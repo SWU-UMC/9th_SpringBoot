@@ -17,4 +17,9 @@ public class Reply {
 
     @Column(name = "content", nullable = false)
     private String content;
+
+    // 연관 관계
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "review_id")
+    private Review review;
 }
