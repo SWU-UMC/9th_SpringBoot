@@ -1,9 +1,11 @@
 package com.example.umc9th.domain.store.entity;
 
 import com.example.umc9th.domain.mission.entity.Mission;
+import com.example.umc9th.domain.review.entity.Review;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -34,4 +36,7 @@ public class Store {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "location_id")
     private Location location;
+
+    @OneToMany(mappedBy = "store")
+    private List<Review> reviewList = new ArrayList<>();
 }

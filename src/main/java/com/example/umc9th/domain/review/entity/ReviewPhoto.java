@@ -17,4 +17,9 @@ public class ReviewPhoto {
 
     @Column(name = "photo_url")
     private String photo_url;
+
+    // 연관 관계
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "review_id")
+    private Review review;
 }
