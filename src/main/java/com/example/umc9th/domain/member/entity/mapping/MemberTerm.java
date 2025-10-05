@@ -3,15 +3,13 @@ package com.example.umc9th.domain.member.entity.mapping;
 import com.example.umc9th.domain.member.entity.Member;
 import com.example.umc9th.domain.member.entity.Term;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Getter
 @Table(name = "member_term")
 public class MemberTerm {
 
