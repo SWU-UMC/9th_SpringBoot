@@ -1,7 +1,10 @@
 package com.example.umc9th.domain.store.entity;
 
+import com.example.umc9th.domain.mission.entity.Mission;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Builder
@@ -23,4 +26,12 @@ public class Store {
 
     @Column(name = "detail_address", nullable = false)
     private String detail_address;
+
+    // 연관 관계
+    @OneToMany(mappedBy = "store")
+    private List<Mission> missions;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "location_id")
+    private Location location;
 }
