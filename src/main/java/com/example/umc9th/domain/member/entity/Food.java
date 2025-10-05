@@ -1,8 +1,12 @@
 package com.example.umc9th.domain.member.entity;
 
+import com.example.umc9th.domain.member.entity.mapping.MemberFood;
 import com.example.umc9th.domain.member.enums.FoodName;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Builder
@@ -19,4 +23,9 @@ public class Food {
     @Column(name = "name")
     @Enumerated(EnumType.STRING)
     private FoodName name;
+
+    // 연관 관계
+    @OneToMany(mappedBy = "food")
+    private List<MemberFood> memberFoodList = new ArrayList<>();
+
 }
