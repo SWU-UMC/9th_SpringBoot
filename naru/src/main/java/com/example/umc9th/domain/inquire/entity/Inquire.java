@@ -39,6 +39,7 @@ public class Inquire extends BaseEntity {
     @Column(name = "type", nullable = false, length = 30)
     private InquireType type;
 
+    @Builder.Default
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, length = 30)

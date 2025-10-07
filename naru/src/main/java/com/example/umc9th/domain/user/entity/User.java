@@ -72,6 +72,7 @@ public class User extends BaseEntity {
     @Column(name = "detail_address", length = 255)
     private String detailAddress;
 
+    @Builder.Default
     @Min(0)
     @Column(name = "point", nullable = false)
     private Long point = 0L;

@@ -35,8 +35,9 @@ public class Notification extends BaseEntity {
     @Column(name = "category", nullable = false, length = 50)
     private NotificationCategory category;
 
+    @Builder.Default
     @NotNull
     @Column(name = "is_read", nullable = false)
-    private Boolean isRead;
+    private Boolean isRead = false;
 
 }

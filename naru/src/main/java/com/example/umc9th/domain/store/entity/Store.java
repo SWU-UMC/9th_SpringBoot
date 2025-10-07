@@ -39,6 +39,7 @@ public class Store extends BaseEntity {
     @Column(name = "address", nullable = false, length = 255)
     private String address;
 
+    @Builder.Default
     @NotNull
     @DecimalMin("0.0")
     @DecimalMax("5.0")

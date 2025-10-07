@@ -22,16 +22,19 @@ public class NotificationSetting extends BaseEntity {
     @JoinColumn(name = "user_id", nullable = false, unique = true)
     private User user;
 
+    @Builder.Default
     @NotNull
     @Column(name = "new_event", nullable = false)
-    private Boolean newEvent;
+    private Boolean newEvent = true;
 
+    @Builder.Default
     @NotNull
     @Column(name = "review_reply", nullable = false)
-    private Boolean reviewReply;
+    private Boolean reviewReply = true;
 
+    @Builder.Default
     @NotNull
     @Column(name = "inquire_reply", nullable = false)
-    private Boolean inquireReply;
+    private Boolean inquireReply = true;
 
 }

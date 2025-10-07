@@ -17,17 +17,20 @@ public class Agreement extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false, unique = true)
     private User user;
 
+    @Builder.Default
     @NotNull
     @Column(name = "age_consent", nullable = false)
-    private Boolean ageConsent;
+    private Boolean ageConsent = true;
 
+    @Builder.Default
     @NotNull
     @Column(name = "privacy_consent", nullable = false)
-    private Boolean privacyConsent;
+    private Boolean privacyConsent = true;
 
     @NotNull
     @Column(name = "location_consent", nullable = false)
