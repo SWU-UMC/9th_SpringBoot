@@ -41,12 +41,23 @@ public class Review extends BaseEntity {
     private String content;
 
     // 양방향 연관관계
-    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(
+            mappedBy = "review",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     private List<ReviewPhoto> photos = new ArrayList<>();
 
-    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(
+            mappedBy = "review",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     private List<ReviewReply> replies = new ArrayList<>();
 
+    // 헬퍼
     public void addPhoto(ReviewPhoto p) { photos.add(p); p.setReview(this); }
     public void removePhoto(ReviewPhoto p) { photos.remove(p); p.setReview(null); }
 

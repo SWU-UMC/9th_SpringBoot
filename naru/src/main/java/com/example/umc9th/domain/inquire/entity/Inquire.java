@@ -45,12 +45,23 @@ public class Inquire extends BaseEntity {
     @Column(name = "status", nullable = false, length = 30)
     private InquireStatus status = InquireStatus.RECEIVED;
 
-    @OneToMany(mappedBy = "inquire", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(
+            mappedBy = "inquire",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     private List<InquirePhoto> photos = new ArrayList<>();
 
-    @OneToMany(mappedBy = "inquire", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(
+            mappedBy = "inquire",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     private List<InquireReply> replies = new ArrayList<>();
 
+    // 헬퍼
     public void addPhoto(InquirePhoto p) { photos.add(p); p.setInquire(this); }
     public void removePhoto(InquirePhoto p) { photos.remove(p); p.setInquire(null); }
 

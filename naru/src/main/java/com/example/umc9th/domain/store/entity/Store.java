@@ -47,7 +47,12 @@ public class Store extends BaseEntity {
     private Double score = 0.0;
 
     // 양방향 연관관계
-    @OneToMany(mappedBy = "store", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(
+            mappedBy = "store",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     private List<BusinessHours> businessHours = new ArrayList<>();
 
     // 헬퍼
