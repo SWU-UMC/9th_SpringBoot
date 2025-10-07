@@ -4,8 +4,14 @@ import com.example.umc9th.global.common.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.*;
 
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 @Entity
+@Table(name = "review_photo")
 public class ReviewPhoto extends BaseEntity {
 
     @Id

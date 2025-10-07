@@ -7,11 +7,17 @@ import com.example.umc9th.domain.user.entity.enums.UserStatus;
 import com.example.umc9th.global.common.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 @Entity
+@Table(name = "user")
 public class User extends BaseEntity {
 
     @Id
@@ -68,7 +74,7 @@ public class User extends BaseEntity {
 
     @Min(0)
     @Column(name = "point", nullable = false)
-    private Long point;
+    private Long point = 0L;
 
     @Size(max = 512)
     @Column(name = "image_url", length = 512)

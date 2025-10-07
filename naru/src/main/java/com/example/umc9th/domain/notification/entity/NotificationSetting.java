@@ -4,8 +4,14 @@ import com.example.umc9th.domain.user.entity.User;
 import com.example.umc9th.global.common.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 @Entity
+@Table(name = "notification_setting")
 public class NotificationSetting extends BaseEntity {
 
     @Id

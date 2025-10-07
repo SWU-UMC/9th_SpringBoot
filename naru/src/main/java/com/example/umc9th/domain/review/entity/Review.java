@@ -5,11 +5,17 @@ import com.example.umc9th.domain.user.entity.User;
 import com.example.umc9th.global.common.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 @Entity
+@Table(name = "review")
 public class Review extends BaseEntity {
 
     @Id

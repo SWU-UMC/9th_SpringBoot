@@ -4,10 +4,16 @@ import com.example.umc9th.domain.store.entity.enums.Days;
 import com.example.umc9th.global.common.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
 import java.time.LocalTime;
 
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 @Entity
+@Table(name = "business_hours")
 public class BusinessHours extends BaseEntity {
 
     @Id

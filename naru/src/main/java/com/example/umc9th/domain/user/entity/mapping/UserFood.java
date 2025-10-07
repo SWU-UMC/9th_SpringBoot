@@ -4,9 +4,14 @@ import com.example.umc9th.domain.user.entity.Food;
 import com.example.umc9th.domain.user.entity.User;
 import com.example.umc9th.global.common.BaseEntity;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 @Entity
+@Table(name = "user_food")
 public class UserFood extends BaseEntity {
 
     @Id
