@@ -22,4 +22,6 @@ public class InquireReply extends BaseEntity {
     @Column(name = "content", nullable = false, length = 1000)
     private String content;
 
+    public void setInquire(Inquire inquire) { this.inquire = inquire; }
+
 }

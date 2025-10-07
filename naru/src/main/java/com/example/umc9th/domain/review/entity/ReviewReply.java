@@ -22,4 +22,6 @@ public class ReviewReply extends BaseEntity {
     @Column(name = "content", nullable = false, length = 500)
     private String content;
 
+    public void setReview(Review review) { this.review = review; }
+
 }

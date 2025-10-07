@@ -21,4 +21,6 @@ public class ReviewPhoto extends BaseEntity {
     @Column(name = "image_url", nullable = false, length = 512)
     private String imageUrl;
 
+    public void setReview(Review review) { this.review = review; }
+
 }

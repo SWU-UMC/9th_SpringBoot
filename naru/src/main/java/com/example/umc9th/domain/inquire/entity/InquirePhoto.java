@@ -21,4 +21,6 @@ public class InquirePhoto extends BaseEntity {
     @Column(name = "image_url", nullable = false, length = 512)
     private String imageUrl;
 
+    public void setInquire(Inquire inquire) { this.inquire = inquire; }
+
 }

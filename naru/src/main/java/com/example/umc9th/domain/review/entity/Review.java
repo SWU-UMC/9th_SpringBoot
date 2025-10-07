@@ -6,6 +6,9 @@ import com.example.umc9th.global.common.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 public class Review extends BaseEntity {
 
@@ -30,5 +33,18 @@ public class Review extends BaseEntity {
     @Size(max = 1000)
     @Column(name = "content", nullable = false, length = 1000)
     private String content;
+
+    // 양방향 연관관계
+    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ReviewPhoto> photos = new ArrayList<>();
+
+    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ReviewReply> replies = new ArrayList<>();
+
+    public void addPhoto(ReviewPhoto p) { photos.add(p); p.setReview(this); }
+    public void removePhoto(ReviewPhoto p) { photos.remove(p); p.setReview(null); }
+
+    public void addReply(ReviewReply r) { replies.add(r); r.setReview(this); }
+    public void removeReply(ReviewReply r) { replies.remove(r); r.setReview(null); }
 
 }

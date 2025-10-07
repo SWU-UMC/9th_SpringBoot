@@ -31,4 +31,6 @@ public class BusinessHours extends BaseEntity {
     @Column(name = "end_time", nullable = false)
     private LocalTime endTime;
 
+    public void setStore(Store store) { this.store = store; }
+
 }

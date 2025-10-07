@@ -5,6 +5,9 @@ import com.example.umc9th.global.common.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 public class Store extends BaseEntity {
 
@@ -35,5 +38,19 @@ public class Store extends BaseEntity {
     @DecimalMax("5.0")
     @Column(name = "score", nullable = false)
     private Double score = 0.0;
+
+    // 양방향 연관관계
+    @OneToMany(mappedBy = "store", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<BusinessHours> businessHours = new ArrayList<>();
+
+    // 헬퍼
+    public void addBusinessHours(BusinessHours bh) {
+        businessHours.add(bh);
+        bh.setStore(this);
+    }
+    public void removeBusinessHours(BusinessHours bh) {
+        businessHours.remove(bh);
+        bh.setStore(null);
+    }
 
 }
