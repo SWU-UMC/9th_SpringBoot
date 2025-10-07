@@ -1,10 +1,9 @@
 package com.example.umc9th.domain.store.entity;
 
 import com.example.umc9th.global.common.BaseEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Location extends BaseEntity {
@@ -13,6 +12,9 @@ public class Location extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
+    @Size(max = 100)
+    @Column(name = "name", nullable = false, length = 100, unique = true)
     private String name;
 
 }

@@ -1,10 +1,8 @@
 package com.example.umc9th.domain.review.entity;
 
 import com.example.umc9th.global.common.BaseEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 @Entity
 public class Review extends BaseEntity {
@@ -13,12 +11,22 @@ public class Review extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
+    @Column(name = "user_id", nullable = false)
     private Long userId;
 
+    @NotNull
+    @Column(name = "store_id", nullable = false)
     private Long storeId;
 
-    private Long score;
+    @NotNull
+    @DecimalMin("0.0")
+    @DecimalMax("5.0")
+    @Column(name = "score", nullable = false)
+    private Double score;
 
+    @Size(max = 1000)
+    @Column(name = "content", nullable = false, length = 1000)
     private String content;
 
 }

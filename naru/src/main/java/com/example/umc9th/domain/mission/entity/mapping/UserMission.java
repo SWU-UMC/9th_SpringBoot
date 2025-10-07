@@ -2,9 +2,8 @@ package com.example.umc9th.domain.mission.entity.mapping;
 
 import com.example.umc9th.domain.mission.entity.enums.MissionStatus;
 import com.example.umc9th.global.common.BaseEntity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 public class UserMission extends BaseEntity {
 
@@ -12,10 +11,17 @@ public class UserMission extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
+    @Column(name = "user_id", nullable = false)
     private Long userId;
 
+    @NotNull
+    @Column(name = "mission_id", nullable = false)
     private Long missionId;
 
-    private MissionStatus status;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false, length = 30)
+    private MissionStatus status = MissionStatus.ACTIVE;
 
 }

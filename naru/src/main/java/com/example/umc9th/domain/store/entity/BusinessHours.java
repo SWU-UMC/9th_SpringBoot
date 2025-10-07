@@ -2,10 +2,8 @@ package com.example.umc9th.domain.store.entity;
 
 import com.example.umc9th.domain.store.entity.enums.Days;
 import com.example.umc9th.global.common.BaseEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalTime;
 
@@ -16,12 +14,21 @@ public class BusinessHours extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
+    @Column(name = "store_id", nullable = false)
     private Long storeId;
 
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "days", nullable = false, length = 20)
     private Days days;
 
+    @NotNull
+    @Column(name = "start_time", nullable = false)
     private LocalTime startTime;
 
+    @NotNull
+    @Column(name = "end_time", nullable = false)
     private LocalTime endTime;
 
 }
