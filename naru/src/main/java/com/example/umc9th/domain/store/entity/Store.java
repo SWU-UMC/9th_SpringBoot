@@ -1,5 +1,6 @@
 package com.example.umc9th.domain.store.entity;
 
+import com.example.umc9th.domain.user.entity.Food;
 import com.example.umc9th.global.common.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -11,13 +12,13 @@ public class Store extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @Column(name = "location_id", nullable = false)
-    private Long locationId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "location_id", nullable = false)
+    private Location location;
 
-    @NotNull
-    @Column(name = "food_id", nullable = false)
-    private Long foodId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "food_id", nullable = false)
+    private Food food;
 
     @NotBlank
     @Size(max = 100)

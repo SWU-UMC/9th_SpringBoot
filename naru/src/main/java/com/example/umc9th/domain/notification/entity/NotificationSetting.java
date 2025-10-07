@@ -1,5 +1,6 @@
 package com.example.umc9th.domain.notification.entity;
 
+import com.example.umc9th.domain.user.entity.User;
 import com.example.umc9th.global.common.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -11,9 +12,9 @@ public class NotificationSetting extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @Column(name = "user_id", nullable = false)
-    private Long userId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false, unique = true)
+    private User user;
 
     @NotNull
     @Column(name = "new_event", nullable = false)

@@ -13,9 +13,9 @@ public class InquireReply extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @Column(name = "inquire_id", nullable = false)
-    private Long inquireId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "inquire_id", nullable = false)
+    private Inquire inquire;
 
     @NotBlank
     @Size(max = 1000)

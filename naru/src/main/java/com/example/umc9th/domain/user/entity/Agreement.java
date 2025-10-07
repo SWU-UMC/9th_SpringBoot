@@ -11,10 +11,9 @@ public class Agreement extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // 나중에 @ManyToOne(User)로 교체 예정
-    @NotNull
-    @Column(name = "user_id", nullable = false)
-    private Long userId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false, unique = true)
+    private User user;
 
     @NotNull
     @Column(name = "age_consent", nullable = false)
