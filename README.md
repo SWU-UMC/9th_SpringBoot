@@ -1,6 +1,4 @@
 # 9th_SpringBoot
-<br>
-
 
 ### Git 작업 순서
 
@@ -30,7 +28,6 @@ git commit-m "Commit Message"
 ```sh
 git push origin <브랜치명>
 ```
-<br>
 
 ### Commit Convention
 
@@ -51,8 +48,6 @@ git push origin <브랜치명>
 git commit -m "feat: 4주차 미션 엔터티 작성 #1"
 git commit -m "fix: 5주차 미션 연관관계 수정 #2"
 ```
-<br>
-
 
 ### Branch Naming Convention
 
@@ -67,8 +62,6 @@ git commit -m "fix: 5주차 미션 연관관계 수정 #2"
 #### Commit Example
 - `naru/week4` -> 나루의 4주차 미션 브랜치
 - `ruma/week5` -> 루마의 5주차 미션 브랜치
-<br>
-
 
 ### PR Convention
 
