@@ -7,7 +7,8 @@ public enum Category {
     KOREAN_CUISINE("한식"),
     CHINESE_FOOD("중식"),
     JAPANESE_FOOD("일식"),
-    WESTERN_FOOD("양식");
+    WESTERN_FOOD("양식"),
+    THAI_FOOD("태국음식");
 
     private final String label;
 
