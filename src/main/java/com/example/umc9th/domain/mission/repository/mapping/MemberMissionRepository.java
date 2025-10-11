@@ -1,5 +1,6 @@
 package com.example.umc9th.domain.mission.repository.mapping;
 
+import com.example.umc9th.domain.mission.dto.MemberMissionHomeDto;
 import com.example.umc9th.domain.mission.entity.mapping.MemberMission;
 import com.example.umc9th.domain.mission.dto.MemberMissionDto;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,8 +16,22 @@ public interface MemberMissionRepository extends JpaRepository<MemberMission, Lo
             " WHERE mm.member.id = :memberId" +
             "  AND mm.status = :status" +
             " ORDER BY mm.id DESC")
-    Page<MemberMissionDto> findUserMissionByStatus(
+    Page<MemberMissionDto> findMemberMissionByStatus(
             @Param("memberId") Long memberId,
             @Param("status") String status,
+            Pageable pageable);
+
+    @Query("SELECT new com.example.umc9th.domain.mission.dto" +
+            ".MemberMissionHomeDto(s.name, m.conditional, m.point, m.created_at)" +
+            " FROM MemberMission mm" +
+            " JOIN mm.mission m" +
+            " JOIN m.store s" +
+            " WHERE s.location.id = :locationId" +
+            " AND mm.member.id = :memberId" +
+            " AND mm.status = 'NOT_STARTED'" +
+            " ORDER BY mm.id DESC")
+    Page<MemberMissionHomeDto> findMemberMissionForHome(
+            @Param("locationId") Long locationId,
+            @Param("memberId") Long memberId,
             Pageable pageable);
 }
