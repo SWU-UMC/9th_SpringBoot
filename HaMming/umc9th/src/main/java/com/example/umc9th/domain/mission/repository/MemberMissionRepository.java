@@ -1,6 +1,7 @@
 package com.example.umc9th.domain.mission.repository;
 
 import com.example.umc9th.domain.mission.entity.mapping.MemberMission;
+import com.example.umc9th.domain.mission.enums.MissionStatus;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -11,14 +12,14 @@ import java.util.List;
 public interface MemberMissionRepository extends JpaRepository<MemberMission, Long> {
 
     /**
-     *진행 중 미션 조회 (isSuccess = false)
+     *진행 중 미션 목록 조회 (MissionStatus = OnGoing)
      */
     @Query("""
         SELECT mm
         FROM MemberMission mm
         JOIN FETCH mm.mission m
         WHERE mm.member.id = :memberId
-          AND mm.isSuccess = false
+          AND mm.status = com.example.umc9th.domain.mission.enums.MissionStatus.OnGoing
           AND (:cursor IS NULL OR mm.id < :cursor)
         ORDER BY mm.id DESC
         """)
@@ -30,14 +31,14 @@ public interface MemberMissionRepository extends JpaRepository<MemberMission, Lo
 
 
     /**
-     * 진행 완료 미션 조회 (isSuccess = true)
+     * 진행 완료 미션 목록 조회 (MissionStatus = Finish)
      */
     @Query("""
         SELECT mm
         FROM MemberMission mm
         JOIN FETCH mm.mission m
         WHERE mm.member.id = :memberId
-          AND mm.isSuccess = true
+          AND mm.status = com.example.umc9th.domain.mission.enums.MissionStatus.Finish
           AND (:cursor IS NULL OR mm.id < :cursor)
         ORDER BY mm.id DESC
         """)
