@@ -3,10 +3,10 @@ package com.example.umc9th.domain.mission.repository.mapping;
 import com.example.umc9th.domain.mission.dto.MemberMissionHomeDto;
 import com.example.umc9th.domain.mission.entity.mapping.MemberMission;
 import com.example.umc9th.domain.mission.dto.MemberMissionDto;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface MemberMissionRepository extends JpaRepository<MemberMission, Long> {
@@ -15,10 +15,11 @@ public interface MemberMissionRepository extends JpaRepository<MemberMission, Lo
             "FROM MemberMission mm JOIN mm.mission m  JOIN m.store s" +
             " WHERE mm.member.id = :memberId" +
             "  AND mm.status = :status" +
-            " ORDER BY mm.id DESC")
-    Page<MemberMissionDto> findMemberMissionByStatus(
+            " AND mm.id < :lastMissionId ORDER BY mm.id DESC")
+    Slice<MemberMissionDto> findMemberMissionByStatus(
             @Param("memberId") Long memberId,
             @Param("status") String status,
+            @Param("lastMissionId") Long lastMissionId,
             Pageable pageable);
 
     @Query("SELECT new com.example.umc9th.domain.mission.dto" +
@@ -29,9 +30,10 @@ public interface MemberMissionRepository extends JpaRepository<MemberMission, Lo
             " WHERE s.location.id = :locationId" +
             " AND mm.member.id = :memberId" +
             " AND mm.status = 'NOT_STARTED'" +
-            " ORDER BY mm.id DESC")
-    Page<MemberMissionHomeDto> findMemberMissionForHome(
+            " AND mm.id < :lastMissionId ORDER BY mm.id DESC")
+    Slice<MemberMissionHomeDto> findMemberMissionForHome(
             @Param("locationId") Long locationId,
             @Param("memberId") Long memberId,
+            @Param("lastMissionId") Long lastMissionId,
             Pageable pageable);
 }
