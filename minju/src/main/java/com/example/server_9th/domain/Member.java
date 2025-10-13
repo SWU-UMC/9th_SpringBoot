@@ -22,6 +22,9 @@ public class Member extends BaseEntity {
     @Column(nullable = false, length = 3)
     private String name;
 
+    @Column(nullable = false, length = 20)
+    private String email;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     @Builder.Default
