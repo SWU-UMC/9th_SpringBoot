@@ -1,7 +1,7 @@
-package com.example.umc9th.domain.member.entity;
+package com.example.leeseo.domain.member.entity;
 
-import com.example.umc9th.domain.member.entity.mapping.MemberFood;
-import com.example.umc9th.domain.member.enums.FoodName;
+import com.example.leeseo.domain.member.entity.mapping.MemberFood;
+import com.example.leeseo.domain.member.enums.FoodName;
 import jakarta.persistence.*;
 import lombok.*;
 

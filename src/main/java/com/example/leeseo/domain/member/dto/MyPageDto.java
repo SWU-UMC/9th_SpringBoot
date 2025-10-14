@@ -1,4 +1,4 @@
-package com.example.umc9th.domain.member.dto;
+package com.example.leeseo.domain.member.dto;
 
 public class MyPageDto {
     private Long id;

@@ -1,4 +1,4 @@
-package com.example.umc9th.domain.review.entity;
+package com.example.leeseo.domain.review.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

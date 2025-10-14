@@ -1,6 +1,6 @@
-package com.example.umc9th.domain.review.repository;
+package com.example.leeseo.domain.review.repository;
 
-import com.example.umc9th.domain.review.entity.Reply;
+import com.example.leeseo.domain.review.entity.Reply;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ReplyRepository extends JpaRepository<Reply, Long> {

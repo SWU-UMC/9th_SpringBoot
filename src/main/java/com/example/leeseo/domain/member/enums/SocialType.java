@@ -1,4 +1,4 @@
-package com.example.umc9th.domain.member.enums;
+package com.example.leeseo.domain.member.enums;
 
 public enum SocialType {
     GOOGLE, KAKAO, NAVER

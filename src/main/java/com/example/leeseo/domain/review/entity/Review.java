@@ -1,8 +1,8 @@
-package com.example.umc9th.domain.review.entity;
+package com.example.leeseo.domain.review.entity;
 
-import com.example.umc9th.domain.member.entity.Member;
-import com.example.umc9th.domain.store.entity.Store;
-import com.example.umc9th.global.entity.BaseEntity;
+import com.example.leeseo.domain.member.entity.Member;
+import com.example.leeseo.domain.store.entity.Store;
+import com.example.leeseo.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 

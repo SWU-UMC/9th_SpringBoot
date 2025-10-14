@@ -1,4 +1,4 @@
-package com.example.umc9th;
+package com.example.leeseo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,10 +6,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
 @EnableJpaAuditing
-public class Umc9thApplication {
+public class leeseoApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Umc9thApplication.class, args);
+		SpringApplication.run(leeseoApplication.class, args);
 	}
 
 }
