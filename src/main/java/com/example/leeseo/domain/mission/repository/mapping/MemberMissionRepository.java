@@ -41,7 +41,7 @@ public interface MemberMissionRepository extends JpaRepository<MemberMission, Lo
             Pageable pageable);
 
     @Query("SELECT new com.example.leeseo.domain.mission.dto.MyMissionDoneDto" +
-            "(SUM(CASE WHEN mm.status = 'NOT_STARTED' THEN 1 ELSE 0 END), COUNT(mm.id))" +
+            "(SUM(CASE WHEN mm.status = 'DONE' THEN 1 ELSE 0 END), COUNT(mm.id))" +
             "FROM MemberMission mm" )
     Optional<MyMissionDoneDto> getMyMissionDoneCnt();
 }
