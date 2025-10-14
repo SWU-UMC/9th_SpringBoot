@@ -1,8 +1,8 @@
-package com.example.umc9th.domain.mission.entity;
+package com.example.leeseo.domain.mission.entity;
 
-import com.example.umc9th.domain.mission.entity.mapping.MemberMission;
-import com.example.umc9th.domain.store.entity.Store;
-import com.example.umc9th.global.entity.BaseEntity;
+import com.example.leeseo.domain.mission.entity.mapping.MemberMission;
+import com.example.leeseo.domain.store.entity.Store;
+import com.example.leeseo.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 

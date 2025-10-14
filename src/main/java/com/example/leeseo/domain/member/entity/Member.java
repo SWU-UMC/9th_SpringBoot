@@ -1,13 +1,13 @@
-package com.example.umc9th.domain.member.entity;
+package com.example.leeseo.domain.member.entity;
 
-import com.example.umc9th.domain.member.entity.mapping.MemberFood;
-import com.example.umc9th.domain.member.entity.mapping.MemberTerm;
-import com.example.umc9th.domain.member.enums.Address;
-import com.example.umc9th.domain.member.enums.Gender;
-import com.example.umc9th.domain.member.enums.SocialType;
-import com.example.umc9th.domain.mission.entity.mapping.MemberMission;
-import com.example.umc9th.domain.review.entity.Review;
-import com.example.umc9th.global.entity.BaseEntity;
+import com.example.leeseo.domain.member.entity.mapping.MemberFood;
+import com.example.leeseo.domain.member.entity.mapping.MemberTerm;
+import com.example.leeseo.domain.member.enums.Address;
+import com.example.leeseo.domain.member.enums.Gender;
+import com.example.leeseo.domain.member.enums.SocialType;
+import com.example.leeseo.domain.mission.entity.mapping.MemberMission;
+import com.example.leeseo.domain.review.entity.Review;
+import com.example.leeseo.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 

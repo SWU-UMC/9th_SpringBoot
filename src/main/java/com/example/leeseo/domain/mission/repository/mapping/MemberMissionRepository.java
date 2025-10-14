@@ -1,8 +1,8 @@
-package com.example.umc9th.domain.mission.repository.mapping;
+package com.example.leeseo.domain.mission.repository.mapping;
 
-import com.example.umc9th.domain.mission.dto.MemberMissionHomeDto;
-import com.example.umc9th.domain.mission.entity.mapping.MemberMission;
-import com.example.umc9th.domain.mission.dto.MemberMissionDto;
+import com.example.leeseo.domain.mission.dto.MemberMissionHomeDto;
+import com.example.leeseo.domain.mission.entity.mapping.MemberMission;
+import com.example.leeseo.domain.mission.dto.MemberMissionDto;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -11,7 +11,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface MemberMissionRepository extends JpaRepository<MemberMission, Long> {
 
-    @Query("SELECT new com.example.umc9th.domain.mission.dto.MemberMissionDto(s.name, m.point, m.created_at, m.conditional, mm.status)" +
+    @Query("SELECT new com.example.leeseo.domain.mission.dto.MemberMissionDto(s.name, m.point, m.created_at, m.conditional, mm.status)" +
             "FROM MemberMission mm JOIN mm.mission m  JOIN m.store s" +
             " WHERE mm.member.id = :memberId" +
             "  AND mm.status = :status" +
@@ -22,7 +22,7 @@ public interface MemberMissionRepository extends JpaRepository<MemberMission, Lo
             @Param("lastMissionId") Long lastMissionId,
             Pageable pageable);
 
-    @Query("SELECT new com.example.umc9th.domain.mission.dto" +
+    @Query("SELECT new com.example.leeseo.domain.mission.dto" +
             ".MemberMissionHomeDto(s.name, m.conditional, m.point, m.created_at)" +
             " FROM MemberMission mm" +
             " JOIN mm.mission m" +

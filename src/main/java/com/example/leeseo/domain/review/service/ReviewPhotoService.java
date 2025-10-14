@@ -1,9 +1,9 @@
-package com.example.umc9th.domain.review.service;
+package com.example.leeseo.domain.review.service;
 
-import com.example.umc9th.domain.review.entity.Review;
-import com.example.umc9th.domain.review.entity.ReviewPhoto;
-import com.example.umc9th.domain.review.repository.ReviewPhotoRepository;
-import com.example.umc9th.domain.review.repository.ReviewRepository;
+import com.example.leeseo.domain.review.entity.Review;
+import com.example.leeseo.domain.review.entity.ReviewPhoto;
+import com.example.leeseo.domain.review.repository.ReviewPhotoRepository;
+import com.example.leeseo.domain.review.repository.ReviewRepository;
 import org.springframework.stereotype.Service;
 
 @Service

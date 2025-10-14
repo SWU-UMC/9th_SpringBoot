@@ -1,4 +1,4 @@
-package com.example.umc9th.domain.member.enums;
+package com.example.leeseo.domain.member.enums;
 
 public enum Address {
     강남구, 강동구, 강북구, 강서구, 계양구, 관악구, 광산구, 광진구,
