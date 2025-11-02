@@ -34,14 +34,19 @@ public class ReviewQueryService {
             builder.and(review.store.id.eq(parseLong(query)));
         }
         if (type.equals("rate")){
-            builder.and(review.rate.goe(Float.parseFloat(query)));
+            int rate_avg = Integer.parseInt(query);
+            builder.and(review.rate.goe(rate_avg));
+            builder.and(review.rate.lt(rate_avg + 1));
         }
         if (type.equals("both")){
             String firstQuery = query.split("&")[0];
             String secondQuery = query.split("&")[1];
 
             builder.and(store.id.eq(parseLong(firstQuery)));
-            builder.and(review.rate.goe(Float.parseFloat(secondQuery)));
+
+            int rate_avg = Integer.parseInt(secondQuery);
+            builder.and(review.rate.goe(rate_avg));
+            builder.and(review.rate.lt(rate_avg + 1));
         }
 
         //Repository 사용 & 결과 매핑
