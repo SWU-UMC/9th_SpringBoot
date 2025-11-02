@@ -1,5 +1,6 @@
 package com.example.leeseo.domain.review.controller;
 
+import com.example.leeseo.domain.review.dto.QReviewDto;
 import com.example.leeseo.domain.review.entity.Review;
 import com.example.leeseo.domain.review.service.ReviewQueryService;
 import lombok.RequiredArgsConstructor;
@@ -17,11 +18,11 @@ public class ReviewController {
     private final ReviewQueryService reviewQueryService;
 
     @GetMapping("/search")
-    public List<Review> searchReview(
+    public List<QReviewDto> searchReview(
             @RequestParam String query,
             @RequestParam String type
     ){
-        List<Review> result = reviewQueryService.searchReview(query,type);
+        List<QReviewDto> result = reviewQueryService.searchReview(query,type);
         return result;
     }
 }
