@@ -25,4 +25,7 @@ INSERT INTO review (id, member_id, store_id, content, rate, created_at, updated_
 INSERT INTO review (id, member_id, store_id, content, rate, created_at, updated_at) VALUES (4, 4, 2, '좀 짜긴 한데 맛있어용', 3.8, NOW(), NOW());
 INSERT INTO review (id, member_id, store_id, content, rate, created_at, updated_at) VALUES (5, 1, 2, '간장 맛이 심해요', 3.4, NOW(), NOW());
 INSERT INTO review (id, member_id, store_id, content, rate, created_at, updated_at) VALUES (6, 2, 2, '가게가 더러운데 맛은 있어요', 3.1, NOW(), NOW());
+INSERT INTO review (id, member_id, store_id, content, rate, created_at, updated_at) VALUES (7, 3, 1, '서비스도 주시고 좋아요', 3.9, NOW(), NOW());
+INSERT INTO review (id, member_id, store_id, content, rate, created_at, updated_at) VALUES (8, 4, 1, '꿔바로우가 맛있어요', 3.8, NOW(), NOW());
+INSERT INTO review (id, member_id, store_id, content, rate, created_at, updated_at) VALUES (9, 1, 1, '좀 비쌌어요', 3.3, NOW(), NOW());
 

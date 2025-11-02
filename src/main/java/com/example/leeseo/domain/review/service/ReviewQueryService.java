@@ -8,6 +8,8 @@ import com.example.leeseo.domain.store.entity.QLocation;
 import com.example.leeseo.domain.store.entity.QStore;
 import com.querydsl.core.BooleanBuilder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +22,7 @@ public class ReviewQueryService {
     private final ReviewRepository reviewRepository;
 
     public List<QReviewDto> searchReview(
-            String query, String type
+            String query, String type, Long cursorId
     ){
         //Q클래스 정의
         QReview review = QReview.review;
@@ -50,7 +52,7 @@ public class ReviewQueryService {
         }
 
         //Repository 사용 & 결과 매핑
-        List<QReviewDto> reviewList = reviewRepository.searchReview(builder);
+        List<QReviewDto> reviewList = reviewRepository.searchReview(builder, cursorId);
 
         return reviewList;
     }

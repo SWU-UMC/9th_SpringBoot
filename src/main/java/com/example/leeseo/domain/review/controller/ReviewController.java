@@ -20,9 +20,10 @@ public class ReviewController {
     @GetMapping("/search")
     public List<QReviewDto> searchReview(
             @RequestParam String query,
-            @RequestParam String type
+            @RequestParam String type,
+            @RequestParam(required = false) Long cursorId
     ){
-        List<QReviewDto> result = reviewQueryService.searchReview(query,type);
+        List<QReviewDto> result = reviewQueryService.searchReview(query,type, cursorId);
         return result;
     }
 }

@@ -1,12 +1,10 @@
 package com.example.leeseo.domain.review.repository;
 
-import com.example.leeseo.domain.member.entity.QMember;
 import com.example.leeseo.domain.review.dto.QReviewDto;
 import com.example.leeseo.domain.review.entity.QReview;
-import com.example.leeseo.domain.review.entity.Review;
 import com.example.leeseo.domain.store.entity.QLocation;
 import com.example.leeseo.domain.store.entity.QStore;
-import com.querydsl.core.group.GroupBy;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -20,9 +18,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ReviewQueryDslImpl implements ReviewQueryDsl{
     private final EntityManager em;
+    private static final int pageSize = 3;
 
     @Override
-    public List<QReviewDto> searchReview(Predicate predicate) {
+    public List<QReviewDto> searchReview(Predicate basePredicate, Long cursorId) {
         //JPA 세팅
         JPAQueryFactory queryFactory = new JPAQueryFactory(em);
 
@@ -30,7 +29,12 @@ public class ReviewQueryDslImpl implements ReviewQueryDsl{
         QReview review = QReview.review;
         QStore store = QStore.store;
         QLocation location = QLocation.location;
-        QMember member = QMember.member;
+
+        BooleanBuilder whereCondition = new BooleanBuilder(basePredicate);
+
+        if (cursorId != null && cursorId > 0) {
+            whereCondition.and(review.id.lt(cursorId));
+        }
 
         return queryFactory
                 .select(Projections.constructor(
@@ -45,7 +49,9 @@ public class ReviewQueryDslImpl implements ReviewQueryDsl{
                 .from(review)
                 .leftJoin(review.store, store)
                 .leftJoin(store.location, location)
-                .where(predicate)
+                .where(whereCondition)
+                .orderBy(review.id.desc())
+                .limit(pageSize)
                 .fetch();
     }
 }
