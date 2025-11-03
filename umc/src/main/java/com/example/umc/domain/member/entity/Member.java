@@ -18,9 +18,6 @@ public class Member extends BaseEntity {
     @Column(name = "member_id")
     private Long memberId;
 
-    @Column(name="nickname", nullable = false, length = 50)
-    private String nickname;
-
     @Column(name = "email", length = 100, nullable = false, unique = true)
     private String email;
 

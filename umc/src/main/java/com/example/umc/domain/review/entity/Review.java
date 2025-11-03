@@ -1,7 +1,7 @@
 package com.example.umc.domain.review.entity;
 
 import com.example.umc.domain.mission.entity.Mission;
-import com.example.umc.domain.member.entity.User;
+import com.example.umc.domain.member.entity.Member;
 import com.example.umc.global.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -20,8 +20,8 @@ public class Review extends BaseEntity {
     private Long reviewId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "member_id", referencedColumnName = "member_id", nullable = false)
+    private Member member;
 
 
     @ManyToOne(fetch=FetchType.LAZY)

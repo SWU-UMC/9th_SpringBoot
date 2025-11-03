@@ -23,5 +23,5 @@ public class Terms extends BaseEntity {
     private String content;
 
     @OneToMany(mappedBy = "terms")
-    private List<UserTerms> userTerms;
+    private List<MemberTerms> memberTerms;
 }

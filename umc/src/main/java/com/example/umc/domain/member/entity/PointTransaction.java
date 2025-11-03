@@ -15,8 +15,8 @@ public class PointTransaction {
 
     // User와의 관계 설정 (회원 ID)
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "member_id", referencedColumnName = "member_id", nullable = false)
+    private Member member;
 
     // 포인트 금액 (예: +500, -200)
     @Column(name = "amount", nullable = false)
@@ -40,12 +40,12 @@ public class PointTransaction {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public Member getMember() {
+        return member;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setMember(Member member) {
+        this.member = member;
     }
 
     public Integer getAmount() {

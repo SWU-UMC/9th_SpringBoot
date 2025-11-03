@@ -10,11 +10,11 @@ import java.util.Optional;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
-    @Query("SELECT r FROM Review r WHERE r.user.userId = :userId ORDER BY r.createdAt DESC")
-    List<Review> findAllReviewsByUserId(@Param("userId") Long userId);
+    @Query("SELECT r FROM Review r WHERE r.member.memberId = :memberId ORDER BY r.createdAt DESC")
+    List<Review> findAllReviewsByMemberId(@Param("memberId") Long memberId);
 
-    @Query("SELECT r FROM Review r WHERE r.user.userId = :userId AND r.mission.missionId = :missionId")
-    Optional<Review> findByUserIdAndMissionId(@Param("userId") Long userId, @Param("missionId") Long missionId);
+    @Query("SELECT r FROM Review r WHERE r.member.memberId  = :memberId AND r.mission.missionId = :missionId")
+    Optional<Review> findByMemberIdAndMissionId(@Param("memberId") Long memberId, @Param("missionId") Long missionId);
 
     @Query("SELECT r FROM Review r WHERE r.mission.missionId = :missionId ORDER BY r.createdAt DESC")
     List<Review> findAllReviewsByMissionId(@Param("missionId") Long missionId);
