@@ -21,7 +21,6 @@ public class ReviewQueryDslImpl implements ReviewQueryDsl {
     @Override
     public List<Review> searchReview(Predicate predicate) {
         JPAQueryFactory queryFactory = new JPAQueryFactory(em);
-
         QReview review = QReview.review;
         QStore store = QStore.store;
         QRegion region = QRegion.region;
@@ -31,6 +30,21 @@ public class ReviewQueryDslImpl implements ReviewQueryDsl {
                 .leftJoin(store).on(store.id.eq(review.store.id))
                 .leftJoin(region).on(region.id.eq(store.region.id))
                 .where(predicate)
+                .fetch();
+    }
+
+    // 내가 작성한 리뷰 보기
+    @Override
+    public List<Review> findMyReviews(Predicate predicate) {
+        JPAQueryFactory queryFactory = new JPAQueryFactory(em);
+        QReview review = QReview.review;
+        QStore store = QStore.store;
+
+        return queryFactory
+                .selectFrom(review)
+                .leftJoin(store).on(store.id.eq(review.store.id))
+                .where(predicate)
+                .orderBy(review.createdAt.desc())
                 .fetch();
     }
 }

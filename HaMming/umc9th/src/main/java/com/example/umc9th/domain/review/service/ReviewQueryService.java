@@ -15,6 +15,7 @@ public class ReviewQueryService {
 
     private final ReviewRepository reviewRepository;
 
+    // 기존 검색
     public List<Review> searchReview(String regionName, Integer rate, String type) {
         QReview review = QReview.review;
         BooleanBuilder builder = new BooleanBuilder();
@@ -39,4 +40,21 @@ public class ReviewQueryService {
         return reviewRepository.searchReview(builder);
     }
 
+    // 내가 작성한 리뷰 보기
+    public List<Review> findMyReviews(Long memberId, String storeName, Integer rate) {
+        QReview review = QReview.review;
+        BooleanBuilder builder = new BooleanBuilder();
+
+        builder.and(review.member.id.eq(memberId)); // 작성자 필수 조건
+
+        if (storeName != null && !storeName.isBlank()) {
+            builder.and(review.store.storeName.containsIgnoreCase(storeName));
+        }
+
+        if (rate != null) {
+            builder.and(review.rate.eq(rate));
+        }
+
+        return reviewRepository.findMyReviews(builder);
+    }
 }

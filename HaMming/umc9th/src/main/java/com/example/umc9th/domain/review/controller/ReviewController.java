@@ -16,6 +16,7 @@ public class ReviewController {
 
     private final ReviewQueryService reviewQueryService;
 
+    // 기존 검색
     @GetMapping("/search")
     public List<ReviewResponse> searchReview(
             @RequestParam(required = false) String region,
@@ -23,8 +24,19 @@ public class ReviewController {
             @RequestParam(defaultValue = "both") String type
     ) {
         List<Review> reviews = reviewQueryService.searchReview(region, rate, type);
+        return reviews.stream()
+                .map(ReviewResponse::from)
+                .collect(Collectors.toList());
+    }
 
-        // 엔티티 대신 DTO로 변환
+    // 내가 작성한 리뷰 보기
+    @GetMapping("/my")
+    public List<ReviewResponse> getMyReviews(
+            @RequestParam Long memberId,
+            @RequestParam(required = false) String storeName,
+            @RequestParam(required = false) Integer rate
+    ) {
+        List<Review> reviews = reviewQueryService.findMyReviews(memberId, storeName, rate);
         return reviews.stream()
                 .map(ReviewResponse::from)
                 .collect(Collectors.toList());
