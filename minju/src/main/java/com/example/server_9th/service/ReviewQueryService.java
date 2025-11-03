@@ -46,4 +46,28 @@ public class ReviewQueryService {
 
         return reviewRepository.searchReview(builder);
     }
+
+    //내가 작성한 리뷰 보기
+    public List<Review> getMyReviews(Long memberId, String storeName, Double rating){
+
+        QReview review = QReview.review;
+        QStore store = QStore.store;
+
+        BooleanBuilder builder = new BooleanBuilder();
+
+        // 내가 작성한 리뷰만
+        builder.and(review.id.user_id.eq(memberId));
+
+        if (storeName != null && !storeName.isEmpty()){
+            builder.and(store.storeName.eq(storeName));
+        }
+
+        if (rating != null){
+            double min = rating.doubleValue();
+            double max = min + 0.9;
+            builder.and(review.rating.between(min, max));
+        }
+
+        return reviewRepository.searchMyReviews(builder);
+    }
 }
