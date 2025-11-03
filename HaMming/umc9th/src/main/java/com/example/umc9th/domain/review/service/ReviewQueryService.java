@@ -15,29 +15,28 @@ public class ReviewQueryService {
 
     private final ReviewRepository reviewRepository;
 
-    public List<Review> searchReview(String query, String type) {
+    public List<Review> searchReview(String regionName, Integer rate, String type) {
         QReview review = QReview.review;
-
         BooleanBuilder builder = new BooleanBuilder();
 
-        // 지역명 기반 검색
-        if (type.equals("region")) {
-            builder.and(review.store.region.regionName.contains(query));
+        if ("region".equals(type) && regionName != null) {
+            builder.and(review.store.region.regionName.contains(regionName));
         }
 
-        // 별점 기반 검색
-        if (type.equals("rate")) {
-            builder.and(review.rate.goe(Integer.parseInt(query)));
+        if ("rate".equals(type) && rate != null) {
+            builder.and(review.rate.goe(rate));
         }
 
-        // 둘 다 검색 (region + rate)
-        if (type.equals("both")) {
-            String[] splitQuery = query.split("&");
-            builder.and(review.store.region.regionName.contains(splitQuery[0]));
-            builder.and(review.rate.goe(Integer.parseInt(splitQuery[1])));
+        if ("both".equals(type)) {
+            if (regionName != null) {
+                builder.and(review.store.region.regionName.contains(regionName));
+            }
+            if (rate != null) {
+                builder.and(review.rate.goe(rate));
+            }
         }
 
         return reviewRepository.searchReview(builder);
     }
-}
 
+}

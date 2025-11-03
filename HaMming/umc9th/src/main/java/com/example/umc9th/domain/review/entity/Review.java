@@ -2,6 +2,7 @@ package com.example.umc9th.domain.review.entity;
 
 import com.example.umc9th.domain.member.entity.Member;
 import com.example.umc9th.domain.store.entity.Store;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -19,6 +20,7 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "review")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Review {
 
     @Id
