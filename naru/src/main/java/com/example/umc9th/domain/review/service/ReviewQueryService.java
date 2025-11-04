@@ -51,4 +51,30 @@ public class ReviewQueryService {
 
         return reviewRepository.searchReview(builder);
     }
+
+    /**
+     * 내가 작성한 리뷰 보기 (가게명, 별점 필터 가능)
+     */
+    public List<Review> getMyReviews(Long userId, String storeName, Integer scoreGroup) {
+        QReview review = QReview.review;
+        BooleanBuilder builder = new BooleanBuilder();
+
+        // 로그인한 사용자의 리뷰만
+        builder.and(review.user.id.eq(userId));
+
+        // 가게 이름 필터 (예: "반이학생마라탕마라반")
+        if (storeName != null && !storeName.isBlank()) {
+            builder.and(review.store.name.containsIgnoreCase(storeName));
+        }
+
+        // 별점대 필터 (5점대, 4점대 등)
+        if (scoreGroup != null) {
+            double minScore = scoreGroup;
+            double maxScore = scoreGroup + 0.9;
+            builder.and(review.score.between(minScore, maxScore));
+        }
+
+        // ReviewRepository (QueryDSL 기반 검색)
+        return reviewRepository.searchReview(builder);
+    }
 }
