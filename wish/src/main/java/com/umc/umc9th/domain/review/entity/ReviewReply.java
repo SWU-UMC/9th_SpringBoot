@@ -1,6 +1,7 @@
 package com.umc.umc9th.domain.review.entity;
 
 import com.umc.umc9th.domain.owner.entity.Owner;
+import com.umc.umc9th.global.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,7 +12,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ReviewReply {
+public class ReviewReply extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
