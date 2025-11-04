@@ -19,12 +19,23 @@ import java.util.List;
 public class ReviewController {
     private final ReviewQueryService reviewQueryService;
 
+    @Operation(
+            summary = "리뷰 검색 API",
+            description = """
+                    QueryDSL을 이용한 리뷰 검색 API입니다.  
+                    - `location`: 지역명으로 검색 (예: 서울)  
+                    - `score`: 별점 기준 검색 (예: 4.0)  
+                    - `both`: 지역 + 별점 동시 검색 (예: 서울&4.0)
+                    """
+    )
     @GetMapping("/search")
-    public List<Review> searchReview(
+    public List<ReviewResponseDto> searchReview(
+            @Parameter(description = "검색어 (type=location → 지역명, type=score → 별점, type=both → '서울&4.5')", example = "서울&4.5")
             @RequestParam String query,
+            @Parameter(description = "검색 기준 (location | score | both)", example = "both")
             @RequestParam String type
-    ){
-        return reviewQueryService.searchReview(query,type);
+    ) {
+        return reviewQueryService.searchReview(query, type);
     }
 
     @Operation(summary = "내 리뷰 조회", description = "로그인한 사용자의 리뷰를 조회합니다.")

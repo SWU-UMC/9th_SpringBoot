@@ -17,29 +17,20 @@ public class ReviewQueryService {
 
     private final ReviewRepository reviewRepository;
 
-    public List<Review> searchReview(String query, String type) {
+    public List<ReviewResponseDto> searchReview(String query, String type) {
         QReview review = QReview.review;
-
         BooleanBuilder builder = new BooleanBuilder();
 
-        // 지역명 기반 검색 (Store -> Location.name)
         if ("location".equalsIgnoreCase(type)) {
             builder.and(review.store.location.name.containsIgnoreCase(query));
-        }
-
-        // 별점 기반 검색 (score)
-        else if ("score".equalsIgnoreCase(type)) {
+        } else if ("score".equalsIgnoreCase(type)) {
             try {
                 double score = Double.parseDouble(query);
-                builder.and(review.score.goe(score)); // 이상 검색
+                builder.and(review.score.goe(score));
             } catch (NumberFormatException e) {
                 throw new IllegalArgumentException("별점 검색 시 숫자 형태로 입력해야 합니다.");
             }
-        }
-
-        // 지역 + 별점 동시 검색 (location & score)
-        else if ("both".equalsIgnoreCase(type)) {
-            // 예시 query 형식: "서울&4.5"
+        } else if ("both".equalsIgnoreCase(type)) {
             String[] splitQuery = query.split("&");
             if (splitQuery.length == 2) {
                 String locationQuery = splitQuery[0];
@@ -51,8 +42,9 @@ public class ReviewQueryService {
             }
         }
 
-        return reviewRepository.searchReview(builder);
+        return ReviewConverter.toDtoList(reviewRepository.searchReview(builder));
     }
+
 
     /**
      * 내가 작성한 리뷰 보기 (가게명, 별점 필터 가능)
