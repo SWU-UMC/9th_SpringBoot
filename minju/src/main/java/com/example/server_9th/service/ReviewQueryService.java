@@ -1,5 +1,6 @@
 package com.example.server_9th.service;
 
+
 import com.example.server_9th.domain.QRegion;
 import com.example.server_9th.domain.QStore;
 import com.example.server_9th.domain.mapping.review.QReview;
@@ -10,8 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
-import static com.example.server_9th.domain.QRegion.region;
 
 @Service
 @RequiredArgsConstructor

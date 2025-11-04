@@ -1,6 +1,8 @@
 package com.example.server_9th.controller;
 
+import com.example.server_9th.converter.ReviewConverter;
 import com.example.server_9th.domain.mapping.review.Review;
+import com.example.server_9th.dto.ReviewDto;
 import com.example.server_9th.service.ReviewQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,11 +30,15 @@ public class ReviewController {
     }
 
     @GetMapping("/myReview")
-    public List<Review> getMyReviews(
+    public List<ReviewDto.MyReviewResponseDto> getMyReviews(
             @RequestParam Long memberId,
             @RequestParam(required = false) String storeName,
             @RequestParam(required = false) Double rating
     ){
-        return reviewQueryService.getMyReviews(memberId, storeName, rating);
+        List<Review> reviews = reviewQueryService.getMyReviews(memberId, storeName, rating);
+
+        return reviews.stream()
+                .map(ReviewConverter::toMyReviewResponseDto)
+                .collect(Collectors.toList());
     }
 }
