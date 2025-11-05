@@ -1,6 +1,7 @@
 package com.example.leeseo.global.entity.apiPayload;
 
 import com.example.leeseo.global.entity.apiPayload.code.BaseErrorCode;
+import com.example.leeseo.global.entity.apiPayload.code.BaseSuccessCode;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.AllArgsConstructor;
@@ -24,6 +25,9 @@ public class ApiResponse<T> {
     private final T result;
 
     //성공한 경우
+    public static <T> ApiResponse<T> onSuccess(BaseSuccessCode code, T result){
+        return new ApiResponse<>(true, code.getCode(), code.getMessage(), result);
+    }
 
     //실패한 경우
     public static <T> ApiResponse<T> onFailure(BaseErrorCode code, T result){
