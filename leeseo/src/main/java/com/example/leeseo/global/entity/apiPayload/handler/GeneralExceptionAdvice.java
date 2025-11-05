@@ -6,10 +6,10 @@ import com.example.leeseo.global.entity.apiPayload.code.GeneralErrorCode;
 import com.example.leeseo.global.entity.apiPayload.exception.GeneralException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 // 애플리케이션에서 발생하는 커스텀 예외를 처리
-@RestController
+@RestControllerAdvice
 public class GeneralExceptionAdvice {
     @ExceptionHandler(GeneralException.class)
     public ResponseEntity<ApiResponse<Void>> handlerException(
