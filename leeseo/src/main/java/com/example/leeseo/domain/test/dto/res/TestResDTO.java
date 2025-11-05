@@ -8,6 +8,6 @@ public class TestResDTO {
     @Builder
     @Getter
     public static class Testing{
-        private String testing;
+        private String testString;
     }
 }

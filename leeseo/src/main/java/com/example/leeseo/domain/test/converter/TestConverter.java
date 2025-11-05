@@ -7,7 +7,7 @@ public class TestConverter {
             String testing
     ) {
         return TestResDTO.Testing.builder()
-                .testing(testing)
+                .testString(testing)
                 .build();
     }
 }
