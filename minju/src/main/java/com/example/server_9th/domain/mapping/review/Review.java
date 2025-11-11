@@ -1,6 +1,8 @@
 package com.example.server_9th.domain.mapping.review;
 
+import com.example.server_9th.domain.Member;
 import com.example.server_9th.domain.Reply;
+import com.example.server_9th.domain.Store;
 import com.example.server_9th.domain.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -40,4 +42,14 @@ public class Review extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reply_id")
     private Reply reply;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("user_id")
+    @JoinColumn(name = "user_id")
+    private Member member;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("store_id")
+    @JoinColumn(name = "store_id")
+    private Store store;
 }

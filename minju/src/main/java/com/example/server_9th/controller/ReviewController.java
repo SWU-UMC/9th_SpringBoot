@@ -35,10 +35,6 @@ public class ReviewController {
             @RequestParam(required = false) String storeName,
             @RequestParam(required = false) Double rating
     ){
-        List<Review> reviews = reviewQueryService.getMyReviews(memberId, storeName, rating);
-
-        return reviews.stream()
-                .map(ReviewConverter::toMyReviewResponseDto)
-                .collect(Collectors.toList());
+        return reviewQueryService.getMyReviews(memberId, storeName, rating);
     }
 }

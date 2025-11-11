@@ -17,11 +17,14 @@ public class ReviewDto {
     }
 
     @Getter
+    @Setter
     @Builder
     @AllArgsConstructor
+    @NoArgsConstructor
     public static class MyReviewResponseDto{
         private Long memberId;
         private String nickName;
+        private String storeName;
         private Double rating;
         private String context;
         private List<String> imageUrl;
