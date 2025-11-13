@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -33,16 +34,15 @@ public class MemberCommandServiceImpl implements MemberCommandService{
     {
         Member member = MemberConverter.toMember(dto);
         if (dto.preferCategory().size() > 1){
-            List<MemberFood> memberFoodList = new ArrayList<>();
+            List<MemberFood> memberFoodList = dto.preferCategory().stream()
+                    .map(id -> MemberFood.builder()
+                            .member(member)
+                            .food(foodRepository.findById(id)
+                                    .orElseThrow(() -> new FoodException(FoodErrorCode.NOT_FOUND)))
+                            .build()
+                    )
+                    .collect(Collectors.toList());
 
-            for (Long id : dto.preferCategory()){
-                Food food = foodRepository.findById(id)
-                        .orElseThrow(() -> new FoodException(FoodErrorCode.NOT_FOUND));
-
-                MemberFood memberFood = MemberFoodConverter.toMemberFood(member, food);
-
-                memberFoodList.add(memberFood);
-            }
             memberFoodRepository.saveAll(memberFoodList);
         }
 
