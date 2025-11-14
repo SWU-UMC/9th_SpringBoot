@@ -7,8 +7,10 @@ import com.example.leeseo.domain.review.converter.ReviewConverter;
 import com.example.leeseo.domain.review.dto.ReviewReqDTO;
 import com.example.leeseo.domain.review.dto.ReviewResDTO;
 import com.example.leeseo.domain.review.entity.Review;
+import com.example.leeseo.domain.review.entity.ReviewPhoto;
 import com.example.leeseo.domain.review.exception.ReviewException;
 import com.example.leeseo.domain.review.exception.code.ReviewErrorCode;
+import com.example.leeseo.domain.review.repository.ReviewPhotoRepository;
 import com.example.leeseo.domain.review.repository.ReviewRepository;
 import com.example.leeseo.domain.store.entity.Store;
 import com.example.leeseo.domain.store.exception.StoreErrorCode;
@@ -23,6 +25,7 @@ public class StoreReviewService {
     private final MemberRepository memberRepository;
     private final StoreRepository storeRepository;
     private final ReviewRepository reviewRepository;
+    private final ReviewPhotoRepository reviewPhotoRepository;
 
     public ReviewResDTO.JoinDTO saveReview(
             Long member_id,
@@ -34,8 +37,15 @@ public class StoreReviewService {
         Store store = storeRepository.findById(store_id)
                 .orElseThrow(() -> new ReviewException(StoreErrorCode.NOT_FOUND));
         Review review = ReviewConverter.toReview(dto, member, store);
-
         reviewRepository.save(review);
+
+        dto.img_url().forEach(url -> {
+            ReviewPhoto photo = ReviewPhoto.builder()
+                    .review(review)
+                    .photo_url(url)
+                    .build();
+            reviewPhotoRepository.save(photo);
+        });
 
         return ReviewConverter.toJoinDTO(review);
     }
