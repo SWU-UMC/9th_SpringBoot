@@ -1,7 +1,9 @@
 package com.example.leeseo.domain.mission.entity.mapping;
 
 import com.example.leeseo.domain.member.entity.Member;
+import com.example.leeseo.domain.member.enums.MissionStatus;
 import com.example.leeseo.domain.mission.entity.Mission;
+import com.example.leeseo.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,14 +13,15 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 @Table(name = "member_mission")
-public class MemberMission {
+public class MemberMission extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(name = "status", nullable = false)
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private MissionStatus status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
