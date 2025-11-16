@@ -7,7 +7,7 @@ import com.example.leeseo.domain.mission.entity.Mission;
 import com.example.leeseo.domain.mission.exception.MissionException;
 import com.example.leeseo.domain.mission.repository.MissionRepository;
 import com.example.leeseo.domain.store.entity.Store;
-import com.example.leeseo.domain.store.exception.StoreErrorCode;
+import com.example.leeseo.domain.store.exception.code.StoreErrorCode;
 import com.example.leeseo.domain.store.repository.StoreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
