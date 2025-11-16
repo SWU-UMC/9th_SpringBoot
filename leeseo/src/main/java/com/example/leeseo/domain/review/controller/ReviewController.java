@@ -29,7 +29,7 @@ public class ReviewController {
         return result;
     }
 
-    @PostMapping("/store/{store_id}/review")
+    @PostMapping("/store/{store_id}/addReview")
     public ApiResponse<ReviewResDTO.JoinDTO> saveReview(
             @RequestParam Long member_id,
             @PathVariable Long store_id,
