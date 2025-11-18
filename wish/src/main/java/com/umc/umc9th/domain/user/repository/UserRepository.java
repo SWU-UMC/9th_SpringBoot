@@ -9,4 +9,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
   // user_id로 특정 유저 조회 (마이페이지용)
   Optional<User> findById(Integer userId);
+
+  // 이메일 중복 확인
+  boolean existsByEmail(String email);
 }

@@ -1,6 +1,6 @@
 package com.umc.umc9th.domain.user.entity;
 
-import com.umc.umc9th.domain.food.entity.FoodCategory;
+import com.umc.umc9th.domain.food.entity.Category;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,7 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserFoodCategory {
+public class UserCategory {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,5 +24,5 @@ public class UserFoodCategory {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "category_id", nullable = false)
-  private FoodCategory category;
+  private Category category;
 }
