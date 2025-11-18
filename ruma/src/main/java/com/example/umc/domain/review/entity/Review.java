@@ -2,6 +2,7 @@ package com.example.umc.domain.review.entity;
 
 import com.example.umc.domain.mission.entity.Mission;
 import com.example.umc.domain.member.entity.Member;
+import com.example.umc.domain.store.entity.Store;
 import com.example.umc.global.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -27,6 +28,10 @@ public class Review extends BaseEntity {
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="mission_id", nullable=false)
     private Mission mission;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "store_id", referencedColumnName = "store_id", nullable = false)
+    private Store store;
 
     @Lob
     private String content;

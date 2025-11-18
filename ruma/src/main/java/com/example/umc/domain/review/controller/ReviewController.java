@@ -1,7 +1,12 @@
 package com.example.umc.domain.review.controller;
 
 import com.example.umc.domain.review.dto.QReviewDto;
+import com.example.umc.domain.review.dto.res.ReviewResDTO;
+import com.example.umc.domain.review.dto.req.ReviewReqDTO;
+import com.example.umc.domain.review.exception.code.ReviewSuccessCode;
+import com.example.umc.domain.review.service.ReviewCommandService;
 import com.example.umc.domain.review.service.ReviewQueryService;
+import com.example.umc.global.apiPayload.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +18,7 @@ import java.util.List;
 public class ReviewController {
 
     private final ReviewQueryService reviewQueryService;
+    private final ReviewCommandService reviewCommandService;
 
     @GetMapping("/my")
     public List<QReviewDto> getMyReviews(
@@ -37,4 +43,15 @@ public class ReviewController {
         // 조건이 아무것도 없을 경우 빈 배열 리턴
         return List.of();
     }
+
+    @PostMapping
+    public ApiResponse<ReviewResDTO.CreateDTO> createReview(
+            @RequestBody ReviewReqDTO.CreateDTO dto) {
+
+        return ApiResponse.onSuccess(
+                ReviewSuccessCode.CREATED,
+                reviewCommandService.createReview(dto)
+        );
+    }
+
 }

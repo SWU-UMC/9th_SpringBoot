@@ -10,6 +10,7 @@ import lombok.*;
 @Builder
 public class Store {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "store_id")
     private Long storeId;
 
     @ManyToOne(fetch = FetchType.LAZY)
