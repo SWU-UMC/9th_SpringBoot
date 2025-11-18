@@ -3,6 +3,8 @@ package com.example.umc9th.domain.review.controller;
 import com.example.umc9th.domain.review.dto.ReviewResponseDto;
 import com.example.umc9th.domain.review.entity.Review;
 import com.example.umc9th.domain.review.service.ReviewQueryService;
+import com.example.umc9th.global.entity.apiPayload.ApiResponse;
+import com.example.umc9th.global.entity.apiPayload.code.GeneralSuccessCode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
@@ -29,18 +31,20 @@ public class ReviewController {
                     """
     )
     @GetMapping("/search")
-    public List<ReviewResponseDto> searchReview(
+    public ApiResponse<List<ReviewResponseDto>> searchReview(
             @Parameter(description = "검색어 (type=location → 지역명, type=score → 별점, type=both → '서울&4.5')", example = "서울&4.5")
             @RequestParam String query,
             @Parameter(description = "검색 기준 (location | score | both)", example = "both")
             @RequestParam String type
     ) {
-        return reviewQueryService.searchReview(query, type);
+        List<ReviewResponseDto> result = reviewQueryService.searchReview(query, type);
+        // ApiResponse로 감싸서 반환
+        return ApiResponse.onSuccess(GeneralSuccessCode.OK, result);
     }
 
     @Operation(summary = "내 리뷰 조회", description = "로그인한 사용자의 리뷰를 조회합니다.")
     @GetMapping("/my")
-    public List<ReviewResponseDto> getMyReviews(
+    public ApiResponse<List<ReviewResponseDto>> getMyReviews(
             @Parameter(description = "로그인된 사용자 ID", example = "1")
             @RequestParam Long userId,
             @Parameter(description = "가게 이름 필터", example = "마라탕")
@@ -48,6 +52,8 @@ public class ReviewController {
             @Parameter(description = "별점 그룹 (5,4,3 등)", example = "5")
             @RequestParam(required = false) Integer scoreGroup
     ) {
-        return reviewQueryService.getMyReviews(userId, storeName, scoreGroup);
+        List<ReviewResponseDto> result = reviewQueryService.getMyReviews(userId, storeName, scoreGroup);
+        // ApiResponse로 감싸서 반환
+        return ApiResponse.onSuccess(GeneralSuccessCode.OK, result);
     }
 }

@@ -3,8 +3,9 @@ package com.example.umc9th.domain.review.service;
 import com.example.umc9th.domain.review.converter.ReviewConverter;
 import com.example.umc9th.domain.review.dto.ReviewResponseDto;
 import com.example.umc9th.domain.review.entity.QReview;
-import com.example.umc9th.domain.review.entity.Review;
 import com.example.umc9th.domain.review.repository.ReviewRepository;
+import com.example.umc9th.global.entity.apiPayload.code.GeneralErrorCode;
+import com.example.umc9th.global.entity.apiPayload.exception.GeneralException;
 import com.querydsl.core.BooleanBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,17 +29,24 @@ public class ReviewQueryService {
                 double score = Double.parseDouble(query);
                 builder.and(review.score.goe(score));
             } catch (NumberFormatException e) {
-                throw new IllegalArgumentException("별점 검색 시 숫자 형태로 입력해야 합니다.");
+                // IllegalArgumentException 대신 GeneralException 사용
+                throw new GeneralException(GeneralErrorCode.BAD_REQUEST);
             }
         } else if ("both".equalsIgnoreCase(type)) {
             String[] splitQuery = query.split("&");
             if (splitQuery.length == 2) {
-                String locationQuery = splitQuery[0];
-                double scoreQuery = Double.parseDouble(splitQuery[1]);
-                builder.and(review.store.location.name.containsIgnoreCase(locationQuery));
-                builder.and(review.score.goe(scoreQuery));
+                try {
+                    String locationQuery = splitQuery[0];
+                    double scoreQuery = Double.parseDouble(splitQuery[1]);
+                    builder.and(review.store.location.name.containsIgnoreCase(locationQuery));
+                    builder.and(review.score.goe(scoreQuery));
+                } catch (NumberFormatException e) {
+                    // 별점 부분 파싱 오류 처리
+                    throw new GeneralException(GeneralErrorCode.BAD_REQUEST);
+                }
             } else {
-                throw new IllegalArgumentException("both 검색 시 '지역명&별점' 형식으로 입력해야 합니다.");
+                // 형식 오류 처리
+                throw new GeneralException(GeneralErrorCode.BAD_REQUEST);
             }
         }
 
