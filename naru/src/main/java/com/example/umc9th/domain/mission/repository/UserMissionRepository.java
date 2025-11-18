@@ -1,7 +1,9 @@
 package com.example.umc9th.domain.mission.repository;
 
+import com.example.umc9th.domain.mission.entity.Mission;
 import com.example.umc9th.domain.mission.entity.enums.MissionStatus;
 import com.example.umc9th.domain.mission.entity.mapping.UserMission;
+import com.example.umc9th.domain.user.entity.User;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -39,4 +41,9 @@ public interface UserMissionRepository extends JpaRepository<UserMission, Long> 
             @Param("lastId") Long lastId,
             Pageable pageable
     );
+
+    /**
+     * 특정 사용자가 특정 미션에 도전 중인지 확인하는 쿼리 메서드
+     */
+    boolean existsByUserAndMission(User user, Mission mission);
 }
