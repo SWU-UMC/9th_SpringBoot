@@ -1,5 +1,6 @@
 package com.example.umc9th.global.apiPayload.handler;
 
+import com.example.umc9th.domain.member.exception.MemberException;
 import com.example.umc9th.global.apiPayload.ApiResponse;
 import com.example.umc9th.global.apiPayload.code.BaseErrorCode;
 import com.example.umc9th.global.apiPayload.code.GeneralErrorCode;
@@ -39,5 +40,11 @@ public class GeneralExceptionAdvice {
                         )
                 );
     }
+    @ExceptionHandler(MemberException.class)
+    public ResponseEntity<ApiResponse<Void>> handleMemberException(MemberException ex) {
+        return ResponseEntity.status(ex.getCode().getStatus())
+                .body(ApiResponse.onFailure(ex.getCode(), null));
+    }
+
 }
 

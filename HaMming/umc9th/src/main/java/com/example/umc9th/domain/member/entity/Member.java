@@ -23,41 +23,41 @@ public class Member {
     @Column(name = "user_id")
     private Long id;
 
-    @Column(name = "social_id", nullable = false, length = 255)
+    @Column(name = "social_id", length = 255)
     private String socialId;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "social_type", nullable = false, length = 20)
+    @Column(name = "social_type",  length = 20)
     private SocialType socialType;
 
-    @Column(name = "email", nullable = false, length = 200)
+    @Column(name = "email", length = 200)
     private String email;
 
-    @Column(name = "password", nullable = false, length = 255)
+    @Column(name = "password", length = 255)
     private String password;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "role", nullable = false, length = 20)
+    @Column(name = "role", length = 20)
     private Role role;
 
-    @Column(name = "nickname", nullable = false, length = 150)
+    @Column(name = "nickname", length = 150)
     private String nickname;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "gender", nullable = false, length = 10)
+    @Column(name = "gender", length = 10)
     private Gender gender;
 
-    @Column(name = "birth", nullable = false, length = 50)
+    @Column(name = "birth", nullable = true, length = 50)
     private String birth;
 
-    @Column(name = "user_address", nullable = false, length = 255)
+    @Column(name = "user_address", length = 255)
     private String userAddress;
 
     @Column(name = "phone_number", length = 50)
     private String phoneNumber;
 
     @CreatedDate
-    @Column(name = "created_at", nullable = false, updatable = false)
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
     @LastModifiedDate

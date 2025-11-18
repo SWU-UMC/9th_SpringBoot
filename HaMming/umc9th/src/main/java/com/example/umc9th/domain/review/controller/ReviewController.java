@@ -1,7 +1,10 @@
 package com.example.umc9th.domain.review.controller;
 
+import com.example.umc9th.domain.review.dto.ReviewCreateResponse;
+import com.example.umc9th.domain.review.dto.ReviewRequestDto;
 import com.example.umc9th.domain.review.dto.ReviewResponse;
 import com.example.umc9th.domain.review.entity.Review;
+import com.example.umc9th.domain.review.service.ReviewCommandService;
 import com.example.umc9th.domain.review.service.ReviewQueryService;
 import com.example.umc9th.global.apiPayload.ApiResponse;
 import com.example.umc9th.global.apiPayload.code.GeneralSuccessCode;
@@ -17,6 +20,7 @@ import java.util.stream.Collectors;
 public class ReviewController {
 
     private final ReviewQueryService reviewQueryService;
+    private final ReviewCommandService reviewCommandService;
 
     /**
      * 1. 리뷰 검색 API
@@ -62,4 +66,21 @@ public class ReviewController {
                 result
         );
     }
+    @PostMapping
+    public ApiResponse<ReviewCreateResponse> createReview(
+            @RequestBody ReviewRequestDto.CreateReviewRequest req
+    ) {
+
+        Review review = reviewCommandService.createReview(req);
+
+        ReviewCreateResponse result = ReviewCreateResponse.builder()
+                .reviewId(review.getId())
+                .build();
+
+        return ApiResponse.onSuccess(
+                GeneralSuccessCode.CREATED,
+                result
+        );
+    }
+
 }
