@@ -1,7 +1,6 @@
 package com.example.umc9th.domain.test.controller;
 
 import com.example.umc9th.domain.test.converter.TestConverter;
-import com.example.umc9th.domain.test.converter.TestConverter;
 import com.example.umc9th.domain.test.dto.res.TestResDTO;
 import com.example.umc9th.domain.test.service.query.TestQueryService;
 import com.example.umc9th.global.apiPayload.ApiResponse;
@@ -39,7 +38,9 @@ public class TestController {
         testQueryService.checkFlag(flag);
 
         // 응답 코드 정의
-        GeneralSuccessCode code = GeneralSuccessCode.OK;
-        return ApiResponse.onSuccess(code, TestConverter.toExceptionDTO(flag));
+        return ApiResponse.onSuccess(
+                GeneralSuccessCode.OK,
+                TestConverter.toExceptionDTO(flag)
+        );
     }
 }

@@ -3,6 +3,8 @@ package com.example.umc9th.domain.review.controller;
 import com.example.umc9th.domain.review.dto.ReviewResponse;
 import com.example.umc9th.domain.review.entity.Review;
 import com.example.umc9th.domain.review.service.ReviewQueryService;
+import com.example.umc9th.global.apiPayload.ApiResponse;
+import com.example.umc9th.global.apiPayload.code.GeneralSuccessCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,29 +18,48 @@ public class ReviewController {
 
     private final ReviewQueryService reviewQueryService;
 
-    // 기존 검색
+    /**
+     * 1. 리뷰 검색 API
+     *  - region (옵션)
+     *  - rate   (옵션)
+     *  - type = region / rate / both
+     */
     @GetMapping("/search")
-    public List<ReviewResponse> searchReview(
+    public ApiResponse<List<ReviewResponse>> searchReview(
             @RequestParam(required = false) String region,
             @RequestParam(required = false) Integer rate,
             @RequestParam(defaultValue = "both") String type
     ) {
         List<Review> reviews = reviewQueryService.searchReview(region, rate, type);
-        return reviews.stream()
+        List<ReviewResponse> result = reviews.stream()
                 .map(ReviewResponse::from)
                 .collect(Collectors.toList());
+
+        return ApiResponse.onSuccess(
+                GeneralSuccessCode.OK,
+                result
+        );
     }
 
-    // 내가 작성한 리뷰 보기
+    /**
+     * 2. 내가 작성한 리뷰 보기
+     *  - memberId (필수)
+     *  - storeName, rate (옵션)
+     */
     @GetMapping("/my")
-    public List<ReviewResponse> getMyReviews(
+    public ApiResponse<List<ReviewResponse>> getMyReviews(
             @RequestParam Long memberId,
             @RequestParam(required = false) String storeName,
             @RequestParam(required = false) Integer rate
     ) {
         List<Review> reviews = reviewQueryService.findMyReviews(memberId, storeName, rate);
-        return reviews.stream()
+        List<ReviewResponse> result = reviews.stream()
                 .map(ReviewResponse::from)
                 .collect(Collectors.toList());
+
+        return ApiResponse.onSuccess(
+                GeneralSuccessCode.OK,
+                result
+        );
     }
 }
