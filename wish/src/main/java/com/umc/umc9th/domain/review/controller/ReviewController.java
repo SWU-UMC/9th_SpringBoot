@@ -1,6 +1,9 @@
 package com.umc.umc9th.domain.review.controller;
 
 import com.umc.umc9th.domain.review.dto.MyReviewResponse;
+import com.umc.umc9th.domain.review.dto.ReviewReqDTO;
+import com.umc.umc9th.domain.review.dto.ReviewResDTO;
+import com.umc.umc9th.domain.review.exception.ReviewSuccessCode;
 import com.umc.umc9th.domain.review.service.ReviewService;
 import com.umc.umc9th.global.apiPayload.ApiResponse;
 import com.umc.umc9th.global.apiPayload.code.GeneralSuccessCode;
@@ -40,6 +43,22 @@ public class ReviewController {
     result.put("totalPages", page.getTotalPages());
     result.put("totalElements", page.getTotalElements());
 
-    return ApiResponse.onSuccess(GeneralSuccessCode.OK, result);
+    return ApiResponse.onSuccess(ReviewSuccessCode.FOUND, result);
+  }
+
+  /**
+   * 리뷰 생성
+   */
+  @PostMapping("/mypage/reviews")
+  public ApiResponse<ReviewResDTO.CreateDTO> createReview(
+      @RequestHeader("Authorization") String authHeader,
+      @RequestBody ReviewReqDTO.CreateDTO dto
+  ) {
+    Integer userId = 1;
+
+    return ApiResponse.onSuccess(
+        ReviewSuccessCode.CREATED,
+        reviewService.createReview(userId, dto)
+    );
   }
 }
