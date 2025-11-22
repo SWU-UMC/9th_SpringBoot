@@ -4,7 +4,7 @@ import com.example.leeseo.domain.review.dto.QReviewDto;
 import com.example.leeseo.domain.review.dto.ReviewReqDTO;
 import com.example.leeseo.domain.review.dto.ReviewResDTO;
 import com.example.leeseo.domain.review.exception.code.ReviewSuccessCode;
-import com.example.leeseo.domain.review.service.ReviewQueryService;
+import com.example.leeseo.domain.review.service.ReviewQueryServiceImpl;
 import com.example.leeseo.domain.review.service.StoreReviewService;
 import com.example.leeseo.global.entity.apiPayload.ApiResponse;
 import jakarta.validation.Valid;
@@ -15,8 +15,8 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class ReviewController {
-    private final ReviewQueryService reviewQueryService;
+public class ReviewController implements ReviewControllerDocs{
+    private final ReviewQueryServiceImpl reviewQueryService;
     private final StoreReviewService storeReviewService;
 
     @GetMapping("/review/search")
@@ -36,5 +36,13 @@ public class ReviewController {
             @Valid @RequestBody ReviewReqDTO.JoinDTO dto
     ){
         return ApiResponse.onSuccess(ReviewSuccessCode.OK, storeReviewService.saveReview(member_id, store_id, dto));
+    }
+
+    @GetMapping("/reviews")
+    public ApiResponse<ReviewResDTO.ReviewPreViewListDTO> getReviews(
+            @RequestParam Long store_id,
+            @RequestParam Integer page
+    ){
+        return ApiResponse.onSuccess(ReviewSuccessCode.FOUND, reviewQueryService.findReview(store_id, page));
     }
 }

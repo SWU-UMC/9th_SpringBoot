@@ -5,6 +5,9 @@ import com.example.leeseo.domain.review.dto.ReviewReqDTO;
 import com.example.leeseo.domain.review.dto.ReviewResDTO;
 import com.example.leeseo.domain.review.entity.Review;
 import com.example.leeseo.domain.store.entity.Store;
+import org.springframework.data.domain.Page;
+
+import java.time.LocalDateTime;
 
 public class ReviewConverter {
 
@@ -25,6 +28,33 @@ public class ReviewConverter {
                 .rate(dto.rate())
                 .member(member)
                 .store(store)
+                .build();
+    }
+
+    public static ReviewResDTO.ReviewPreViewListDTO toReviewPreviewListDTO(
+            Page<Review> result
+    ){
+        return ReviewResDTO.ReviewPreViewListDTO.builder()
+                .reviewList(result.getContent().stream()
+                        .map(ReviewConverter::toReviewPreviewDTO)
+                        .toList()
+                )
+                .listSize(result.getSize())
+                .totalPage(result.getTotalPages())
+                .totalElements(result.getTotalElements())
+                .isFirst(result.isFirst())
+                .isLast(result.isLast())
+                .build();
+    }
+
+    public static ReviewResDTO.ReviewPreViewDTO toReviewPreviewDTO(
+            Review review
+    ){
+        return ReviewResDTO.ReviewPreViewDTO.builder()
+                .ownerNickname(review.getMember().getName())
+                .score(review.getRate())
+                .body(review.getContent())
+                .createdAt(review.getCreated_at())
                 .build();
     }
 }

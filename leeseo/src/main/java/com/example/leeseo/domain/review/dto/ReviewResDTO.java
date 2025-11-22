@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class ReviewResDTO {
 
@@ -14,4 +15,23 @@ public class ReviewResDTO {
         LocalDateTime createAt
     ){
     }
+
+    @Builder
+    public record ReviewPreViewListDTO(
+            List<ReviewPreViewDTO> reviewList,
+            Integer listSize,
+            Integer totalPage,
+            Long totalElements,
+            Boolean isFirst,
+            Boolean isLast
+    ){}
+
+
+    @Builder
+    public record ReviewPreViewDTO(
+            String ownerNickname,
+            Float score,
+            String body,
+            LocalDateTime createdAt
+    ){}
 }
