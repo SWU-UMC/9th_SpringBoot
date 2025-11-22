@@ -19,7 +19,7 @@ public class MissionController {
     private final StoreMissionService storeMissionService;
     private final MemberMissionService memberMissionService;
 
-    @PostMapping("/store/{store_id}/addMission")
+    @PostMapping("/store/{store_id}/mission")
     public ApiResponse<MissionResDTO.JoinDTO> saveMission(
         @PathVariable Long store_id,
         @Valid @RequestBody MissionReqDTO.JoinDTO dto
@@ -27,7 +27,7 @@ public class MissionController {
         return ApiResponse.onSuccess(MissionSuccessCode.OK, storeMissionService.saveMission(store_id, dto));
     }
 
-    @PostMapping("location/{location_id}/addMission")
+    @PostMapping("location/{location_id}/mission")
     public ApiResponse<MemberMissionResDTO.JoinDTO> saveMemberMission(
             @PathVariable Long location_id,
             @RequestParam Long mission_id,
