@@ -18,20 +18,38 @@ public class ReviewResDTO {
 
     @Builder
     public record ReviewPreViewListDTO(
-            List<ReviewPreViewDTO> reviewList,
-            Integer listSize,
-            Integer totalPage,
-            Long totalElements,
-            Boolean isFirst,
-            Boolean isLast
+        List<ReviewPreViewDTO> reviewList,
+        Integer listSize,
+        Integer totalPage,
+        Long totalElements,
+        Boolean isFirst,
+        Boolean isLast
     ){}
 
 
     @Builder
     public record ReviewPreViewDTO(
-            String ownerNickname,
-            Float score,
-            String body,
-            LocalDateTime createdAt
+        String ownerNickname,
+        Float score,
+        String body,
+        LocalDateTime createdAt
+    ){}
+
+    @Builder
+    public record MyReviewListDTO(
+        List<MyReviewDTO> reviewList,
+        Integer listSize,
+        Integer totalPage,
+        Long totalElements,
+        Boolean isFirst,
+        Boolean isLast
+    ){}
+
+    @Builder
+    public record MyReviewDTO(
+        Float rate,
+        String content,
+        List<String> img_url,
+        LocalDateTime createdAt
     ){}
 }

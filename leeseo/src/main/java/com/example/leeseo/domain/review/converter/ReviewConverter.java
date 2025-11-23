@@ -4,6 +4,7 @@ import com.example.leeseo.domain.member.entity.Member;
 import com.example.leeseo.domain.review.dto.ReviewReqDTO;
 import com.example.leeseo.domain.review.dto.ReviewResDTO;
 import com.example.leeseo.domain.review.entity.Review;
+import com.example.leeseo.domain.review.entity.ReviewPhoto;
 import com.example.leeseo.domain.store.entity.Store;
 import org.springframework.data.domain.Page;
 
@@ -54,6 +55,31 @@ public class ReviewConverter {
                 .ownerNickname(review.getMember().getName())
                 .score(review.getRate())
                 .body(review.getContent())
+                .createdAt(review.getCreated_at())
+                .build();
+    }
+
+    public static ReviewResDTO.MyReviewListDTO toMyReviewListDTO(
+            Page<Review> result
+    ){
+        return ReviewResDTO.MyReviewListDTO.builder()
+                .reviewList(result.getContent().stream()
+                        .map(ReviewConverter::toMyReviewDTO).toList())
+                .listSize(result.getSize())
+                .totalPage(result.getTotalPages())
+                .totalElements(result.getTotalElements())
+                .isFirst(result.isFirst())
+                .isLast(result.isLast())
+                .build();
+    }
+
+    public static ReviewResDTO.MyReviewDTO toMyReviewDTO(
+            Review review
+    ){
+        return ReviewResDTO.MyReviewDTO.builder()
+                .rate(review.getRate())
+                .content(review.getContent())
+                .img_url(review.getReviewPhotoList().stream().map(ReviewPhoto::getPhoto_url).toList())
                 .createdAt(review.getCreated_at())
                 .build();
     }

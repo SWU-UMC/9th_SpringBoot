@@ -1,5 +1,8 @@
 package com.example.leeseo.domain.review.service;
 
+import com.example.leeseo.domain.member.entity.Member;
+import com.example.leeseo.domain.member.exception.code.MemberErrorCode;
+import com.example.leeseo.domain.member.repository.MemberRepository;
 import com.example.leeseo.domain.review.converter.ReviewConverter;
 import com.example.leeseo.domain.review.dto.QReviewDto;
 import com.example.leeseo.domain.review.dto.ReviewResDTO;
@@ -27,6 +30,7 @@ import static java.lang.Long.parseLong;
 public class ReviewQueryServiceImpl implements ReviewQueryService{
     private final ReviewRepository reviewRepository;
     private final StoreRepository storeRepository;
+    private final MemberRepository memberRepository;
 
     public List<QReviewDto> searchReview(
             String query, String type, Long cursorId
@@ -73,5 +77,15 @@ public class ReviewQueryServiceImpl implements ReviewQueryService{
         PageRequest pageRequest = PageRequest.of(page -1, 10);
         Page<Review> result = reviewRepository.findAllByStore(store,pageRequest);
         return ReviewConverter.toReviewPreviewListDTO(result);
+    }
+
+    public ReviewResDTO.MyReviewListDTO findMyReview(
+            Long member_id,
+            Integer page
+    ){
+        Member member = memberRepository.findById(member_id).orElseThrow(() -> new ReviewException(MemberErrorCode.NOT_FOUND));
+        PageRequest pageRequest = PageRequest.of(page -1, 10);
+        Page<Review> result = reviewRepository.findALlByMember(member, pageRequest);
+        return ReviewConverter.toMyReviewListDTO(result);
     }
 }
