@@ -70,7 +70,7 @@ public class ReviewQueryServiceImpl implements ReviewQueryService{
             Integer page
     ){
         Store store = storeRepository.findById(store_id).orElseThrow(() -> new ReviewException(StoreErrorCode.NOT_FOUND));
-        PageRequest pageRequest = PageRequest.of(page, 5);
+        PageRequest pageRequest = PageRequest.of(page -1, 10);
         Page<Review> result = reviewRepository.findAllByStore(store,pageRequest);
         return ReviewConverter.toReviewPreviewListDTO(result);
     }

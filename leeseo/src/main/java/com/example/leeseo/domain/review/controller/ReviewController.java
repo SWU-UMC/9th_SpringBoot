@@ -6,9 +6,11 @@ import com.example.leeseo.domain.review.dto.ReviewResDTO;
 import com.example.leeseo.domain.review.exception.code.ReviewSuccessCode;
 import com.example.leeseo.domain.review.service.ReviewQueryServiceImpl;
 import com.example.leeseo.domain.review.service.StoreReviewService;
+import com.example.leeseo.global.annotation.PageValid;
 import com.example.leeseo.global.entity.apiPayload.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,7 +43,7 @@ public class ReviewController implements ReviewControllerDocs{
     @GetMapping("/reviews")
     public ApiResponse<ReviewResDTO.ReviewPreViewListDTO> getReviews(
             @RequestParam Long store_id,
-            @RequestParam Integer page
+            @PageValid Integer page
     ){
         return ApiResponse.onSuccess(ReviewSuccessCode.FOUND, reviewQueryService.findReview(store_id, page));
     }
