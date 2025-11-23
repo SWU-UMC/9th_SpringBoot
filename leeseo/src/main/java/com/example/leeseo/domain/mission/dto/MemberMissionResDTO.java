@@ -19,6 +19,14 @@ public class MemberMissionResDTO {
     }
 
     @Builder
+    public record PatchMissionDTO(
+            Long member_mission_id,
+            MissionStatus status,
+            LocalDateTime updatedAt
+    ){
+    }
+
+    @Builder
     public record MyMissionListDTO(
             List<MyMissionDTO> myMissionList,
             Integer listSize,

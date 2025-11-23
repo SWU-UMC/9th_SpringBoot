@@ -26,4 +26,14 @@ public interface MissionControllerDocs {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "실패"),
     })
     ApiResponse<MemberMissionResDTO.MyMissionListDTO> getMyMissions(Long store_id, String status, Integer page);
+
+    @Operation(
+            summary = "진행중인 미션 진행 완료로 변경 API by 이서",
+            description = "진행중인 미션 진행 완료로 변경합니다."
+    )
+    @ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "성공"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "실패"),
+    })
+    ApiResponse<MemberMissionResDTO.PatchMissionDTO> updateMyMission(Long memberMission_id, String status);
 }

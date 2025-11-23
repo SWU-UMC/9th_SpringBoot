@@ -7,6 +7,8 @@ import com.example.leeseo.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -22,6 +24,11 @@ public class MemberMission extends BaseEntity {
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
     private MissionStatus status;
+
+    public void updateStatus(MissionStatus status){
+        this.status = status;
+        prePersist();
+    }
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")

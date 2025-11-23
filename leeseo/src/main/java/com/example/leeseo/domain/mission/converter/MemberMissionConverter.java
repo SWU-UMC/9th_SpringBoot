@@ -1,7 +1,6 @@
 package com.example.leeseo.domain.mission.converter;
 
 import com.example.leeseo.domain.member.entity.Member;
-import com.example.leeseo.domain.mission.dto.MissionResDTO;
 import com.example.leeseo.domain.mission.enums.MissionStatus;
 import com.example.leeseo.domain.mission.dto.MemberMissionResDTO;
 import com.example.leeseo.domain.mission.entity.Mission;
@@ -56,6 +55,16 @@ public class MemberMissionConverter {
                 .conditional(memberMission.getMission().getConditional())
                 .point(memberMission.getMission().getPoint())
                 .createdAt(memberMission.getMember().getCreated_at())
+                .build();
+    }
+
+    public static MemberMissionResDTO.PatchMissionDTO toPatchDTO(
+            MemberMission memberMission
+    ){
+        return MemberMissionResDTO.PatchMissionDTO.builder()
+                .member_mission_id(memberMission.getId())
+                .status(memberMission.getStatus())
+                .updatedAt(memberMission.getUpdated_at())
                 .build();
     }
 }

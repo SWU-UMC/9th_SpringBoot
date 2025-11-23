@@ -55,13 +55,10 @@ public class MissionController implements MissionControllerDocs{
     }
 
     @PatchMapping("/my-mission")
-    public String updateMyMission(
-            @RequestParam Long member_id,
-            @RequestParam String status,
-            @RequestParam Integer page
+    public ApiResponse<MemberMissionResDTO.PatchMissionDTO> updateMyMission(
+            @RequestParam Long memberMission_id,
+            @RequestParam String status
     ){
-
-        return "redirect://my-mission";
+        return ApiResponse.onSuccess(MissionSuccessCode.PATCH_OK, memberMissionService.updateMyMissions(memberMission_id, status));
     }
-
 }
