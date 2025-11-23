@@ -1,5 +1,6 @@
 package com.example.leeseo.domain.mission.dto;
 
+import com.example.leeseo.domain.mission.enums.MissionStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 
@@ -30,6 +31,28 @@ public class MissionResDTO {
 
     @Builder
     public record StoreMissionDTO(
+        LocalDate deadline,
+        String conditional,
+        Integer point,
+        LocalDateTime createdAt
+    ){
+    }
+
+    @Builder
+    public record MyMissionListDTO(
+        List<MyMissionDTO> myMissionList,
+        Integer listSize,
+        Integer totalPage,
+        Long totalElements,
+        Boolean isFirst,
+        Boolean isLast
+    ){
+    }
+
+    @Builder
+    public record MyMissionDTO(
+        long memberMissionId,
+        MissionStatus status,
         LocalDate deadline,
         String conditional,
         Integer point,

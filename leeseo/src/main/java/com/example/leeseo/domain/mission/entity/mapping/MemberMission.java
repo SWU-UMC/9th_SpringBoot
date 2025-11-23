@@ -1,7 +1,7 @@
 package com.example.leeseo.domain.mission.entity.mapping;
 
 import com.example.leeseo.domain.member.entity.Member;
-import com.example.leeseo.domain.member.enums.MissionStatus;
+import com.example.leeseo.domain.mission.enums.MissionStatus;
 import com.example.leeseo.domain.mission.entity.Mission;
 import com.example.leeseo.global.entity.BaseEntity;
 import jakarta.persistence.*;

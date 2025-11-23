@@ -44,4 +44,14 @@ public class MissionController implements MissionControllerDocs{
     ){
         return ApiResponse.onSuccess(MissionSuccessCode.GET_OK, storeMissionService.getStoreMissions(store_id, page));
     }
+
+    @GetMapping("/my-mission")
+    public ApiResponse<MissionResDTO.MyMissionListDTO> getMyMissions(
+            @RequestParam Long member_id,
+            @RequestParam String status,
+            @RequestParam Integer page
+    ){
+        return ApiResponse.onSuccess(MissionSuccessCode.GET_OK, memberMissionService.getMyMissions(member_id, status, page));
+    }
+
 }

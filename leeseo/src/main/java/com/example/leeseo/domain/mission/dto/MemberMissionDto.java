@@ -1,6 +1,6 @@
 package com.example.leeseo.domain.mission.dto;
 
-import com.example.leeseo.domain.member.enums.MissionStatus;
+import com.example.leeseo.domain.mission.enums.MissionStatus;
 import lombok.Getter;
 
 import java.time.LocalDateTime;

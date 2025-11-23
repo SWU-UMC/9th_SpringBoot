@@ -1,11 +1,13 @@
 package com.example.leeseo.domain.mission.service;
 
 import com.example.leeseo.domain.member.entity.Member;
-import com.example.leeseo.domain.member.enums.MissionStatus;
+import com.example.leeseo.domain.mission.converter.MissionConverter;
+import com.example.leeseo.domain.mission.enums.MissionStatus;
 import com.example.leeseo.domain.member.exception.code.MemberErrorCode;
 import com.example.leeseo.domain.member.repository.MemberRepository;
 import com.example.leeseo.domain.mission.converter.MemberMissionConverter;
 import com.example.leeseo.domain.mission.dto.MemberMissionResDTO;
+import com.example.leeseo.domain.mission.dto.MissionResDTO;
 import com.example.leeseo.domain.mission.entity.Mission;
 import com.example.leeseo.domain.mission.entity.mapping.MemberMission;
 import com.example.leeseo.domain.mission.exception.MissionException;
@@ -14,6 +16,8 @@ import com.example.leeseo.domain.mission.exception.code.MissionErrorCode;
 import com.example.leeseo.domain.mission.repository.MissionRepository;
 import com.example.leeseo.domain.mission.repository.mapping.MemberMissionRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -42,5 +46,18 @@ public class MemberMissionService {
         memberMissionRepository.save(memberMission);
 
         return MemberMissionConverter.toJoinDTO(memberMission);
+    }
+
+    public MissionResDTO.MyMissionListDTO getMyMissions(
+            Long member_id,
+            String status,
+            Integer page
+    ){
+        MissionStatus missionStatus = MissionStatus.from(status);
+        Member member = memberRepository.findById(member_id)
+                .orElseThrow(() -> new MissionException(MemberErrorCode.NOT_FOUND));
+        PageRequest pageRequest = PageRequest.of(page-1, 10);
+        Page<MemberMission> result = memberMissionRepository.findMemberMissionByMemberAndStatus(member,missionStatus, pageRequest);
+        return MemberMissionConverter.toMyMemberList(result);
     }
 }

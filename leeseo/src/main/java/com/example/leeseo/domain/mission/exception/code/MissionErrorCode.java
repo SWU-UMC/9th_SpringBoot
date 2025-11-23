@@ -15,7 +15,11 @@ public enum MissionErrorCode implements BaseErrorCode {
 
     NOT_FOUND(HttpStatus.NOT_FOUND,
             "MISSION404_1",
-            "해당 미션을 찾을 수 없습니다.");
+            "해당 미션을 찾을 수 없습니다."),
+
+    INVALID_STATUS(HttpStatus.BAD_REQUEST,
+            "MISSION400_2",
+            "잘못된 상태 타입입니다.");
 
     private final HttpStatus status;
     private final String code;
