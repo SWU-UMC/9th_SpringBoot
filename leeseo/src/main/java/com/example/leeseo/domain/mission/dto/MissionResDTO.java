@@ -38,25 +38,4 @@ public class MissionResDTO {
     ){
     }
 
-    @Builder
-    public record MyMissionListDTO(
-        List<MyMissionDTO> myMissionList,
-        Integer listSize,
-        Integer totalPage,
-        Long totalElements,
-        Boolean isFirst,
-        Boolean isLast
-    ){
-    }
-
-    @Builder
-    public record MyMissionDTO(
-        long memberMissionId,
-        MissionStatus status,
-        LocalDate deadline,
-        String conditional,
-        Integer point,
-        LocalDateTime createdAt
-    ){
-    }
 }

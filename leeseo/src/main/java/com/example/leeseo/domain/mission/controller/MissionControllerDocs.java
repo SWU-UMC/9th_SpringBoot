@@ -1,5 +1,6 @@
 package com.example.leeseo.domain.mission.controller;
 
+import com.example.leeseo.domain.mission.dto.MemberMissionResDTO;
 import com.example.leeseo.domain.mission.dto.MissionResDTO;
 import com.example.leeseo.global.entity.apiPayload.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,5 +25,5 @@ public interface MissionControllerDocs {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "성공"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "실패"),
     })
-    ApiResponse<MissionResDTO.MyMissionListDTO> getMyMissions(Long store_id, String status, Integer page);
+    ApiResponse<MemberMissionResDTO.MyMissionListDTO> getMyMissions(Long store_id, String status, Integer page);
 }

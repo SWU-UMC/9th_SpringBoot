@@ -31,10 +31,10 @@ public class MemberMissionConverter {
                 .build();
     }
 
-    public static MissionResDTO.MyMissionListDTO toMyMemberList(
+    public static MemberMissionResDTO.MyMissionListDTO toMyMemberList(
             Page<MemberMission> result
     ){
-        return MissionResDTO.MyMissionListDTO.builder()
+        return MemberMissionResDTO.MyMissionListDTO.builder()
                 .myMissionList(result.getContent().stream()
                         .map(MemberMissionConverter::toMyMember)
                         .toList())
@@ -46,10 +46,10 @@ public class MemberMissionConverter {
                 .build();
     }
 
-    public static MissionResDTO.MyMissionDTO toMyMember(
+    public static MemberMissionResDTO.MyMissionDTO toMyMember(
             MemberMission memberMission
     ){
-        return MissionResDTO.MyMissionDTO.builder()
+        return MemberMissionResDTO.MyMissionDTO.builder()
                 .memberMissionId(memberMission.getId())
                 .status(memberMission.getStatus())
                 .deadline(memberMission.getMission().getDeadline())

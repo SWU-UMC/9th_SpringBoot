@@ -46,12 +46,22 @@ public class MissionController implements MissionControllerDocs{
     }
 
     @GetMapping("/my-mission")
-    public ApiResponse<MissionResDTO.MyMissionListDTO> getMyMissions(
+    public ApiResponse<MemberMissionResDTO.MyMissionListDTO> getMyMissions(
             @RequestParam Long member_id,
             @RequestParam String status,
             @RequestParam Integer page
     ){
         return ApiResponse.onSuccess(MissionSuccessCode.GET_OK, memberMissionService.getMyMissions(member_id, status, page));
+    }
+
+    @PatchMapping("/my-mission")
+    public String updateMyMission(
+            @RequestParam Long member_id,
+            @RequestParam String status,
+            @RequestParam Integer page
+    ){
+
+        return "redirect://my-mission";
     }
 
 }

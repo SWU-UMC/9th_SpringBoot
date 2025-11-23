@@ -48,7 +48,7 @@ public class MemberMissionService {
         return MemberMissionConverter.toJoinDTO(memberMission);
     }
 
-    public MissionResDTO.MyMissionListDTO getMyMissions(
+    public MemberMissionResDTO.MyMissionListDTO getMyMissions(
             Long member_id,
             String status,
             Integer page
