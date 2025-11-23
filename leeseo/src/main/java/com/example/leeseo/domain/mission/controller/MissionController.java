@@ -7,6 +7,7 @@ import com.example.leeseo.domain.mission.exception.code.MemberMissionSuccessCode
 import com.example.leeseo.domain.mission.exception.code.MissionSuccessCode;
 import com.example.leeseo.domain.mission.service.MemberMissionService;
 import com.example.leeseo.domain.mission.service.StoreMissionService;
+import com.example.leeseo.global.annotation.PageValid;
 import com.example.leeseo.global.entity.apiPayload.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-public class MissionController {
+public class MissionController implements MissionControllerDocs{
 
     private final StoreMissionService storeMissionService;
     private final MemberMissionService memberMissionService;
@@ -24,7 +25,7 @@ public class MissionController {
         @PathVariable Long store_id,
         @Valid @RequestBody MissionReqDTO.JoinDTO dto
     ){
-        return ApiResponse.onSuccess(MissionSuccessCode.OK, storeMissionService.saveMission(store_id, dto));
+        return ApiResponse.onSuccess(MissionSuccessCode.POST_OK, storeMissionService.saveMission(store_id, dto));
     }
 
     @PostMapping("location/{location_id}/mission")
@@ -34,5 +35,13 @@ public class MissionController {
             @RequestParam Long member_id
     ){
         return ApiResponse.onSuccess(MemberMissionSuccessCode.OK, memberMissionService.saveMemberMission(member_id,mission_id));
+    }
+
+    @GetMapping("/store/{store_id}/mission")
+    public ApiResponse<MissionResDTO.StoreMissionListDTO> getStoreMissions(
+            @PathVariable Long store_id,
+            @PageValid Integer page
+    ){
+        return ApiResponse.onSuccess(MissionSuccessCode.GET_OK, storeMissionService.getStoreMissions(store_id, page));
     }
 }

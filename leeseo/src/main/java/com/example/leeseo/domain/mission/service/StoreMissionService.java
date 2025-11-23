@@ -10,6 +10,8 @@ import com.example.leeseo.domain.store.entity.Store;
 import com.example.leeseo.domain.store.exception.code.StoreErrorCode;
 import com.example.leeseo.domain.store.repository.StoreRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -30,5 +32,16 @@ public class StoreMissionService {
         missionRepository.save(mission);
 
         return MissionConverter.toJoinDTO(mission);
+    }
+
+    public MissionResDTO.StoreMissionListDTO getStoreMissions(
+            Long store_id,
+            Integer page
+    ){
+        Store store = storeRepository.findById(store_id)
+                .orElseThrow(() -> new MissionException(StoreErrorCode.NOT_FOUND));
+        PageRequest pageRequest = PageRequest.of(page -1 , 10);
+        Page<Mission> result = missionRepository.findAllByStore(store, pageRequest);
+        return MissionConverter.toStoreMissionList(result);
     }
 }
