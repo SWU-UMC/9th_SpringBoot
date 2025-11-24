@@ -46,4 +46,10 @@ public interface UserMissionRepository extends JpaRepository<UserMission, Long> 
      * 특정 사용자가 특정 미션에 도전 중인지 확인하는 쿼리 메서드
      */
     boolean existsByUserAndMission(User user, Mission mission);
+
+    /**
+     * 특정 사용자의 미션 목록 조회 (상태별, 페이징 포함)
+     */
+    @EntityGraph(attributePaths = {"mission", "mission.store"})
+    Slice<UserMission> findAllByUserIdAndStatus(Long userId, MissionStatus status, Pageable pageable);
 }

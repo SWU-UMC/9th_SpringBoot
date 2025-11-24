@@ -1,5 +1,6 @@
 package com.example.umc9th.domain.mission.dto;
 
+import com.example.umc9th.domain.mission.entity.enums.MissionStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,6 +31,31 @@ public class MissionResponseDto {
 
         @Schema(description = "미션 포인트", example = "500")
         private Long point;
+
+        @Schema(description = "미션 조건", example = "음료 2잔 이상 주문")
+        private String condition;
+
+        @Schema(description = "마감 날짜", example = "2025-12-31")
+        private LocalDate deadline;
+    }
+
+    @Getter
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Schema(description = "내 미션 목록 조회용 DTO")
+    public static class MyMissionDto {
+        @Schema(description = "유저 미션 ID (도전 기록 ID)", example = "10")
+        private Long userMissionId;
+
+        @Schema(description = "가게 이름", example = "반이학생마라탕")
+        private String storeName;
+
+        @Schema(description = "미션 포인트", example = "500")
+        private Long point;
+
+        @Schema(description = "미션 상태 (ACTIVE, COMPLETED)", example = "ACTIVE")
+        private MissionStatus status;
 
         @Schema(description = "미션 조건", example = "음료 2잔 이상 주문")
         private String condition;
