@@ -4,6 +4,7 @@ import com.example.umc9th.domain.mission.converter.MissionConverter;
 import com.example.umc9th.domain.mission.dto.MissionRequestDto;
 import com.example.umc9th.domain.mission.dto.MissionResponseDto;
 import com.example.umc9th.domain.mission.entity.Mission;
+import com.example.umc9th.domain.mission.entity.enums.MissionStatus;
 import com.example.umc9th.domain.mission.entity.mapping.UserMission;
 import com.example.umc9th.domain.mission.error.MissionErrorCode; // MissionErrorCode import
 import com.example.umc9th.domain.mission.repository.MissionRepository; // (가정)
@@ -74,5 +75,22 @@ public class MissionServiceImpl implements MissionService {
 
         // Converter 변환
         return MissionConverter.toMissionPreviewList(missionSlice);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public SliceResponseDto<MissionResponseDto.MyMissionDto> getMyMissions(Long userId, MissionStatus status, Integer page) {
+        // 유저 존재 확인
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new GeneralException(UserErrorCode.USER_NOT_FOUND));
+
+        // PageRequest 생성 (최신순 정렬)
+        PageRequest pageRequest = PageRequest.of(page - 1, 10, Sort.by("createdAt").descending());
+
+        // Repository 조회
+        Slice<UserMission> userMissionSlice = userMissionRepository.findAllByUserIdAndStatus(user.getId(), status, pageRequest);
+
+        // Converter 변환
+        return MissionConverter.toMyMissionList(userMissionSlice);
     }
 }

@@ -62,4 +62,35 @@ public class MissionConverter {
                 .isLast(missionSlice.isLast())
                 .build();
     }
+
+    /**
+     * Mission 엔티티 → MyMissionDto 변환
+     */
+    public static MissionResponseDto.MyMissionDto toMyMissionDto(UserMission userMission) {
+        return MissionResponseDto.MyMissionDto.builder()
+                .userMissionId(userMission.getId())
+                .storeName(userMission.getMission().getStore().getName())
+                .point(userMission.getMission().getPoint())
+                .status(userMission.getStatus())
+                .condition(userMission.getMission().getCondition())
+                .deadline(userMission.getMission().getDeadline().toLocalDate())
+                .build();
+    }
+
+    /**
+     * 무한 스크롤용 참여 중인 Mission 리스트 → DTO 리스트 변환
+     */
+    public static SliceResponseDto<MissionResponseDto.MyMissionDto> toMyMissionList(Slice<UserMission> userMissionSlice) {
+        List<MissionResponseDto.MyMissionDto> myMissionDtoList = userMissionSlice.getContent().stream()
+                .map(MissionConverter::toMyMissionDto)
+                .collect(Collectors.toList());
+
+        return SliceResponseDto.<MissionResponseDto.MyMissionDto>builder()
+                .list(myMissionDtoList)
+                .listSize(myMissionDtoList.size())
+                .hasNext(userMissionSlice.hasNext())
+                .isFirst(userMissionSlice.isFirst())
+                .isLast(userMissionSlice.isLast())
+                .build();
+    }
 }
