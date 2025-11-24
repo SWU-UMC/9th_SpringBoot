@@ -1,17 +1,17 @@
 package com.example.umc9th.domain.review.controller;
 
+import com.example.umc9th.domain.review.dto.ReviewRequestDto;
 import com.example.umc9th.domain.review.dto.ReviewResponseDto;
 import com.example.umc9th.domain.review.entity.Review;
 import com.example.umc9th.domain.review.service.ReviewQueryService;
+import com.example.umc9th.domain.review.service.ReviewService;
 import com.example.umc9th.global.entity.apiPayload.ApiResponse;
 import com.example.umc9th.global.entity.apiPayload.code.GeneralSuccessCode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,7 +19,18 @@ import java.util.List;
 @RequestMapping("/review")
 @RequiredArgsConstructor
 public class ReviewController {
+
     private final ReviewQueryService reviewQueryService;
+    private final ReviewService reviewService;
+
+    @Operation(summary = "리뷰 등록 API", description = "가게에 리뷰를 등록하는 API입니다.")
+    @PostMapping("/create")
+    public ApiResponse<ReviewResponseDto> createReview(
+            @Valid @RequestBody ReviewRequestDto.CreateReview request
+    ) {
+        ReviewResponseDto result = reviewService.createReview(request);
+        return ApiResponse.onSuccess(GeneralSuccessCode.CREATED, result);
+    }
 
     @Operation(
             summary = "리뷰 검색 API",
