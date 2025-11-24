@@ -29,10 +29,10 @@ public class MissionCommandServiceImpl implements MissionCommandService {
     public MemberMission challengeMission(MissionChallengeRequestDto req) {
 
         Member member = memberRepository.findById(req.getMemberId())
-                .orElseThrow(() -> new GeneralException(GeneralErrorCode.RESOURCE_NOT_FOUND));
+                .orElseThrow(() -> new GeneralException(GeneralErrorCode.NOT_FOUND));
 
         Mission mission = missionRepository.findById(req.getMissionId())
-                .orElseThrow(() -> new GeneralException(GeneralErrorCode.RESOURCE_NOT_FOUND));
+                .orElseThrow(() -> new GeneralException(GeneralErrorCode.NOT_FOUND));
 
         MemberMission mm = MemberMission.builder()
                 .member(member)
