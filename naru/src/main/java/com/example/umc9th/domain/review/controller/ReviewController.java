@@ -5,12 +5,15 @@ import com.example.umc9th.domain.review.dto.ReviewResponseDto;
 import com.example.umc9th.domain.review.entity.Review;
 import com.example.umc9th.domain.review.service.ReviewQueryService;
 import com.example.umc9th.domain.review.service.ReviewService;
+import com.example.umc9th.global.common.dto.SliceResponseDto;
 import com.example.umc9th.global.entity.apiPayload.ApiResponse;
 import com.example.umc9th.global.entity.apiPayload.code.GeneralSuccessCode;
+import com.example.umc9th.global.validation.annotation.CheckPage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +21,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/review")
 @RequiredArgsConstructor
+@Validated // @CheckPage가 쿼리 파라미터에서 동작하려면 필요
 public class ReviewController {
 
     private final ReviewQueryService reviewQueryService;
@@ -53,8 +57,8 @@ public class ReviewController {
         return ApiResponse.onSuccess(GeneralSuccessCode.OK, result);
     }
 
-    @Operation(summary = "내 리뷰 조회", description = "로그인한 사용자의 리뷰를 조회합니다.")
-    @GetMapping("/my")
+    @Operation(summary = "내 리뷰 목록 조회 (필터링)", description = "로그인한 사용자의 리뷰를 조회합니다.")
+    @GetMapping("/my/filter")
     public ApiResponse<List<ReviewResponseDto>> getMyReviews(
             @Parameter(description = "로그인된 사용자 ID", example = "1")
             @RequestParam Long userId,
@@ -65,6 +69,20 @@ public class ReviewController {
     ) {
         List<ReviewResponseDto> result = reviewQueryService.getMyReviews(userId, storeName, scoreGroup);
         // ApiResponse로 감싸서 반환
+        return ApiResponse.onSuccess(GeneralSuccessCode.OK, result);
+    }
+
+    @Operation(summary = "내 리뷰 목록 조회 (페이징)", description = "내 리뷰를 무한 스크롤(Slice) 방식으로 조회합니다. page는 1부터 시작합니다.")
+    @GetMapping("/my/paging")
+    public ApiResponse<SliceResponseDto<ReviewResponseDto>> getMyReviewList(
+            @Parameter(description = "로그인된 사용자 ID", example = "1")
+            @RequestParam Long userId,
+
+            @Parameter(description = "페이지 번호 (1 이상)", example = "1")
+            @CheckPage // 커스텀 어노테이션 적용 (1 미만 시 에러)
+            @RequestParam Integer page
+    ) {
+        SliceResponseDto<ReviewResponseDto> result = reviewService.getMyReviewList(userId, page);
         return ApiResponse.onSuccess(GeneralSuccessCode.OK, result);
     }
 }
