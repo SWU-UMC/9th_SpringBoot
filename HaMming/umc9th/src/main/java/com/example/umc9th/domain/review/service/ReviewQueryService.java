@@ -5,6 +5,7 @@ import com.example.umc9th.domain.review.entity.Review;
 import com.example.umc9th.domain.review.repository.ReviewRepository;
 import com.querydsl.core.BooleanBuilder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +16,6 @@ public class ReviewQueryService {
 
     private final ReviewRepository reviewRepository;
 
-    // 기존 검색
     public List<Review> searchReview(String regionName, Integer rate, String type) {
         QReview review = QReview.review;
         BooleanBuilder builder = new BooleanBuilder();
@@ -40,12 +40,11 @@ public class ReviewQueryService {
         return reviewRepository.searchReview(builder);
     }
 
-    // 내가 작성한 리뷰 보기
     public List<Review> findMyReviews(Long memberId, String storeName, Integer rate) {
         QReview review = QReview.review;
         BooleanBuilder builder = new BooleanBuilder();
 
-        builder.and(review.member.id.eq(memberId)); // 작성자 필수 조건
+        builder.and(review.member.id.eq(memberId));
 
         if (storeName != null && !storeName.isBlank()) {
             builder.and(review.store.storeName.containsIgnoreCase(storeName));
@@ -56,5 +55,10 @@ public class ReviewQueryService {
         }
 
         return reviewRepository.findMyReviews(builder);
+    }
+
+    public List<Review> findMyReviewsPaged(Long memberId, int page) {
+        PageRequest pageable = PageRequest.of(page - 1, 10);
+        return reviewRepository.findMyReviewsPaged(memberId, pageable);
     }
 }

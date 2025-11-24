@@ -1,18 +1,16 @@
 package com.example.umc9th.domain.review.controller;
 
-import com.example.umc9th.domain.review.dto.ReviewCreateResponse;
-import com.example.umc9th.domain.review.dto.ReviewRequestDto;
 import com.example.umc9th.domain.review.dto.ReviewResponse;
 import com.example.umc9th.domain.review.entity.Review;
-import com.example.umc9th.domain.review.service.ReviewCommandService;
 import com.example.umc9th.domain.review.service.ReviewQueryService;
 import com.example.umc9th.global.apiPayload.ApiResponse;
 import com.example.umc9th.global.apiPayload.code.GeneralSuccessCode;
+import com.example.umc9th.global.resolver.PageParam;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/reviews")
@@ -20,67 +18,23 @@ import java.util.stream.Collectors;
 public class ReviewController {
 
     private final ReviewQueryService reviewQueryService;
-    private final ReviewCommandService reviewCommandService;
 
-    /**
-     * 1. 리뷰 검색 API
-     *  - region (옵션)
-     *  - rate   (옵션)
-     *  - type = region / rate / both
-     */
-    @GetMapping("/search")
-    public ApiResponse<List<ReviewResponse>> searchReview(
-            @RequestParam(required = false) String region,
-            @RequestParam(required = false) Integer rate,
-            @RequestParam(defaultValue = "both") String type
-    ) {
-        List<Review> reviews = reviewQueryService.searchReview(region, rate, type);
-        List<ReviewResponse> result = reviews.stream()
-                .map(ReviewResponse::from)
-                .collect(Collectors.toList());
-
-        return ApiResponse.onSuccess(
-                GeneralSuccessCode.OK,
-                result
-        );
-    }
-
-    /**
-     * 2. 내가 작성한 리뷰 보기
-     *  - memberId (필수)
-     *  - storeName, rate (옵션)
-     */
-    @GetMapping("/my")
-    public ApiResponse<List<ReviewResponse>> getMyReviews(
+    // 내가 작성한 리뷰 목록 페이징 조회
+    @Operation(summary = "내 리뷰 페이징 조회", description = "page는 반드시 1 이상의 값이어야 합니다.")
+    @GetMapping("/my/paged")
+    public ApiResponse<List<ReviewResponse>> getMyReviewsPaged(
             @RequestParam Long memberId,
-            @RequestParam(required = false) String storeName,
-            @RequestParam(required = false) Integer rate
+            @PageParam Integer page
     ) {
-        List<Review> reviews = reviewQueryService.findMyReviews(memberId, storeName, rate);
-        List<ReviewResponse> result = reviews.stream()
+
+        List<ReviewResponse> result = reviewQueryService.findMyReviewsPaged(memberId, page)
+                .stream()
                 .map(ReviewResponse::from)
-                .collect(Collectors.toList());
+                .toList();
 
         return ApiResponse.onSuccess(
                 GeneralSuccessCode.OK,
                 result
         );
     }
-    @PostMapping
-    public ApiResponse<ReviewCreateResponse> createReview(
-            @RequestBody ReviewRequestDto.CreateReviewRequest req
-    ) {
-
-        Review review = reviewCommandService.createReview(req);
-
-        ReviewCreateResponse result = ReviewCreateResponse.builder()
-                .reviewId(review.getId())
-                .build();
-
-        return ApiResponse.onSuccess(
-                GeneralSuccessCode.CREATED,
-                result
-        );
-    }
-
 }
