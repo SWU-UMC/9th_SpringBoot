@@ -4,8 +4,13 @@ import com.example.umc9th.domain.mission.dto.MissionResponseDto;
 import com.example.umc9th.domain.mission.entity.mapping.UserMission;
 import com.example.umc9th.domain.mission.entity.Mission;
 import com.example.umc9th.domain.user.entity.User;
+import com.example.umc9th.global.common.dto.SliceResponseDto;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.springframework.data.domain.Slice;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MissionConverter {
@@ -26,6 +31,35 @@ public class MissionConverter {
     public static MissionResponseDto.ChallengeResult toChallengeResultDto(UserMission userMission) {
         return MissionResponseDto.ChallengeResult.builder()
                 .userMissionId(userMission.getId())
+                .build();
+    }
+
+    /**
+     * Mission 엔티티 → MissionPreviewDto 변환
+     */
+    public static MissionResponseDto.MissionPreviewDto toMissionPreviewDto(Mission mission) {
+        return MissionResponseDto.MissionPreviewDto.builder()
+                .id(mission.getId())
+                .point(mission.getPoint())
+                .condition(mission.getCondition())
+                .deadline(mission.getDeadline().toLocalDate())
+                .build();
+    }
+
+    /**
+     * 무한 스크롤용 Mission 리스트 → DTO 리스트 변환
+     */
+    public static SliceResponseDto<MissionResponseDto.MissionPreviewDto> toMissionPreviewList(Slice<Mission> missionSlice) {
+        List<MissionResponseDto.MissionPreviewDto> missionDtoList = missionSlice.getContent().stream()
+                .map(MissionConverter::toMissionPreviewDto)
+                .collect(Collectors.toList());
+
+        return SliceResponseDto.<MissionResponseDto.MissionPreviewDto>builder()
+                .list(missionDtoList)
+                .listSize(missionDtoList.size())
+                .hasNext(missionSlice.hasNext())
+                .isFirst(missionSlice.isFirst())
+                .isLast(missionSlice.isLast())
                 .build();
     }
 }
