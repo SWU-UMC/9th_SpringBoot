@@ -6,8 +6,10 @@ import com.example.umc9th.domain.review.entity.Review;
 import com.example.umc9th.domain.review.entity.ReviewPhoto;
 import com.example.umc9th.domain.store.entity.Store;
 import com.example.umc9th.domain.user.entity.User;
+import com.example.umc9th.global.common.dto.SliceResponseDto;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.springframework.data.domain.Slice;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -57,5 +59,22 @@ public class ReviewConverter {
         return reviews.stream()
                 .map(ReviewConverter::toDto)
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * 무한 스크롤용 Review 리스트 → DTO 리스트 변환
+     */
+    public static SliceResponseDto<ReviewResponseDto> toReviewPageDto(Slice<Review> reviewSlice) {
+        List<ReviewResponseDto> reviewDtoList = reviewSlice.getContent().stream()
+                .map(ReviewConverter::toDto)
+                .collect(Collectors.toList());
+
+        return SliceResponseDto.<ReviewResponseDto>builder()
+                .list(reviewDtoList)
+                .listSize(reviewDtoList.size())
+                .hasNext(reviewSlice.hasNext())
+                .isFirst(reviewSlice.isFirst())
+                .isLast(reviewSlice.isLast())
+                .build();
     }
 }

@@ -11,14 +11,14 @@ import com.example.umc9th.domain.store.repository.StoreRepository;
 import com.example.umc9th.domain.user.entity.User;
 import com.example.umc9th.domain.user.error.UserErrorCode;
 import com.example.umc9th.domain.user.repository.UserRepository;
+import com.example.umc9th.global.common.dto.SliceResponseDto;
 import com.example.umc9th.global.entity.apiPayload.exception.GeneralException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import static com.example.umc9th.domain.store.entity.QStore.store;
-import static com.example.umc9th.domain.user.entity.QUser.user;
 
 @Service
 @RequiredArgsConstructor
@@ -52,5 +52,22 @@ public class ReviewServiceImpl implements ReviewService { // ReviewService 구�
 
         // 저장된 Review 엔티티를 DTO로 변환하여 반환
         return ReviewConverter.toDto(savedReview);
+    }
+
+    @Override
+    public SliceResponseDto<ReviewResponseDto> getMyReviewList(Long userId, Integer page) {
+        // 유저 검증
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new GeneralException(UserErrorCode.USER_NOT_FOUND));
+
+        // PageRequest 생성 (0-based 인덱스 변환: page - 1)
+        // 사이즈 10, 최신순(createdAt DESC) 정렬
+        PageRequest pageRequest = PageRequest.of(page - 1, 10, Sort.by("createdAt").descending());
+
+        // Repository 조회 (Slice 반환)
+        Slice<Review> reviewSlice = reviewRepository.findAllByUserId(user.getId(), pageRequest);
+
+        // 변환 후 반환
+        return ReviewConverter.toReviewPageDto(reviewSlice);
     }
 }
