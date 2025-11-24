@@ -41,6 +41,7 @@ public class Review extends BaseEntity {
     private String content;
 
     // 양방향 연관관계
+    @Builder.Default
     @OneToMany(
             mappedBy = "review",
             fetch = FetchType.LAZY,
@@ -49,6 +50,7 @@ public class Review extends BaseEntity {
     )
     private List<ReviewPhoto> photos = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(
             mappedBy = "review",
             fetch = FetchType.LAZY,

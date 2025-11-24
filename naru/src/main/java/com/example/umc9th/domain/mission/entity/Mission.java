@@ -38,7 +38,7 @@ public class Mission extends BaseEntity {
 
     @NotBlank
     @Size(max = 255)
-    @Column(name = "condition", nullable = false, length = 255)
+    @Column(name = "mission_condition", nullable = false, length = 255)
     private String condition;
 
 }
