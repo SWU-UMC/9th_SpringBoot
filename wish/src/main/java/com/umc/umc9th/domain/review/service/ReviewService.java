@@ -36,16 +36,24 @@ public class ReviewService {
    * 리뷰 조회
    */
   @Transactional(readOnly = true)
-  public Page<MyReviewResponse> getMyReviews(Integer userId, Integer storeId,
-      BigDecimal minRating, BigDecimal maxRating,
-      Pageable pageable) {
+  public ReviewResDTO.MyReviewListDTO getMyReviews(
+      Integer userId,
+      Integer storeId,
+      BigDecimal minRating,
+      BigDecimal maxRating,
+      Pageable pageable
+  ) {
     if (userId == null) {
       throw new IllegalArgumentException("사용자 ID는 필수입니다.");
     }
 
     validateRatingRange(minRating, maxRating);
 
-    return reviewRepository.findMyReviews(userId, storeId, minRating, maxRating, pageable);
+    Page<MyReviewResponse> page = reviewRepository.findMyReviews(
+        userId, storeId, minRating, maxRating, pageable
+    );
+
+    return ReviewConverter.toMyReviewListDTO(page);
   }
 
   private void validateRatingRange(BigDecimal minRating, BigDecimal maxRating) {

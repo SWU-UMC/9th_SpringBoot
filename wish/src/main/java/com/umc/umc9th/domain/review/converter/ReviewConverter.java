@@ -1,6 +1,7 @@
 package com.umc.umc9th.domain.review.converter;
 
 import com.umc.umc9th.domain.image.entity.Image;
+import com.umc.umc9th.domain.review.dto.MyReviewResponse;
 import com.umc.umc9th.domain.review.dto.ReviewReqDTO;
 import com.umc.umc9th.domain.review.dto.ReviewResDTO;
 import com.umc.umc9th.domain.review.entity.Review;
@@ -9,6 +10,7 @@ import com.umc.umc9th.domain.user.entity.User;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import org.springframework.data.domain.Page;
 
 public class ReviewConverter {
 
@@ -66,6 +68,17 @@ public class ReviewConverter {
                 .created_at(review.getCreatedAt())
                 .build()
         )
+        .build();
+  }
+
+  public static ReviewResDTO.MyReviewListDTO toMyReviewListDTO(Page<MyReviewResponse> page) {
+    return ReviewResDTO.MyReviewListDTO.builder()
+        .reviews(page.getContent())
+        .listSize(page.getNumberOfElements())
+        .totalPage(page.getTotalPages())
+        .totalElements(page.getTotalElements())
+        .isFirst(page.isFirst())
+        .isLast(page.isLast())
         .build();
   }
 }
