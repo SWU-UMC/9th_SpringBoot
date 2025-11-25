@@ -93,4 +93,29 @@ public class MissionServiceImpl implements MissionService {
         // Converter 변환
         return MissionConverter.toMyMissionList(userMissionSlice);
     }
+
+    @Override
+    @Transactional
+    public MissionResponseDto.MyMissionDto completeMission(Long userMissionId, Long userId) {
+
+        // 미션 조회
+        UserMission userMission = userMissionRepository.findById(userMissionId)
+                .orElseThrow(() -> new GeneralException(MissionErrorCode.MISSION_NOT_FOUND));
+
+        // 소유자 검증
+        if (!userMission.getUser().getId().equals(userId)) {
+            throw new GeneralException(MissionErrorCode.MISSION_NOT_OWNER);
+        }
+
+        // 완료 여부 확인
+        if (userMission.getStatus() == MissionStatus.COMPLETED) {
+            throw new GeneralException(MissionErrorCode.MISSION_ALREADY_COMPLETED);
+        }
+
+        // 상태 변경
+        userMission.complete();
+
+        // 반환
+        return MissionConverter.toMyMissionDto(userMission);
+    }
 }

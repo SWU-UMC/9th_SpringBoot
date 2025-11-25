@@ -12,4 +12,6 @@ public interface MissionService {
     SliceResponseDto<MissionResponseDto.MissionPreviewDto> getMissionsByStore(Long storeId, Integer page);
 
     SliceResponseDto<MissionResponseDto.MyMissionDto> getMyMissions(Long userId, MissionStatus status, Integer page);
+
+    MissionResponseDto.MyMissionDto completeMission(Long userMissionId, Long userId);
 }
