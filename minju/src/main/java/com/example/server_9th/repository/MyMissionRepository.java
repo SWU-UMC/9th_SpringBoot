@@ -1,5 +1,6 @@
 package com.example.server_9th.repository;
 
+import com.example.server_9th.domain.Member;
 import com.example.server_9th.domain.enums.MissionStatus;
 import com.example.server_9th.domain.mapping.myMission.MyMission;
 import com.example.server_9th.domain.mapping.myMission.MyMissionId;
@@ -9,8 +10,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface MyMissionRepository extends JpaRepository<MyMission, MyMissionId> {
+   /*
     //특정 회원의 미션 상태에 따른 미션 목록 조회
     @Query("""
             SELECT mm
@@ -34,5 +38,10 @@ public interface MyMissionRepository extends JpaRepository<MyMission, MyMissionI
                 END,
                 mm.updatedAt DESC
             """)
-    Page<MyMission> findAllByUserId(Long userId, Pageable pageable);
+
+    */;
+
+    Page<MyMission> findByMyMission_idUser_idAndMissionStatus(Long userId, MissionStatus status, Pageable pageable);
+
+    Optional<MyMission> findByMyMission_id(MyMissionId id);
 }

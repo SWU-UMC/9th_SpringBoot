@@ -28,4 +28,5 @@ public class GeneralExceptionAdvice {
         return ResponseEntity.status(code.getStatus())
                 .body(ApiResponse.onFailure(code,exception.getMessage()));
     }
+
 }
