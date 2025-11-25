@@ -34,4 +34,9 @@ public class UserMission extends BaseEntity {
     @Column(name = "status", nullable = false, length = 30)
     private MissionStatus status = MissionStatus.ACTIVE;
 
+    // 미션 완료 메서드
+    public void complete() {
+        this.status = MissionStatus.COMPLETED;
+    }
+
 }
