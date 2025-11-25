@@ -42,7 +42,8 @@ public class ReviewQueryDslImpl implements ReviewQueryDsl {
                         review.content,
                         review.rating,
                         store.name,
-                        review.member.name
+                        review.member.name,
+                        review.member.memberId
                 ))
                 .from(review)
                 .leftJoin(review.mission, mission)
@@ -67,7 +68,8 @@ public class ReviewQueryDslImpl implements ReviewQueryDsl {
                         review.content,
                         review.rating,
                         store.name,
-                        review.member.name
+                        review.member.name,
+                        review.member.memberId
                 ))
                 .from(review)
                 .leftJoin(review.mission, mission)
@@ -92,7 +94,8 @@ public class ReviewQueryDslImpl implements ReviewQueryDsl {
                         review.content,
                         review.rating,
                         store.name,
-                        review.member.name
+                        review.member.name,
+                        review.member.memberId
                 ))
                 .from(review)
                 .leftJoin(review.mission, mission)
@@ -125,7 +128,8 @@ public class ReviewQueryDslImpl implements ReviewQueryDsl {
                         review.content,
                         review.rating,
                         store.name,
-                        review.member.name
+                        review.member.name,
+                        review.member.memberId
                 ))
                 .from(review)
                 .leftJoin(review.mission, mission)
@@ -137,6 +141,7 @@ public class ReviewQueryDslImpl implements ReviewQueryDsl {
     // 특정 가게의 리뷰 목록 조회
     public List<QReviewDto> findStoreReviews(Long storeId, int page, int pageSize) {
         JPAQueryFactory queryFactory = new JPAQueryFactory(em);
+
         QReview review = QReview.review;
         QMission mission = QMission.mission;
         QStore store = QStore.store;
@@ -161,6 +166,7 @@ public class ReviewQueryDslImpl implements ReviewQueryDsl {
                 .limit(pageSize)
                 .fetch();
     }
+
 
     // 특정 가게의 전체 리뷰 개수 조회
     public long countStoreReviews(Long storeId) {
