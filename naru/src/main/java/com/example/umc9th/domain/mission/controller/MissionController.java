@@ -62,4 +62,17 @@ public class MissionController {
         SliceResponseDto<MissionResponseDto.MyMissionDto> result = missionService.getMyMissions(userId, status, page);
         return ApiResponse.onSuccess(GeneralSuccessCode.OK, result);
     }
+
+    @Operation(summary = "미션 완료 API", description = "진행 중인 미션을 완료 상태로 변경합니다.")
+    @PatchMapping("/{userMissionId}/complete") // URL에 ID 포함
+    public ApiResponse<MissionResponseDto.MyMissionDto> completeMission(
+            @Parameter(description = "완료할 유저 미션 ID", example = "10")
+            @PathVariable Long userMissionId,
+
+            @Parameter(description = "사용자 ID", example = "1")
+            @RequestParam Long userId
+    ) {
+        MissionResponseDto.MyMissionDto result = missionService.completeMission(userMissionId, userId);
+        return ApiResponse.onSuccess(GeneralSuccessCode.OK, result);
+    }
 }
