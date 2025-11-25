@@ -2,6 +2,8 @@ package com.umc.umc9th.domain.review.controller;
 
 import com.umc.umc9th.domain.review.dto.MyReviewResponse;
 import com.umc.umc9th.domain.review.service.ReviewService;
+import com.umc.umc9th.global.apiPayload.ApiResponse;
+import com.umc.umc9th.global.apiPayload.code.GeneralSuccessCode;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,21 +22,24 @@ public class ReviewController {
   private final ReviewService reviewService;
 
   @GetMapping("/mypage/reviews")
-  public Map<String, Object> getMyReviews(
+  public ApiResponse<Map<String, Object>> getMyReviews(
       @RequestParam(required = false) Integer storeId,
       @RequestParam(required = false) BigDecimal minRating,
       @RequestParam(required = false) BigDecimal maxRating,
       @PageableDefault(size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
   ) {
+
     Integer userId = 1;
-    Page<MyReviewResponse> page = reviewService.getMyReviews(userId, storeId, minRating, maxRating, pageable);
 
-    Map<String, Object> response = new HashMap<>();
-    response.put("reviews", page.getContent());
-    response.put("currentPage", page.getNumber());
-    response.put("totalPages", page.getTotalPages());
-    response.put("totalElements", page.getTotalElements());
+    Page<MyReviewResponse> page =
+        reviewService.getMyReviews(userId, storeId, minRating, maxRating, pageable);
 
-    return response;
+    Map<String, Object> result = new HashMap<>();
+    result.put("reviews", page.getContent());
+    result.put("currentPage", page.getNumber());
+    result.put("totalPages", page.getTotalPages());
+    result.put("totalElements", page.getTotalElements());
+
+    return ApiResponse.onSuccess(GeneralSuccessCode.OK, result);
   }
 }
