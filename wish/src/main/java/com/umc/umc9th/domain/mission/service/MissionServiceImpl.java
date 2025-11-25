@@ -9,10 +9,15 @@ import com.umc.umc9th.domain.mission.exception.MissionErrorCode;
 import com.umc.umc9th.domain.mission.exception.MissionException;
 import com.umc.umc9th.domain.mission.repository.MissionRepository;
 import com.umc.umc9th.domain.mission.repository.UserMissionRepository;
+import com.umc.umc9th.domain.store.exception.StoreErrorCode;
+import com.umc.umc9th.domain.store.exception.StoreException;
+import com.umc.umc9th.domain.store.repository.StoreRepository;
 import com.umc.umc9th.domain.user.entity.User;
 import com.umc.umc9th.domain.user.repository.UserRepository;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +29,7 @@ public class MissionServiceImpl implements MissionService {
   private final MissionRepository missionRepository;
   private final UserMissionRepository userMissionRepository;
   private final UserRepository userRepository;
+  private final StoreRepository storeRepository;
 
   @Override
   public MissionResDTO.ChallengeDTO challengeMission(Integer userId, MissionReqDTO.ChallengeDTO dto) {
@@ -51,5 +57,20 @@ public class MissionServiceImpl implements MissionService {
     userMissionRepository.save(userMission);
 
     return MissionConverter.toChallengeDTO(userMission);
+  }
+
+  @Override
+  @Transactional(readOnly = true)
+  public MissionResDTO.MissionListDTO getStoreMissions(Integer storeId, Pageable pageable) {
+
+    // 가게 존재 여부 확인
+    storeRepository.findById(storeId)
+        .orElseThrow(() -> new StoreException(StoreErrorCode.NOT_FOUND));
+
+    // 가게의 미션 목록 조회 (페이징)
+    Page<Mission> missionPage = missionRepository.findAllByStoreId(storeId, pageable);
+
+    // DTO 변환
+    return MissionConverter.toMissionListDTO(missionPage);
   }
 }
