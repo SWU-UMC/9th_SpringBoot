@@ -1,7 +1,7 @@
 package com.umc.umc9th.domain.store.entity;
 
 import com.umc.umc9th.domain.address.entity.Address;
-import com.umc.umc9th.domain.food.entity.FoodCategory;
+import com.umc.umc9th.domain.food.entity.Category;
 import com.umc.umc9th.domain.owner.entity.Owner;
 import com.umc.umc9th.global.common.BaseEntity;
 import jakarta.persistence.*;
@@ -26,7 +26,7 @@ public class Store extends BaseEntity {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "category_id", nullable = false)
-  private FoodCategory category;
+  private Category category;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "address_id")

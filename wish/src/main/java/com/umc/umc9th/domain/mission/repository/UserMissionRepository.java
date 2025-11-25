@@ -1,6 +1,7 @@
 package com.umc.umc9th.domain.mission.repository;
 
 import com.umc.umc9th.domain.mission.entity.UserMission;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -27,5 +28,7 @@ public interface UserMissionRepository extends JpaRepository<UserMission, Intege
           AND s.address.id = u.currentDong.id
     """)
   Long countCompletedMissionsInCurrentDong(@Param("userId") Integer userId);
+
+  Optional<UserMission> findByUserIdAndMissionId(Integer userId, Integer missionId);
 }
 
