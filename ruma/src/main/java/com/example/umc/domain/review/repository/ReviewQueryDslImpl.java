@@ -134,5 +134,49 @@ public class ReviewQueryDslImpl implements ReviewQueryDsl {
                 .orderBy(review.reviewId.desc())
                 .fetch();
     }
+    // 특정 가게의 리뷰 목록 조회
+    public List<QReviewDto> findStoreReviews(Long storeId, int page, int pageSize) {
+        JPAQueryFactory queryFactory = new JPAQueryFactory(em);
+        QReview review = QReview.review;
+        QMission mission = QMission.mission;
+        QStore store = QStore.store;
+
+        return queryFactory
+                .select(Projections.constructor(
+                        QReviewDto.class,
+                        review.reviewId,
+                        review.createdAt,
+                        review.content,
+                        review.rating,
+                        store.name,
+                        review.member.name,
+                        review.member.memberId
+                ))
+                .from(review)
+                .leftJoin(review.mission, mission)
+                .leftJoin(mission.store, store)
+                .where(store.storeId.eq(storeId))
+                .orderBy(review.reviewId.desc())
+                .offset((long) page * pageSize)
+                .limit(pageSize)
+                .fetch();
+    }
+
+    // 특정 가게의 전체 리뷰 개수 조회
+    public long countStoreReviews(Long storeId) {
+        JPAQueryFactory queryFactory = new JPAQueryFactory(em);
+        QReview review = QReview.review;
+        QMission mission = QMission.mission;
+        QStore store = QStore.store;
+
+        return queryFactory
+                .select(review.count())
+                .from(review)
+                .leftJoin(review.mission, mission)
+                .leftJoin(mission.store, store)
+                .where(store.storeId.eq(storeId))
+                .fetchOne();
+    }
+
 
 }

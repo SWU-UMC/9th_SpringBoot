@@ -1,6 +1,7 @@
 package com.example.umc.domain.review.controller;
 
 import com.example.umc.domain.review.dto.QReviewDto;
+import com.example.umc.domain.review.dto.res.ReviewPreViewListDTO;
 import com.example.umc.domain.review.dto.res.ReviewResDTO;
 import com.example.umc.domain.review.dto.req.ReviewReqDTO;
 import com.example.umc.domain.review.exception.code.ReviewSuccessCode;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/review")
+@RequestMapping("/reviews")
 @RequiredArgsConstructor
 public class ReviewController {
 
@@ -30,28 +31,37 @@ public class ReviewController {
             @RequestParam(required = false) String type
     ) {
 
-        // memberId로 내 리뷰 조회
         if (memberId != null) {
             return reviewQueryService.getMyReviews(memberId, storeId, starRange, cursorId);
         }
 
-        // query + type 으로 검색
         if (query != null && type != null) {
             return reviewQueryService.searchReviews(query, type);
         }
 
-        // 조건이 아무것도 없을 경우 빈 배열 리턴
         return List.of();
     }
 
     @PostMapping
     public ApiResponse<ReviewResDTO.CreateDTO> createReview(
-            @RequestBody ReviewReqDTO.CreateDTO dto) {
-
+            @RequestBody ReviewReqDTO.CreateDTO dto
+    ) {
         return ApiResponse.onSuccess(
                 ReviewSuccessCode.CREATED,
                 reviewCommandService.createReview(dto)
         );
     }
 
+    @GetMapping
+    public ApiResponse<ReviewPreViewListDTO> getReviews(
+            @RequestParam Long storeId,
+            @RequestParam(defaultValue = "0") Integer page
+    ) {
+        var result = reviewQueryService.getStoreReviewList(storeId, page);
+
+        return ApiResponse.onSuccess(
+                ReviewSuccessCode.CREATED,
+                result
+        );
+    }
 }
