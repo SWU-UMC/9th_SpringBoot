@@ -33,4 +33,27 @@ public class MissionResDTO {
       LocalDateTime deadline,
       Boolean isActive
   ){}
+
+  @Builder
+  public record MyMissionListDTO(
+      List<MyMissionPreviewDTO> missions,
+      Integer listSize,
+      Integer totalPage,
+      Long totalElements,
+      Boolean isFirst,
+      Boolean isLast
+  ){}
+
+  @Builder
+  public record MyMissionPreviewDTO(
+      Integer userMissionId,
+      Integer missionId,
+      String storeName,
+      String missionDescription,
+      Integer minAmount,
+      Integer rewardPoints,
+      LocalDateTime deadline,
+      String status,
+      LocalDateTime startedAt
+  ){}
 }

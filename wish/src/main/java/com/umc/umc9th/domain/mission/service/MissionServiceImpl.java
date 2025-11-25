@@ -73,4 +73,20 @@ public class MissionServiceImpl implements MissionService {
     // DTO 변환
     return MissionConverter.toMissionListDTO(missionPage);
   }
+
+  @Override
+  @Transactional(readOnly = true)
+  public MissionResDTO.MyMissionListDTO getMyProgressMissions(Integer userId, Pageable pageable) {
+
+    // 사용자 존재 여부 확인
+    userRepository.findById(userId)
+        .orElseThrow(() -> new MissionException(MissionErrorCode.USER_NOT_FOUND));
+
+    // 진행중인 미션 목록 조회 (페이징)
+    Page<UserMission> userMissionPage = userMissionRepository
+        .findAllByUser_IdAndStatus(userId, "PROGRESS", pageable);
+
+    // DTO 변환
+    return MissionConverter.toMyMissionListDTO(userMissionPage);
+  }
 }

@@ -63,4 +63,36 @@ public class MissionController {
 
     return ApiResponse.onSuccess(MissionSuccessCode.FOUND, result);
   }
+
+  @Operation(
+      summary = "내가 진행중인 미션 목록 조회 API",
+      description = "사용자가 진행중인 미션을 페이징 처리하여 조회합니다. 시작일 기준 내림차순으로 정렬됩니다."
+  )
+  @ApiResponses({
+      @io.swagger.v3.oas.annotations.responses.ApiResponse(
+          responseCode = "200",
+          description = "진행중인 미션 목록 조회 성공"
+      ),
+      @io.swagger.v3.oas.annotations.responses.ApiResponse(
+          responseCode = "400",
+          description = "잘못된 요청 (잘못된 페이지 번호)"
+      ),
+      @io.swagger.v3.oas.annotations.responses.ApiResponse(
+          responseCode = "404",
+          description = "사용자를 찾을 수 없음"
+      )
+  })
+  @GetMapping("/my-progress")
+  public ApiResponse<MissionResDTO.MyMissionListDTO> getMyProgressMissions(
+      @RequestParam(defaultValue = "1") @CheckPage Integer page
+  ) {
+    Integer userId = 1;
+
+    Pageable pageable = PageRequest.of(page - 1, 10, Sort.by("startedAt").descending());
+
+    MissionResDTO.MyMissionListDTO result =
+        missionService.getMyProgressMissions(userId, pageable);
+
+    return ApiResponse.onSuccess(MissionSuccessCode.MY_MISSION_FOUND, result);
+  }
 }

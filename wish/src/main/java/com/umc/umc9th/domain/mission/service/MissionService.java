@@ -9,4 +9,5 @@ public interface MissionService {
 
   MissionResDTO.MissionListDTO getStoreMissions(Integer storeId, Pageable pageable);
 
+  MissionResDTO.MyMissionListDTO getMyProgressMissions(Integer userId, Pageable pageable);
 }

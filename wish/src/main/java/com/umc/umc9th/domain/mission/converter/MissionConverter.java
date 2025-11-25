@@ -38,11 +38,38 @@ public class MissionConverter {
         .build();
   }
 
-  // 새로 추가: Page<Mission> -> MissionListDTO 변환
   public static MissionResDTO.MissionListDTO toMissionListDTO(Page<Mission> page) {
     return MissionResDTO.MissionListDTO.builder()
         .missions(page.getContent().stream()
             .map(MissionConverter::toMissionPreviewDTO)
+            .toList())
+        .listSize(page.getNumberOfElements())
+        .totalPage(page.getTotalPages())
+        .totalElements(page.getTotalElements())
+        .isFirst(page.isFirst())
+        .isLast(page.isLast())
+        .build();
+  }
+
+  public static MissionResDTO.MyMissionPreviewDTO toMyMissionPreviewDTO(UserMission userMission) {
+    Mission mission = userMission.getMission();
+    return MissionResDTO.MyMissionPreviewDTO.builder()
+        .userMissionId(userMission.getId())
+        .missionId(mission.getId())
+        .storeName(mission.getStore().getStoreName())
+        .missionDescription(mission.getMissionDescription())
+        .minAmount(mission.getMinAmount())
+        .rewardPoints(mission.getRewardPoints())
+        .deadline(mission.getDeadline())
+        .status(userMission.getStatus())
+        .startedAt(userMission.getStartedAt())
+        .build();
+  }
+
+  public static MissionResDTO.MyMissionListDTO toMyMissionListDTO(Page<UserMission> page) {
+    return MissionResDTO.MyMissionListDTO.builder()
+        .missions(page.getContent().stream()
+            .map(MissionConverter::toMyMissionPreviewDTO)
             .toList())
         .listSize(page.getNumberOfElements())
         .totalPage(page.getTotalPages())
