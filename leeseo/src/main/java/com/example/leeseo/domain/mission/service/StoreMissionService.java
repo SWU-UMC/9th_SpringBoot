@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +22,7 @@ public class StoreMissionService {
     private final StoreRepository storeRepository;
     private final MissionRepository missionRepository;
 
+    @Transactional
     public MissionResDTO.JoinDTO saveMission(
             Long store_id,
             MissionReqDTO.JoinDTO dto

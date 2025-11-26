@@ -9,6 +9,7 @@ import com.example.leeseo.domain.store.exception.StoreException;
 import com.example.leeseo.domain.store.exception.code.LocationErrorCode;
 import com.example.leeseo.domain.store.repository.LocationRepository;
 import com.example.leeseo.domain.store.repository.StoreRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ public class StoreService {
     private final LocationRepository locationRepository;
     private final StoreRepository storeRepository;
 
+    @Transactional
     public StoreResDTO.JoinDTO saveStore(
             Long location_id,
             StoreReqDTO.JoinDTO dto

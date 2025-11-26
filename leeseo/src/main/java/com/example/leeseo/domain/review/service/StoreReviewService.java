@@ -14,6 +14,7 @@ import com.example.leeseo.domain.review.repository.ReviewRepository;
 import com.example.leeseo.domain.store.entity.Store;
 import com.example.leeseo.domain.store.exception.code.StoreErrorCode;
 import com.example.leeseo.domain.store.repository.StoreRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,7 @@ public class StoreReviewService {
     private final ReviewRepository reviewRepository;
     private final ReviewPhotoRepository reviewPhotoRepository;
 
+    @Transactional
     public ReviewResDTO.JoinDTO saveReview(
             Long member_id,
             Long store_id,

@@ -30,6 +30,7 @@ public class MemberMissionService {
     private final MissionRepository missionRepository;
     private final MemberMissionRepository memberMissionRepository;
 
+    @Transactional
     public MemberMissionResDTO.JoinDTO saveMemberMission(
             Long member_id,
             Long mission_id
