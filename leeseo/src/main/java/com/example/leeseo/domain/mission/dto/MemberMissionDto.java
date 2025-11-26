@@ -1,5 +1,6 @@
 package com.example.leeseo.domain.mission.dto;
 
+import com.example.leeseo.domain.member.enums.MissionStatus;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -10,9 +11,9 @@ public class MemberMissionDto {
     private Integer point;
     private LocalDateTime created_at;
     private String conditional;
-    private String status;
+    private MissionStatus status;
 
-    public MemberMissionDto(String name, Integer point, LocalDateTime created_at, String conditional, String status) {
+    public MemberMissionDto(String name, Integer point, LocalDateTime created_at, String conditional, MissionStatus status) {
         this.name = name;
         this.point = point;
         this.created_at = created_at;

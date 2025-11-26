@@ -14,6 +14,8 @@ import java.util.Optional;
 
 public interface MemberMissionRepository extends JpaRepository<MemberMission, Long> {
 
+    boolean existsByMemberIdAndMissionId(Long memberId, Long missionId);
+
     @Query("SELECT new com.example.leeseo.domain.mission.dto.MemberMissionDto(s.name, m.point, m.created_at, m.conditional, mm.status)" +
             "FROM MemberMission mm JOIN mm.mission m  JOIN m.store s" +
             " WHERE mm.member.id = :memberId" +

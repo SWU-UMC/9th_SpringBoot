@@ -1,0 +1,38 @@
+package com.example.leeseo.domain.mission.controller;
+
+import com.example.leeseo.domain.mission.dto.MemberMissionResDTO;
+import com.example.leeseo.domain.mission.dto.MissionReqDTO;
+import com.example.leeseo.domain.mission.dto.MissionResDTO;
+import com.example.leeseo.domain.mission.exception.code.MemberMissionSuccessCode;
+import com.example.leeseo.domain.mission.exception.code.MissionSuccessCode;
+import com.example.leeseo.domain.mission.service.MemberMissionService;
+import com.example.leeseo.domain.mission.service.StoreMissionService;
+import com.example.leeseo.global.entity.apiPayload.ApiResponse;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequiredArgsConstructor
+public class MissionController {
+
+    private final StoreMissionService storeMissionService;
+    private final MemberMissionService memberMissionService;
+
+    @PostMapping("/store/{store_id}/addMission")
+    public ApiResponse<MissionResDTO.JoinDTO> saveMission(
+        @PathVariable Long store_id,
+        @Valid @RequestBody MissionReqDTO.JoinDTO dto
+    ){
+        return ApiResponse.onSuccess(MissionSuccessCode.OK, storeMissionService.saveMission(store_id, dto));
+    }
+
+    @PostMapping("location/{location_id}/addMission")
+    public ApiResponse<MemberMissionResDTO.JoinDTO> saveMemberMission(
+            @PathVariable Long location_id,
+            @RequestParam Long mission_id,
+            @RequestParam Long member_id
+    ){
+        return ApiResponse.onSuccess(MemberMissionSuccessCode.OK, memberMissionService.saveMemberMission(member_id,mission_id));
+    }
+}

@@ -2,6 +2,7 @@ package com.example.leeseo.domain.store.entity;
 
 import com.example.leeseo.domain.mission.entity.Mission;
 import com.example.leeseo.domain.review.entity.Review;
+import com.example.leeseo.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 @Table(name = "store")
-public class Store {
+public class Store extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
