@@ -9,14 +9,14 @@ import java.time.LocalDateTime;
 public class MemberMissionDto {
     private String name;
     private Integer point;
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
     private String conditional;
     private MissionStatus status;
 
-    public MemberMissionDto(String name, Integer point, LocalDateTime created_at, String conditional, MissionStatus status) {
+    public MemberMissionDto(String name, Integer point, LocalDateTime createdAt, String conditional, MissionStatus status) {
         this.name = name;
         this.point = point;
-        this.created_at = created_at;
+        this.createdAt = createdAt;
         this.conditional = conditional;
         this.status = status;
     }

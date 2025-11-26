@@ -49,7 +49,7 @@ public class ReviewResDTO {
     public record MyReviewDTO(
         Float rate,
         String content,
-        List<String> img_url,
+        List<String> imgUrl,
         LocalDateTime createdAt
     ){}
 }

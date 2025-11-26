@@ -10,7 +10,7 @@ public class StoreResDTO {
     @Builder
     @Schema(name = "StoreResponse")
     public record JoinDTO(
-        Long store_id,
+        Long storeId,
         LocalDateTime createdAt
     ){
     }

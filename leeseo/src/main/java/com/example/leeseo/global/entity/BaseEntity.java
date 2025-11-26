@@ -13,31 +13,31 @@ import java.time.LocalDateTime;
 @Getter
 public abstract class BaseEntity {
     @CreatedDate
-    @Column(name = "created_at", nullable = false)
-    private LocalDateTime created_at;
+    @Column(name = "createdAt", nullable = false)
+    private LocalDateTime createdAt;
 
-    @Column(name = "deleted_at")
-    private LocalDateTime deleted_at;
+    @Column(name = "deletedAt")
+    private LocalDateTime deletedAt;
 
     @LastModifiedDate
-    @Column(name = "updated_at", nullable = false)
-    private LocalDateTime updated_at;
+    @Column(name = "updatedAt", nullable = false)
+    private LocalDateTime updatedAt;
 
     protected BaseEntity() {}
 
-    protected BaseEntity(LocalDateTime created_at, LocalDateTime updated_at) {
-        this.created_at = created_at;
-        this.updated_at = updated_at;
+    protected BaseEntity(LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     @PrePersist
     protected void prePersist() {
-        this.created_at = LocalDateTime.now();
-        this.updated_at = LocalDateTime.now();
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
     }
 
     @PreUpdate
     protected void preUpdate() {
-        this.updated_at = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
     }
 }

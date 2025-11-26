@@ -15,7 +15,7 @@ public interface ReviewControllerDocs {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "성공"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "실패")
     })
-    ApiResponse<ReviewResDTO.ReviewPreViewListDTO> getReviews(Long store_id, Integer page);
+    ApiResponse<ReviewResDTO.ReviewPreViewListDTO> getReviews(Long storeId, Integer page);
 
     @Operation(
             summary = "내가 쓴 목록 조회 API By 이서",
@@ -25,5 +25,5 @@ public interface ReviewControllerDocs {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "성공"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "실패")
     })
-    ApiResponse<ReviewResDTO.MyReviewListDTO> getMyReviews(Long store_id, Integer page);
+    ApiResponse<ReviewResDTO.MyReviewListDTO> getMyReviews(Long storeId, Integer page);
 }

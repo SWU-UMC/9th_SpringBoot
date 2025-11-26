@@ -17,7 +17,7 @@ public class ReviewConverter {
     ){
         return ReviewResDTO.JoinDTO.builder()
                 .reviewId(review.getId())
-                .createAt(review.getCreated_at())
+                .createAt(review.getCreatedAt())
                 .build();
     }
 
@@ -55,7 +55,7 @@ public class ReviewConverter {
                 .ownerNickname(review.getMember().getName())
                 .score(review.getRate())
                 .body(review.getContent())
-                .createdAt(review.getCreated_at())
+                .createdAt(review.getCreatedAt())
                 .build();
     }
 
@@ -79,8 +79,8 @@ public class ReviewConverter {
         return ReviewResDTO.MyReviewDTO.builder()
                 .rate(review.getRate())
                 .content(review.getContent())
-                .img_url(review.getReviewPhotoList().stream().map(ReviewPhoto::getPhoto_url).toList())
-                .createdAt(review.getCreated_at())
+                .imgUrl(review.getReviewPhotoList().stream().map(ReviewPhoto::getPhotoUrl).toList())
+                .createdAt(review.getCreatedAt())
                 .build();
     }
 }

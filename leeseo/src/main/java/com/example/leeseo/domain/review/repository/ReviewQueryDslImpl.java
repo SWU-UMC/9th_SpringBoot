@@ -40,7 +40,7 @@ public class ReviewQueryDslImpl implements ReviewQueryDsl{
                 .select(Projections.constructor(
                         QReviewDto.class,
                         review.id,
-                        review.created_at,
+                        review.createdAt,
                         review.content,
                         review.rate.floatValue(),
                         store.name,

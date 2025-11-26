@@ -13,7 +13,7 @@ public class MissionConverter {
     ){
         return MissionResDTO.JoinDTO.builder()
                 .id(mission.getId())
-                .createdAt(mission.getCreated_at())
+                .createdAt(mission.getCreatedAt())
                 .build();
     }
 
@@ -51,7 +51,7 @@ public class MissionConverter {
                 .deadline(mission.getDeadline())
                 .conditional(mission.getConditional())
                 .point(mission.getPoint())
-                .createdAt(mission.getCreated_at())
+                .createdAt(mission.getCreatedAt())
                 .build();
     }
 }

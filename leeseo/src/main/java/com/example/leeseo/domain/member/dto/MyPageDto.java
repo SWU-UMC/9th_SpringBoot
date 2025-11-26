@@ -3,13 +3,13 @@ package com.example.leeseo.domain.member.dto;
 public class MyPageDto {
     private Long id;
     private String email;
-    private String phone_number;
+    private String phoneNumber;
     private Integer points;
 
-    public MyPageDto(Long id, String email, String phone_number, Integer points) {
+    public MyPageDto(Long id, String email, String phoneNumber, Integer points) {
         this.id = id;
         this.email = email;
-        this.phone_number = phone_number;
+        this.phoneNumber = phoneNumber;
         this.points = points;
     }
 
@@ -21,8 +21,8 @@ public class MyPageDto {
         return email;
     }
 
-    public String getPhone_number() {
-        return phone_number;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
     public Integer getPoints() {

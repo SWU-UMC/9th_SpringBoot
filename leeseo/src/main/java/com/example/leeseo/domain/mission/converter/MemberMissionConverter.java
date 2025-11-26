@@ -13,8 +13,8 @@ public class MemberMissionConverter {
             MemberMission memberMission
     ){
         return MemberMissionResDTO.JoinDTO.builder()
-                .member_mission_id(memberMission.getId())
-                .createdAt(memberMission.getCreated_at())
+                .memberMissionId(memberMission.getId())
+                .createdAt(memberMission.getCreatedAt())
                 .build();
     }
 
@@ -54,7 +54,7 @@ public class MemberMissionConverter {
                 .deadline(memberMission.getMission().getDeadline())
                 .conditional(memberMission.getMission().getConditional())
                 .point(memberMission.getMission().getPoint())
-                .createdAt(memberMission.getMember().getCreated_at())
+                .createdAt(memberMission.getMember().getCreatedAt())
                 .build();
     }
 
@@ -62,9 +62,9 @@ public class MemberMissionConverter {
             MemberMission memberMission
     ){
         return MemberMissionResDTO.PatchMissionDTO.builder()
-                .member_mission_id(memberMission.getId())
+                .memberMissionId(memberMission.getId())
                 .status(memberMission.getStatus())
-                .updatedAt(memberMission.getUpdated_at())
+                .updatedAt(memberMission.getUpdatedAt())
                 .build();
     }
 }

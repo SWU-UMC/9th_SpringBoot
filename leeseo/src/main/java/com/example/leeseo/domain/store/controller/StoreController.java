@@ -18,11 +18,11 @@ public class StoreController {
 
     private final StoreService storeService;
 
-    @PostMapping("location/{location_id}/addStore")
+    @PostMapping("location/{locationId}/addStore")
     public ApiResponse<StoreResDTO.JoinDTO> saveStore(
-            @PathVariable Long location_id,
+            @PathVariable Long locationId,
             @Valid @RequestBody StoreReqDTO.JoinDTO dto
     ){
-        return ApiResponse.onSuccess(StoreSuccessCode.OK, storeService.saveStore(location_id, dto));
+        return ApiResponse.onSuccess(StoreSuccessCode.OK, storeService.saveStore(locationId, dto));
     }
 }

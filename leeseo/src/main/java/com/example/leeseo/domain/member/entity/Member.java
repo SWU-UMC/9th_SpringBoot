@@ -43,14 +43,14 @@ public class Member extends BaseEntity {
     private Address address;
 
     @Column(name = "detail_address", nullable = false)
-    private String detail_address;
+    private String detailAddress;
 
-    @Column(name = "social_uid", nullable = false)
-    private String social_uid;
+    @Column(name = "socialId", nullable = false)
+    private String socialId;
 
     @Column(name = "social_type", nullable = false)
     @Enumerated(EnumType.STRING)
-    private SocialType social_type;
+    private SocialType socialType;
 
     @Column(name = "point", nullable = false)
     private Integer point;
@@ -58,8 +58,8 @@ public class Member extends BaseEntity {
     @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "phone_number")
-    private String phone_number;
+    @Column(name = "phoneNumber")
+    private String phoneNumber;
 
 
     // 연관 관계

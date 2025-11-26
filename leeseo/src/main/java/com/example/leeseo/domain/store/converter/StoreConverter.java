@@ -12,8 +12,8 @@ public class StoreConverter {
     ){
         return StoreResDTO.JoinDTO
                 .builder()
-                .store_id(store.getId())
-                .createdAt(store.getCreated_at())
+                .storeId(store.getId())
+                .createdAt(store.getCreatedAt())
                 .build();
     }
 
@@ -24,8 +24,8 @@ public class StoreConverter {
         return Store
                 .builder()
                 .name(dto.name())
-                .manager_number(dto.manager_number())
-                .detail_address(dto.detail_address())
+                .managerNumber(dto.managerNumber())
+                .detailAddress(dto.detailAddress())
                 .location(location)
                 .build();
     }

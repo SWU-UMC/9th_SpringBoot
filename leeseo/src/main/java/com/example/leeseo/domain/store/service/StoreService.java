@@ -22,10 +22,10 @@ public class StoreService {
 
     @Transactional
     public StoreResDTO.JoinDTO saveStore(
-            Long location_id,
+            Long locationId,
             StoreReqDTO.JoinDTO dto
     ){
-        Location location = locationRepository.findById(location_id)
+        Location location = locationRepository.findById(locationId)
                 .orElseThrow(() -> new StoreException(LocationErrorCode.NOT_FOUND));
 
         Store store = StoreConverter.toStore(dto,location);

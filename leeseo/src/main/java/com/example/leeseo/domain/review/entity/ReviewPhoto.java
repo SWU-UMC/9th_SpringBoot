@@ -15,8 +15,8 @@ public class ReviewPhoto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "photo_url")
-    private String photo_url;
+    @Column(name = "photoUrl")
+    private String photoUrl;
 
     // 연관 관계
     @ManyToOne(fetch = FetchType.LAZY)

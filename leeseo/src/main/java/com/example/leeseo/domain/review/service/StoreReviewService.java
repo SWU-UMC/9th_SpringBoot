@@ -40,10 +40,10 @@ public class StoreReviewService {
         Review review = ReviewConverter.toReview(dto, member, store);
         reviewRepository.save(review);
 
-        dto.img_url().forEach(url -> {
+        dto.imgUrl().forEach(url -> {
             ReviewPhoto photo = ReviewPhoto.builder()
                     .review(review)
-                    .photo_url(url)
+                    .photoUrl(url)
                     .build();
             reviewPhotoRepository.save(photo);
         });

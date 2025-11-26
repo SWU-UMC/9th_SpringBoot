@@ -32,15 +32,15 @@ public class MemberMissionService {
 
     @Transactional
     public MemberMissionResDTO.JoinDTO saveMemberMission(
-            Long member_id,
-            Long mission_id
+            Long memberId,
+            Long missionId
     ){
-        Member member = getMember(member_id);
+        Member member = getMember(memberId);
 
-        Mission mission = missionRepository.findById(mission_id)
+        Mission mission = missionRepository.findById(missionId)
                 .orElseThrow(()-> new MissionException(MissionErrorCode.NOT_FOUND));
 
-        if (memberMissionRepository.existsByMemberIdAndMissionId(member_id, mission_id)){
+        if (memberMissionRepository.existsByMemberIdAndMissionId(memberId, missionId)){
             throw new MissionException(MemberMissionErrorCode.ALREADY_JOINED);
         }
 
@@ -51,12 +51,12 @@ public class MemberMissionService {
     }
 
     public MemberMissionResDTO.MyMissionListDTO getMyMissions(
-            Long member_id,
+            Long memberId,
             String status,
             Integer page
     ){
         MissionStatus missionStatus = MissionStatus.from(status);
-        Member member = getMember(member_id);
+        Member member = getMember(memberId);
         PageRequest pageRequest = PageRequest.of(page-1, 10);
         Page<MemberMission> result = memberMissionRepository.findMemberMissionByMemberAndStatus(member,missionStatus, pageRequest);
         return MemberMissionConverter.toMyMemberList(result);
@@ -64,12 +64,12 @@ public class MemberMissionService {
 
     @Transactional
     public MemberMissionResDTO.PatchMissionDTO updateMyMissions(
-            Long memberMission_id,
+            Long memberMissionId,
             String status
     ){
         MissionStatus missionStatus = MissionStatus.from(status);
         MemberMission memberMission = memberMissionRepository
-                .findById(memberMission_id)
+                .findById(memberMissionId)
                 .orElseThrow(() -> new MemberMissionException(MemberMissionErrorCode.NOT_FOUND));
 
         memberMission.updateStatus(missionStatus);
@@ -80,8 +80,8 @@ public class MemberMissionService {
         return MemberMissionConverter.toPatchDTO(memberMission);
     }
 
-    private Member getMember(Long member_id) {
-        return memberRepository.findById(member_id)
+    private Member getMember(Long memberId) {
+        return memberRepository.findById(memberId)
                 .orElseThrow(() -> new MissionException(MemberErrorCode.NOT_FOUND));
     }
 }

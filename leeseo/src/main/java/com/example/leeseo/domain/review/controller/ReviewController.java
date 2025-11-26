@@ -31,28 +31,28 @@ public class ReviewController implements ReviewControllerDocs{
         return result;
     }
 
-    @PostMapping("/store/{store_id}/review")
+    @PostMapping("/store/{storeId}/review")
     public ApiResponse<ReviewResDTO.JoinDTO> saveReview(
-            @RequestParam Long member_id,
-            @PathVariable Long store_id,
+            @RequestParam Long memberId,
+            @PathVariable Long storeId,
             @Valid @RequestBody ReviewReqDTO.JoinDTO dto
     ){
-        return ApiResponse.onSuccess(ReviewSuccessCode.OK, storeReviewService.saveReview(member_id, store_id, dto));
+        return ApiResponse.onSuccess(ReviewSuccessCode.OK, storeReviewService.saveReview(memberId, storeId, dto));
     }
 
     @GetMapping("/reviews")
     public ApiResponse<ReviewResDTO.ReviewPreViewListDTO> getReviews(
-            @RequestParam Long store_id,
+            @RequestParam Long storeId,
             @PageValid Integer page
     ){
-        return ApiResponse.onSuccess(ReviewSuccessCode.FOUND, reviewQueryService.findReview(store_id, page));
+        return ApiResponse.onSuccess(ReviewSuccessCode.FOUND, reviewQueryService.findReview(storeId, page));
     }
 
     @GetMapping("/my-reviews")
     public ApiResponse<ReviewResDTO.MyReviewListDTO> getMyReviews(
-            @RequestParam Long member_id,
+            @RequestParam Long memberId,
             @PageValid Integer page
     ){
-        return ApiResponse.onSuccess(ReviewSuccessCode.FOUND, reviewQueryService.findMyReview(member_id, page));
+        return ApiResponse.onSuccess(ReviewSuccessCode.FOUND, reviewQueryService.findMyReview(memberId, page));
     }
 }

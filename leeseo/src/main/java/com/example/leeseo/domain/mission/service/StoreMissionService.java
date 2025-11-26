@@ -24,10 +24,10 @@ public class StoreMissionService {
 
     @Transactional
     public MissionResDTO.JoinDTO saveMission(
-            Long store_id,
+            Long storeId,
             MissionReqDTO.JoinDTO dto
     ){
-        Store store = storeRepository.findById(store_id)
+        Store store = storeRepository.findById(storeId)
                 .orElseThrow(() -> new MissionException(StoreErrorCode.NOT_FOUND));
 
         Mission mission = MissionConverter.toMission(store, dto);
@@ -37,10 +37,10 @@ public class StoreMissionService {
     }
 
     public MissionResDTO.StoreMissionListDTO getStoreMissions(
-            Long store_id,
+            Long storeId,
             Integer page
     ){
-        Store store = storeRepository.findById(store_id)
+        Store store = storeRepository.findById(storeId)
                 .orElseThrow(() -> new MissionException(StoreErrorCode.NOT_FOUND));
         PageRequest pageRequest = PageRequest.of(page -1 , 10);
         Page<Mission> result = missionRepository.findAllByStore(store, pageRequest);

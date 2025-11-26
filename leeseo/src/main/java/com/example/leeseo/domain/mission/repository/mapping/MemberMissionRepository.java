@@ -21,7 +21,7 @@ public interface MemberMissionRepository extends JpaRepository<MemberMission, Lo
     boolean existsByMemberIdAndMissionId(Long memberId, Long missionId);
     
 
-    @Query("SELECT new com.example.leeseo.domain.mission.dto.MemberMissionDto(s.name, m.point, m.created_at, m.conditional, mm.status)" +
+    @Query("SELECT new com.example.leeseo.domain.mission.dto.MemberMissionDto(s.name, m.point, m.createdAt, m.conditional, mm.status)" +
             "FROM MemberMission mm JOIN mm.mission m  JOIN m.store s" +
             " WHERE mm.member.id = :memberId" +
             "  AND mm.status = :status" +
@@ -33,7 +33,7 @@ public interface MemberMissionRepository extends JpaRepository<MemberMission, Lo
             Pageable pageable);
 
     @Query("SELECT new com.example.leeseo.domain.mission.dto" +
-            ".MemberMissionHomeDto(s.name, m.conditional, m.point, m.created_at)" +
+            ".MemberMissionHomeDto(s.name, m.conditional, m.point, m.createdAt)" +
             " FROM MemberMission mm" +
             " JOIN mm.mission m" +
             " JOIN m.store s" +

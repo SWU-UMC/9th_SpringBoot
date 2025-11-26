@@ -13,14 +13,14 @@ public class MemberMissionResDTO {
     @Builder
     @Schema(name = "MemberMissionResponse")
     public record JoinDTO(
-        Long member_mission_id,
+        Long memberMissionId,
         LocalDateTime createdAt
     ){
     }
 
     @Builder
     public record PatchMissionDTO(
-            Long member_mission_id,
+            Long memberMissionId,
             MissionStatus status,
             LocalDateTime updatedAt
     ){
