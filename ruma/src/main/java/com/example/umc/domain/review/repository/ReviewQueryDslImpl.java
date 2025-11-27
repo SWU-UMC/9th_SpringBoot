@@ -138,10 +138,9 @@ public class ReviewQueryDslImpl implements ReviewQueryDsl {
                 .orderBy(review.reviewId.desc())
                 .fetch();
     }
-    // 특정 가게의 리뷰 목록 조회
-    public List<QReviewDto> findStoreReviews(Long storeId, int page, int pageSize) {
+    //특정 사용자의 리뷰 리스트 반환
+    public List<QReviewDto> findMemberReviews(Long memberId, int page, int pageSize) {
         JPAQueryFactory queryFactory = new JPAQueryFactory(em);
-
         QReview review = QReview.review;
         QMission mission = QMission.mission;
         QStore store = QStore.store;
@@ -160,7 +159,7 @@ public class ReviewQueryDslImpl implements ReviewQueryDsl {
                 .from(review)
                 .leftJoin(review.mission, mission)
                 .leftJoin(mission.store, store)
-                .where(store.storeId.eq(storeId))
+                .where(review.member.memberId.eq(memberId))
                 .orderBy(review.reviewId.desc())
                 .offset((long) page * pageSize)
                 .limit(pageSize)
@@ -168,21 +167,16 @@ public class ReviewQueryDslImpl implements ReviewQueryDsl {
     }
 
 
-    // 특정 가게의 전체 리뷰 개수 조회
-    public long countStoreReviews(Long storeId) {
+
+    public long countMemberReviews(Long memberId) {
         JPAQueryFactory queryFactory = new JPAQueryFactory(em);
+
         QReview review = QReview.review;
-        QMission mission = QMission.mission;
-        QStore store = QStore.store;
 
         return queryFactory
                 .select(review.count())
                 .from(review)
-                .leftJoin(review.mission, mission)
-                .leftJoin(mission.store, store)
-                .where(store.storeId.eq(storeId))
+                .where(review.member.memberId.eq(memberId))
                 .fetchOne();
     }
-
-
 }

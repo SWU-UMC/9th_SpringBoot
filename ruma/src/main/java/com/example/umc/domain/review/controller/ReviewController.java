@@ -54,10 +54,10 @@ public class ReviewController {
 
     @GetMapping
     public ApiResponse<ReviewPreViewListDTO> getReviews(
-            @RequestParam Long storeId,
-            @RequestParam(defaultValue = "0") Integer page
+            @RequestParam Long memberId,
+            @RequestParam(defaultValue = "1") Integer page
     ) {
-        var result = reviewQueryService.getStoreReviewList(storeId, page);
+        var result = reviewQueryService.getMemberReviewList(memberId, page);
 
         return ApiResponse.onSuccess(
                 ReviewSuccessCode.CREATED,

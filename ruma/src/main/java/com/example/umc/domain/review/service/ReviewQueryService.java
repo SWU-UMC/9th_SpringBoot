@@ -46,18 +46,18 @@ public class ReviewQueryService {
         }
     }
 
-    //storeId 기반 리뷰 조회 (페이징 포함)
-    public ReviewPreViewListDTO getStoreReviewList(Long storeId, Integer page) {
+    //memberId 기반 리뷰 조회 (페이징 포함)
+    public ReviewPreViewListDTO getMemberReviewList(Long memberId, Integer page) {
 
         int pageSize = 10;
 
         // 1) 리뷰 목록 조회 (QueryDSL)
         List<QReviewDto> reviews =
-                reviewQueryDSL.findStoreReviews(storeId, page, pageSize);
+                reviewQueryDSL.findMemberReviews(memberId, page, pageSize);
 
         // 2) 전체 리뷰 수 조회
         long totalCount =
-                reviewQueryDSL.countStoreReviews(storeId);
+                reviewQueryDSL.countMemberReviews(memberId);
 
         // 3) ReviewPreviewDTO 로 변환
         List<ReviewPreviewDTO> previewList =
@@ -75,7 +75,7 @@ public class ReviewQueryService {
                 .reviewList(previewList)
                 .listSize(pageSize)
                 .totalPage((int) Math.ceil((double) totalCount / pageSize))
-                .totalElement(totalCount)  // ⭐ record 필드명에 맞춤 (totalElements 아님!)
+                .totalElement(totalCount)
                 .isFirst(page == 0)
                 .isLast((page + 1) * pageSize >= totalCount)
                 .build();

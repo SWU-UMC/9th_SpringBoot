@@ -12,8 +12,8 @@ public interface ReviewQueryDsl {
 
     List<QReviewDto> findMyReviews(Predicate predicate, Long cursorId);
 
-    List<QReviewDto> findStoreReviews(Long storeId, int page, int pageSize);
-    long countStoreReviews(Long storeId);
+    List<QReviewDto> findMemberReviews(Long memberId, int page, int pageSize);
+    long countMemberReviews(Long memberId);
 
 }
 
