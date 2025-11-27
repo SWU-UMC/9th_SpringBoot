@@ -8,6 +8,7 @@ import com.example.umc.domain.mission.entity.QMission;
 import com.example.umc.domain.review.repository.ReviewQueryDslImpl;
 import com.querydsl.core.BooleanBuilder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -49,11 +50,18 @@ public class ReviewQueryService {
     //memberId 기반 리뷰 조회 (페이징 포함)
     public ReviewPreViewListDTO getMemberReviewList(Long memberId, Integer page) {
 
-        int pageSize = 10;
+        if (page == null || page < 1) page = 1;
+
+        PageRequest pageRequest = PageRequest.of(page - 1, 10);  // ← 여기!
+
+        // QueryDSL로 넘길 pageIndex
+        int pageIndex = pageRequest.getPageNumber();  // 즉 (page - 1)
+
+        int pageSize = pageRequest.getPageSize();
 
         // 1) 리뷰 목록 조회 (QueryDSL)
         List<QReviewDto> reviews =
-                reviewQueryDSL.findMemberReviews(memberId, page, pageSize);
+                reviewQueryDSL.findMemberReviews(memberId, pageIndex, pageSize);
 
         // 2) 전체 리뷰 수 조회
         long totalCount =
@@ -76,8 +84,8 @@ public class ReviewQueryService {
                 .listSize(pageSize)
                 .totalPage((int) Math.ceil((double) totalCount / pageSize))
                 .totalElement(totalCount)
-                .isFirst(page == 0)
-                .isLast((page + 1) * pageSize >= totalCount)
+                .isFirst(page == 1)
+                .isLast(page * pageSize >= totalCount)
                 .build();
     }
 
