@@ -38,6 +38,7 @@ public class ReviewQueryDslImpl implements ReviewQueryDsl {
                 .select(Projections.constructor(
                         QReviewDto.class,
                         review.reviewId,
+                        review.mission.missionId,
                         review.createdAt,
                         review.content,
                         review.rating,
@@ -64,6 +65,7 @@ public class ReviewQueryDslImpl implements ReviewQueryDsl {
                 .select(Projections.constructor(
                         QReviewDto.class,
                         review.reviewId,
+                        review.mission.missionId,
                         review.createdAt,
                         review.content,
                         review.rating,
@@ -90,6 +92,7 @@ public class ReviewQueryDslImpl implements ReviewQueryDsl {
                 .select(Projections.constructor(
                         QReviewDto.class,
                         review.reviewId,
+                        review.mission.missionId,
                         review.createdAt,
                         review.content,
                         review.rating,
@@ -124,6 +127,7 @@ public class ReviewQueryDslImpl implements ReviewQueryDsl {
                 .select(Projections.constructor(
                         QReviewDto.class,
                         review.reviewId,
+                        review.mission.missionId,
                         review.createdAt,
                         review.content,
                         review.rating,
@@ -149,6 +153,7 @@ public class ReviewQueryDslImpl implements ReviewQueryDsl {
                 .select(Projections.constructor(
                         QReviewDto.class,
                         review.reviewId,
+                        review.mission.missionId,
                         review.createdAt,
                         review.content,
                         review.rating,
