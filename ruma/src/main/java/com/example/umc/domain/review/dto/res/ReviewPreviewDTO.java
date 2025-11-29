@@ -4,7 +4,7 @@ import lombok.Builder;
 
 @Builder
 public record ReviewPreviewDTO(
-        Long reviewId,
+        Long missionId,
         Long memberId,
         Integer rating,
         String content

@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 @Getter
 public class QReviewDto {
     private Long reviewId;
+    private Long missionId;
     private LocalDateTime createdAt;
     private String content;
     private Integer rating;
@@ -14,9 +15,10 @@ public class QReviewDto {
     private String memberName;
     private Long memberId;
 
-    public QReviewDto(Long reviewId, LocalDateTime createdAt, String content,
+    public QReviewDto(Long reviewId, Long missionId, LocalDateTime createdAt, String content,
                       Integer rating, String storeName, String memberName, Long memberId) {
         this.reviewId = reviewId;
+        this.missionId = missionId;
         this.createdAt = createdAt;
         this.content = content;
         this.rating = rating;

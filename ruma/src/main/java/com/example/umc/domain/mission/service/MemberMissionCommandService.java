@@ -18,6 +18,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class MemberMissionCommandService {
@@ -51,6 +53,19 @@ public class MemberMissionCommandService {
 
         // 5. DTO 변환 후 반환
         return MemberMissionConverter.toChallengeDTO(memberMission);
+    }
+    // 내가 진행한 미션 목록
+    @Transactional
+    public List<MemberMissionResDTO.ChallengeDTO> getMyMissionList(){
+
+        Member member=memberRepository.findById(FIXED_MEMBER_ID)
+                .orElseThrow(() -> new MemberException(MemberErrorCode.NOT_FOUND));
+        List<MemberMission> memberMissions = memberMissionRepository.findByMember(member);
+
+        return memberMissions.stream()
+                .map(MemberMissionConverter::toChallengeDTO)
+                .toList();
+
     }
 }
 

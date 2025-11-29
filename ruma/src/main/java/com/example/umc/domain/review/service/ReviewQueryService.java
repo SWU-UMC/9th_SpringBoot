@@ -71,7 +71,7 @@ public class ReviewQueryService {
         List<ReviewPreviewDTO> previewList =
                 reviews.stream()
                         .map(r -> ReviewPreviewDTO.builder()
-                                .reviewId(r.getReviewId())
+                                .missionId(r.getMissionId())
                                 .memberId(r.getMemberId())
                                 .rating(r.getRating())
                                 .content(r.getContent())
