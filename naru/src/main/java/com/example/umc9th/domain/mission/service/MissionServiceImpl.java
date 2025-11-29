@@ -4,15 +4,23 @@ import com.example.umc9th.domain.mission.converter.MissionConverter;
 import com.example.umc9th.domain.mission.dto.MissionRequestDto;
 import com.example.umc9th.domain.mission.dto.MissionResponseDto;
 import com.example.umc9th.domain.mission.entity.Mission;
+import com.example.umc9th.domain.mission.entity.enums.MissionStatus;
 import com.example.umc9th.domain.mission.entity.mapping.UserMission;
 import com.example.umc9th.domain.mission.error.MissionErrorCode; // MissionErrorCode import
 import com.example.umc9th.domain.mission.repository.MissionRepository; // (가정)
 import com.example.umc9th.domain.mission.repository.UserMissionRepository; // (가정)
+import com.example.umc9th.domain.store.entity.Store;
+import com.example.umc9th.domain.store.error.StoreErrorCode;
+import com.example.umc9th.domain.store.repository.StoreRepository;
 import com.example.umc9th.domain.user.entity.User;
 import com.example.umc9th.domain.user.error.UserErrorCode; // UserErrorCode import
 import com.example.umc9th.domain.user.repository.UserRepository; // (가정)
+import com.example.umc9th.global.common.dto.SliceResponseDto;
 import com.example.umc9th.global.entity.apiPayload.exception.GeneralException; // GeneralException import
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +32,7 @@ public class MissionServiceImpl implements MissionService {
     private final UserRepository userRepository;
     private final MissionRepository missionRepository;
     private final UserMissionRepository userMissionRepository;
+    private final StoreRepository storeRepository;
 
     @Override
     public MissionResponseDto.ChallengeResult challengeMission(MissionRequestDto.ChallengeMission request) {
@@ -48,5 +57,65 @@ public class MissionServiceImpl implements MissionService {
 
         // 5. 결과 DTO로 변환하여 반환
         return MissionConverter.toChallengeResultDto(savedUserMission);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public SliceResponseDto<MissionResponseDto.MissionPreviewDto> getMissionsByStore(Long storeId, Integer page) {
+
+        // 가게 존재 확인
+        Store store = storeRepository.findById(storeId)
+                .orElseThrow(() -> new GeneralException(StoreErrorCode.STORE_NOT_FOUND));
+
+        // PageRequest 생성 (1-based -> 0-based, 10개씩, 생성일 최신순)
+        PageRequest pageRequest = PageRequest.of(page - 1, 10, Sort.by("createdAt").descending());
+
+        // Repository 조회
+        Slice<Mission> missionSlice = missionRepository.findAllByStoreId(storeId, pageRequest);
+
+        // Converter 변환
+        return MissionConverter.toMissionPreviewList(missionSlice);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public SliceResponseDto<MissionResponseDto.MyMissionDto> getMyMissions(Long userId, MissionStatus status, Integer page) {
+        // 유저 존재 확인
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new GeneralException(UserErrorCode.USER_NOT_FOUND));
+
+        // PageRequest 생성 (최신순 정렬)
+        PageRequest pageRequest = PageRequest.of(page - 1, 10, Sort.by("createdAt").descending());
+
+        // Repository 조회
+        Slice<UserMission> userMissionSlice = userMissionRepository.findAllByUserIdAndStatus(user.getId(), status, pageRequest);
+
+        // Converter 변환
+        return MissionConverter.toMyMissionList(userMissionSlice);
+    }
+
+    @Override
+    @Transactional
+    public MissionResponseDto.MyMissionDto completeMission(Long userMissionId, Long userId) {
+
+        // 미션 조회
+        UserMission userMission = userMissionRepository.findById(userMissionId)
+                .orElseThrow(() -> new GeneralException(MissionErrorCode.MISSION_NOT_FOUND));
+
+        // 소유자 검증
+        if (!userMission.getUser().getId().equals(userId)) {
+            throw new GeneralException(MissionErrorCode.MISSION_NOT_OWNER);
+        }
+
+        // 완료 여부 확인
+        if (userMission.getStatus() == MissionStatus.COMPLETED) {
+            throw new GeneralException(MissionErrorCode.MISSION_ALREADY_COMPLETED);
+        }
+
+        // 상태 변경
+        userMission.complete();
+
+        // 반환
+        return MissionConverter.toMyMissionDto(userMission);
     }
 }
