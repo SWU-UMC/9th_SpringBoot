@@ -1,6 +1,7 @@
 package com.example.umc.domain.member.entity;
 
 import com.example.umc.domain.member.enums.Gender;
+import com.example.umc.domain.member.enums.Role;
 import com.example.umc.global.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -23,6 +24,10 @@ public class Member extends BaseEntity {
 
     @Column(name = "password", nullable = false)
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
 
     @Column(name ="name" , length = 50, nullable = false)
     private String name;
