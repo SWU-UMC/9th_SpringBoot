@@ -25,6 +25,9 @@ public class Member extends BaseEntity {
     @Column(nullable = false, length = 20)
     private String email;
 
+    @Column(nullable = false)
+    private String password;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     @Builder.Default
@@ -38,7 +41,7 @@ public class Member extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Builder.Default
-    private Role role = Role.CUSTOMER;
+    private Role role = Role.ROLE_USER;
 
 
 
