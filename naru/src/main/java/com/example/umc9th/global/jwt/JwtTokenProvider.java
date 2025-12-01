@@ -1,6 +1,7 @@
 package com.example.umc9th.global.jwt;
 
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,25 +14,40 @@ import java.util.Date;
 public class JwtTokenProvider {
 
     private final Key key;
-    private final long tokenValidityInMilliseconds = 1000L * 60 * 60; // 1시간
+    private final long accessTokenValidity = 1000L * 60 * 60; // 1시간
+    private final long refreshTokenValidity = 1000L * 60 * 60 * 24 * 14; // 2주
 
-    // application.yml에 jwt.secret 설정 필요 (32글자 이상)
     public JwtTokenProvider(@Value("${jwt.secret}") String secret) {
-        this.key = Keys.hmacShaKeyFor(secret.getBytes());
+        byte[] keyBytes = Decoders.BASE64.decode(secret);
+        this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    // 토큰 생성
-    public String createToken(String email, String role) {
-        Date now = new Date();
-        Date validity = new Date(now.getTime() + tokenValidityInMilliseconds);
+    // Access Token 생성
+    public String createAccessToken(String email, String role) {
+        return createToken(email, role, accessTokenValidity);
+    }
 
-        return Jwts.builder()
+    // Refresh Token 생성
+    public String createRefreshToken(String email) {
+        return createToken(email, null, refreshTokenValidity);
+    }
+
+    // (내부용) 토큰 생성 로직 통합
+    private String createToken(String email, String role, long validityInMilliseconds) {
+        Date now = new Date();
+        Date validity = new Date(now.getTime() + validityInMilliseconds);
+
+        JwtBuilder builder = Jwts.builder()
                 .setSubject(email)
-                .claim("role", role)
                 .setIssuedAt(now)
                 .setExpiration(validity)
-                .signWith(key, SignatureAlgorithm.HS256)
-                .compact();
+                .signWith(key, SignatureAlgorithm.HS256);
+
+        if (role != null) {
+            builder.claim("role", role);
+        }
+
+        return builder.compact();
     }
 
     // 토큰에서 이메일 추출

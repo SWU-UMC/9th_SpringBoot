@@ -21,5 +21,8 @@ public class AuthResponseDto {
 
         @Schema(description = "JWT 액세스 토큰")
         private String accessToken;
+
+        @Schema(description = "JWT 리프레시 토큰")
+        private String refreshToken;
     }
 }
