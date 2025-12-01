@@ -1,16 +1,19 @@
 package com.example.server_9th.service;
 
 
+import com.example.server_9th.converter.ReviewConverter;
 import com.example.server_9th.domain.QRegion;
 import com.example.server_9th.domain.QStore;
 import com.example.server_9th.domain.mapping.review.QReview;
 import com.example.server_9th.domain.mapping.review.Review;
+import com.example.server_9th.dto.ReviewDto;
 import com.example.server_9th.repository.ReviewRepo.ReviewRepository;
 import com.querydsl.core.BooleanBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -47,7 +50,7 @@ public class ReviewQueryService {
     }
 
     //내가 작성한 리뷰 보기
-    public List<Review> getMyReviews(Long memberId, String storeName, Double rating){
+    public List<ReviewDto.MyReviewResponseDto> getMyReviews(Long memberId, String storeName, Double rating){
 
         QReview review = QReview.review;
         QStore store = QStore.store;
@@ -67,6 +70,8 @@ public class ReviewQueryService {
             builder.and(review.rating.between(min, max));
         }
 
-        return reviewRepository.searchMyReviews(builder);
+        return reviewRepository.searchMyReviews(builder).stream()
+                .map(ReviewConverter::toMyReviewResponseDto)
+                .collect(Collectors.toList());
     }
 }
