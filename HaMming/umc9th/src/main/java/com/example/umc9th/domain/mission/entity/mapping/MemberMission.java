@@ -41,4 +41,16 @@ public class MemberMission {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, length = 20)
     private MissionStatus status = MissionStatus.OnGoing;
+
+    public void setStatus(MissionStatus status) {
+        this.status = status;
+    }
+
+    public void setIsSuccess(Boolean isSuccess) {
+        this.isSuccess = isSuccess;
+    }
+
+    public void setSuccessTime(LocalDateTime successTime) {
+        this.successTime = successTime;
+    }
 }

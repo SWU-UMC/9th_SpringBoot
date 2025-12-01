@@ -10,10 +10,6 @@ import java.util.List;
 
 public interface MissionRepository extends JpaRepository<Mission, Long> {
 
-    /**
-     * - regionId 기준 필터링
-     * - 특정 사용자가 이미 수행 중인 미션은 제외 가능
-     */
     @Query("""
         SELECT m
         FROM Mission m
@@ -35,9 +31,17 @@ public interface MissionRepository extends JpaRepository<Mission, Long> {
             @Param("cursor") Long cursor,
             Pageable pageable
     );
-
-    /**
-     * 단순히 지역 기준으로 미션 조회
-     */
     List<Mission> findByRegionIdAndIdLessThanOrderByIdDesc(Long regionId, Long cursor, Pageable pageable);
+
+    @Query("""
+        SELECT m
+        FROM Mission m
+        JOIN FETCH m.store s
+        WHERE s.id = :storeId
+        ORDER BY m.id DESC
+        """)
+    List<Mission> findByStoreIdPaged(
+            @Param("storeId") Long storeId,
+            Pageable pageable
+    );
 }

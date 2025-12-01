@@ -1,0 +1,23 @@
+package com.example.umc9th.global.config;
+
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import jakarta.persistence.EntityManager;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+/**
+ * QueryDSL 설정 파일
+ * JPAQueryFactory Bean 등록 필수
+ */
+@Configuration
+@RequiredArgsConstructor
+public class QuerydslConfig {
+
+    private final EntityManager em;
+
+    @Bean
+    public JPAQueryFactory jpaQueryFactory() {
+        return new JPAQueryFactory(em);
+    }
+}
