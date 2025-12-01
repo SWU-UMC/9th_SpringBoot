@@ -12,7 +12,9 @@ public enum MissionSuccessCode implements BaseSuccessCode {
     FOUND(HttpStatus.OK,
             "MEMBER200_1",
             "성공적으로 미션을 조회했습니다."),
-    ;
+    STORE_MISSION_LIST_SUCCESS(HttpStatus.OK,
+            "STOREMISSION200_1","가게의 미션 목록을 성공적으로 조회했습니다.");
+
 
     private final HttpStatus status;
     private final String code;

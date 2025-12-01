@@ -11,5 +11,4 @@ public interface MemberMissionRepository extends JpaRepository<MemberMission, Lo
 
     boolean existsByMemberAndMission(Member member, Mission mission);
     List<MemberMission> findByMember(Member member);
-
 }

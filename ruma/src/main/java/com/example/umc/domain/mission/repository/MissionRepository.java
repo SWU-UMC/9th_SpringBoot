@@ -14,4 +14,5 @@ public interface MissionRepository extends JpaRepository<Mission, Long> {
             "AND NOT EXISTS (SELECT 1 FROM MemberMission um WHERE um.member.memberId = :memberId AND um.mission.missionId = m.missionId) " +
             "ORDER BY m.createdAt DESC")
     List<Mission> findAvailableMissions(@Param("memberId") Long memberId, @Param("regionId") Long regionId, Pageable pageable);
+    List<Mission> findByStore_StoreId(Long storeId);
 }
