@@ -17,4 +17,12 @@ public class MemberResDTO {
         private Long memberId;      // 생성된 회원 ID
         private LocalDateTime createdAt; // 가입 일시
     }
+
+    // 로그인
+    @Builder
+    public record LoginDTO(
+            Long memberId,
+            String accessToken,
+            LocalDateTime expirationTime
+    ){}
 }

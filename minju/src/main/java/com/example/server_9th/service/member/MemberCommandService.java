@@ -6,4 +6,7 @@ import com.example.server_9th.dto.MemberResDTO;
 public interface MemberCommandService {
 
     MemberResDTO.JoinDTO signup(MemberReqDTO.JoinDTO request);
+
+    MemberResDTO.LoginDTO login(MemberReqDTO.LoginDTO dto);
+
 }
