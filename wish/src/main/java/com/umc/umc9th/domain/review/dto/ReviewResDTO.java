@@ -41,4 +41,14 @@ public class ReviewResDTO {
       Integer image_id,
       String image_url
   ) {}
+
+  @Builder
+  public record MyReviewListDTO(
+      List<MyReviewResponse> reviews,
+      Integer listSize,
+      Integer totalPage,
+      Long totalElements,
+      Boolean isFirst,
+      Boolean isLast
+  ) {}
 }

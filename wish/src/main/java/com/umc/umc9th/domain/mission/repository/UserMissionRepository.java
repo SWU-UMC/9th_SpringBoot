@@ -2,6 +2,8 @@ package com.umc.umc9th.domain.mission.repository;
 
 import com.umc.umc9th.domain.mission.entity.UserMission;
 import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -12,6 +14,9 @@ public interface UserMissionRepository extends JpaRepository<UserMission, Intege
 
   // 진행중인 미션 조회
   List<UserMission> findAllByUser_IdAndStatusOrderByStartedAtDesc(Integer userId, String status);
+
+  // 진행중인 미션 조회 (페이징)
+  Page<UserMission> findAllByUser_IdAndStatus(Integer userId, String status, Pageable pageable);
 
   // 완료된 미션 조회
   List<UserMission> findAllByUser_IdAndStatusOrderByCompletedAtDesc(Integer userId, String status);

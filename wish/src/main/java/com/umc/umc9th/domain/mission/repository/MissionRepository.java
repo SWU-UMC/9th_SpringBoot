@@ -1,6 +1,8 @@
 package com.umc.umc9th.domain.mission.repository;
 
 import com.umc.umc9th.domain.mission.entity.Mission;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -32,4 +34,6 @@ public interface MissionRepository extends JpaRepository<Mission, Integer> {
         ORDER BY m.deadline ASC
     """, nativeQuery = true)
   List<Object[]> findAvailableMissionsInCurrentDong(@Param("userId") Integer userId);
+
+  Page<Mission> findAllByStoreId(Integer storeId, Pageable pageable);
 }
