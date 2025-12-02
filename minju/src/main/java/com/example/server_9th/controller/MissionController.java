@@ -33,7 +33,7 @@ public class MissionController {
 
         return ApiResponse.onSuccess(_OK,dto);
     }
-
+/*
     @PatchMapping("/{missionId}/complete")
     @Operation(summary = "진행중인 미션 완료 처리", description = "미션을 IN_PROGRESS → COMPLETED 로 변경하고, 변경된 미션 목록을 반환합니다.")
     public ApiResponse<MissionDto.MissionPreviewListDto> completeMission(
@@ -49,6 +49,8 @@ public class MissionController {
 
         return ApiResponse.onSuccess(_OK,dto);
     }
+
+ */
 
 
 }
