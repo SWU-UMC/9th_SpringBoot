@@ -38,11 +38,13 @@ public class ReviewQueryDslImpl implements ReviewQueryDsl {
                 .select(Projections.constructor(
                         QReviewDto.class,
                         review.reviewId,
+                        review.mission.missionId,
                         review.createdAt,
                         review.content,
                         review.rating,
                         store.name,
-                        review.member.name
+                        review.member.name,
+                        review.member.memberId
                 ))
                 .from(review)
                 .leftJoin(review.mission, mission)
@@ -63,11 +65,13 @@ public class ReviewQueryDslImpl implements ReviewQueryDsl {
                 .select(Projections.constructor(
                         QReviewDto.class,
                         review.reviewId,
+                        review.mission.missionId,
                         review.createdAt,
                         review.content,
                         review.rating,
                         store.name,
-                        review.member.name
+                        review.member.name,
+                        review.member.memberId
                 ))
                 .from(review)
                 .leftJoin(review.mission, mission)
@@ -88,11 +92,13 @@ public class ReviewQueryDslImpl implements ReviewQueryDsl {
                 .select(Projections.constructor(
                         QReviewDto.class,
                         review.reviewId,
+                        review.mission.missionId,
                         review.createdAt,
                         review.content,
                         review.rating,
                         store.name,
-                        review.member.name
+                        review.member.name,
+                        review.member.memberId
                 ))
                 .from(review)
                 .leftJoin(review.mission, mission)
@@ -121,11 +127,13 @@ public class ReviewQueryDslImpl implements ReviewQueryDsl {
                 .select(Projections.constructor(
                         QReviewDto.class,
                         review.reviewId,
+                        review.mission.missionId,
                         review.createdAt,
                         review.content,
                         review.rating,
                         store.name,
-                        review.member.name
+                        review.member.name,
+                        review.member.memberId
                 ))
                 .from(review)
                 .leftJoin(review.mission, mission)
@@ -134,5 +142,46 @@ public class ReviewQueryDslImpl implements ReviewQueryDsl {
                 .orderBy(review.reviewId.desc())
                 .fetch();
     }
+    //특정 사용자의 리뷰 리스트 반환
+    public List<QReviewDto> findMemberReviews(Long memberId, int page, int pageSize) {
+        JPAQueryFactory queryFactory = new JPAQueryFactory(em);
+        QReview review = QReview.review;
+        QMission mission = QMission.mission;
+        QStore store = QStore.store;
 
+        return queryFactory
+                .select(Projections.constructor(
+                        QReviewDto.class,
+                        review.reviewId,
+                        review.mission.missionId,
+                        review.createdAt,
+                        review.content,
+                        review.rating,
+                        store.name,
+                        review.member.name,
+                        review.member.memberId
+                ))
+                .from(review)
+                .leftJoin(review.mission, mission)
+                .leftJoin(mission.store, store)
+                .where(review.member.memberId.eq(memberId))
+                .orderBy(review.reviewId.desc())
+                .offset((long) page * pageSize)
+                .limit(pageSize)
+                .fetch();
+    }
+
+
+
+    public long countMemberReviews(Long memberId) {
+        JPAQueryFactory queryFactory = new JPAQueryFactory(em);
+
+        QReview review = QReview.review;
+
+        return queryFactory
+                .select(review.count())
+                .from(review)
+                .where(review.member.memberId.eq(memberId))
+                .fetchOne();
+    }
 }

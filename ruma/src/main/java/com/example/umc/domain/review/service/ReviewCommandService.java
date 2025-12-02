@@ -19,9 +19,11 @@ import com.example.umc.domain.store.entity.Store;
 import com.example.umc.domain.store.exception.StoreException;
 import com.example.umc.domain.store.exception.code.StoreErrorCode;
 import com.example.umc.domain.store.repository.StoreRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -37,7 +39,7 @@ public class ReviewCommandService {
     private static final Long FIXED_MEMBER_ID = 1L;
 
     @Transactional
-    public ReviewResDTO.CreateDTO createReview(ReviewReqDTO.CreateDTO dto) {
+    public ReviewResDTO.CreateDTO createReview(@RequestBody @Valid ReviewReqDTO.CreateDTO dto) {
 
         // 멤버 고정
         Member member = memberRepository.findById(FIXED_MEMBER_ID)
@@ -46,11 +48,6 @@ public class ReviewCommandService {
         // 가게 조회
         Store store = storeRepository.findById(dto.storeId())
                 .orElseThrow(() -> new StoreException(StoreErrorCode.NOT_FOUND));
-
-        // 평점 멀티 검증
-        if (dto.rating() < 0 || dto.rating() > 5) {
-            throw new ReviewException(ReviewErrorCode.INVALID_RATING);
-        }
 
         // 리뷰 저장
         Review review = ReviewConverter.toReview(dto, member, store);

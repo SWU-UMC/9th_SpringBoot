@@ -10,11 +10,20 @@ public class MemberMissionConverter {
 
     // Entity → DTO
     public static MemberMissionResDTO.ChallengeDTO toChallengeDTO(MemberMission memberMission) {
+
+        Mission mission = memberMission.getMission();
+        var store = mission.getStore();   // Mission → Store 접근
+
         return MemberMissionResDTO.ChallengeDTO.builder()
                 .memberMissionId(memberMission.getMemberMissionId())
-                .missionId(memberMission.getMission().getMissionId())
-                .memberId(memberMission.getMember().getMemberId())
+                .missionId(mission.getMissionId())
+                .storeId(store.getStoreId())
+                .storeName(store.getName())
                 .status(memberMission.getStatus().name())
+                .description(mission.getDescription())
+                .point(mission.getPoint())
+                .deadline(mission.getDeadline())
+                .completedAt(memberMission.getCompletedAt())
                 .build();
     }
 
@@ -27,3 +36,4 @@ public class MemberMissionConverter {
                 .build();
     }
 }
+
