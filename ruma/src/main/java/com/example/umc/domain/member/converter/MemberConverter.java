@@ -27,4 +27,14 @@ public class MemberConverter {
                 .createdAt(member.getCreatedAt())
                 .build();
     }
+
+    public static MemberResDTO.LoginDTO toLoginDTO(
+            Member member,
+            String accessToken
+    ){
+        return MemberResDTO.LoginDTO.builder()
+                .memberId(member.getMemberId())
+                .accessToken(accessToken)
+                .build();
+    }
 }

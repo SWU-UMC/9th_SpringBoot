@@ -6,7 +6,6 @@ import com.example.umc.domain.member.dto.res.MemberResDTO;
 import com.example.umc.domain.member.entity.Member;
 import com.example.umc.domain.member.enums.Role;
 import com.example.umc.domain.member.repository.MemberRepository;
-import com.example.umc.domain.member.service.MemberService.MemberCommandService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
