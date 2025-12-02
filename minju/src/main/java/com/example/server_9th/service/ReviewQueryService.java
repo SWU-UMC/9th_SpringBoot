@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ReviewQueryService {
 
+    /*
     private final ReviewRepository reviewRepository;
 
     public List<Review> searchReview(String query, String type){
@@ -74,4 +75,6 @@ public class ReviewQueryService {
                 .map(ReviewConverter::toMyReviewResponseDto)
                 .collect(Collectors.toList());
     }
+
+     */
 }
