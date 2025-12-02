@@ -20,8 +20,8 @@ public class JwtUtil {
     private final Duration accessExpiration;
 
     public JwtUtil(
-        @Value("${jwt.token.secretKey}") String secret,
-        @Value("${jwt.token.expiration.access}") Long accessExpiration
+            @Value("${jwt.token.secretKey}") String secret,
+            @Value("${jwt.token.expiration.access}") Long accessExpiration
     ) {
         this.secretKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
         this.accessExpiration = Duration.ofMillis(accessExpiration);
