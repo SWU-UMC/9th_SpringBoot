@@ -19,6 +19,13 @@ public class MemberRequestDto {
 
     @Getter
     @NoArgsConstructor
+    public static class LoginRequest {
+        private String email;
+        private String password;
+    }
+
+    @Getter
+    @NoArgsConstructor
     public static class SocialSignUpRequest {
         private String socialId;
         private SocialType socialType;

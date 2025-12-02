@@ -32,4 +32,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
      */
     @Query("SELECT r FROM Review r WHERE r.member.id = :memberId ORDER BY r.createdAt DESC")
     List<Review> findReviewsByMemberId(@Param("memberId") Long memberId);
+
+    boolean existsByEmail(String email);
 }

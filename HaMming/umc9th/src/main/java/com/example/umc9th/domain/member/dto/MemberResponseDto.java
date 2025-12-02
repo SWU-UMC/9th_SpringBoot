@@ -1,6 +1,8 @@
 package com.example.umc9th.domain.member.dto;
 
 import com.example.umc9th.domain.member.entity.Member;
+import com.example.umc9th.domain.member.enums.Gender;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -8,27 +10,22 @@ public class MemberResponseDto {
 
     @Getter
     @Builder
+    @AllArgsConstructor
     public static class SignUpResponse {
         private Long memberId;
         private String email;
         private String nickname;
-        private String gender;
+        private Gender gender;
         private String birth;
-        private String userAddress;
-        private String phoneNumber;
-        private String socialType;
     }
 
-    public static SignUpResponse from(Member member) {
-        return SignUpResponse.builder()
-                .memberId(member.getId())
-                .email(member.getEmail())
-                .nickname(member.getNickname())
-                .gender(member.getGender() != null ? member.getGender().name() : null)
-                .birth(member.getBirth())
-                .userAddress(member.getUserAddress())
-                .phoneNumber(member.getPhoneNumber())
-                .socialType(member.getSocialType() != null ? member.getSocialType().name() : null)
-                .build();
+    @Getter
+    @Builder
+    @AllArgsConstructor
+    public static class LoginResponse {
+        private Long memberId;
+        private String email;
+        private String nickname;
     }
+
 }
