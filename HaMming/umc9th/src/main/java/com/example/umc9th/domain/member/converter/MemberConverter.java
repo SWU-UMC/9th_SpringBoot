@@ -30,11 +30,13 @@ public class MemberConverter {
                 .build();
     }
 
-    public MemberResponseDto.LoginResponse toLoginResponse(Member member) {
+    public MemberResponseDto.LoginResponse toLoginResponse(Member member, String accessToken) {
         return MemberResponseDto.LoginResponse.builder()
                 .memberId(member.getId())
                 .email(member.getEmail())
                 .nickname(member.getNickname())
+                .accessToken(accessToken)
                 .build();
     }
+
 }
