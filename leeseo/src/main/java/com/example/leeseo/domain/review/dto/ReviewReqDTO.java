@@ -19,7 +19,7 @@ public class ReviewReqDTO {
         @Range(min = 0, max = 5)
         float rate,
         @NotNull
-        List<String> img_url
+        List<String> imgUrl
     ){
     }
 }

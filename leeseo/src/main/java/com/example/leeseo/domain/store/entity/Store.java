@@ -25,10 +25,10 @@ public class Store extends BaseEntity {
     private String name;
 
     @Column(name = "manager_number", nullable = false)
-    private long manager_number;
+    private long managerNumber;
 
     @Column(name = "detail_address", nullable = false)
-    private String detail_address;
+    private String detailAddress;
 
     // 연관 관계
     @OneToMany(mappedBy = "store")

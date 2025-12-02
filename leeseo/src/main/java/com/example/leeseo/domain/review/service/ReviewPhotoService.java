@@ -21,7 +21,7 @@ public class ReviewPhotoService {
 
         ReviewPhoto reviewPhoto = ReviewPhoto.builder()
                 .review(review)
-                .photo_url(photo_url)
+                .photoUrl(photo_url)
                 .build();
 
         return reviewPhotoRepository.save(reviewPhoto);

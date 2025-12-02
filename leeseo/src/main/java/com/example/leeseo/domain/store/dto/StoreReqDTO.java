@@ -11,9 +11,9 @@ public class StoreReqDTO {
           @NotBlank
           String name,
           @NotNull
-          Long manager_number,
+          Long managerNumber,
           @NotBlank
-          String detail_address
+          String detailAddress
     ){
     }
 }

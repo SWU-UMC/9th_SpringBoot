@@ -4,19 +4,21 @@ import com.example.leeseo.domain.review.dto.QReviewDto;
 import com.example.leeseo.domain.review.dto.ReviewReqDTO;
 import com.example.leeseo.domain.review.dto.ReviewResDTO;
 import com.example.leeseo.domain.review.exception.code.ReviewSuccessCode;
-import com.example.leeseo.domain.review.service.ReviewQueryService;
+import com.example.leeseo.domain.review.service.ReviewQueryServiceImpl;
 import com.example.leeseo.domain.review.service.StoreReviewService;
+import com.example.leeseo.global.annotation.PageValid;
 import com.example.leeseo.global.entity.apiPayload.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class ReviewController {
-    private final ReviewQueryService reviewQueryService;
+public class ReviewController implements ReviewControllerDocs{
+    private final ReviewQueryServiceImpl reviewQueryService;
     private final StoreReviewService storeReviewService;
 
     @GetMapping("/review/search")
@@ -29,12 +31,28 @@ public class ReviewController {
         return result;
     }
 
-    @PostMapping("/store/{store_id}/addReview")
+    @PostMapping("/store/{storeId}/review")
     public ApiResponse<ReviewResDTO.JoinDTO> saveReview(
-            @RequestParam Long member_id,
-            @PathVariable Long store_id,
+            @RequestParam Long memberId,
+            @PathVariable Long storeId,
             @Valid @RequestBody ReviewReqDTO.JoinDTO dto
     ){
-        return ApiResponse.onSuccess(ReviewSuccessCode.OK, storeReviewService.saveReview(member_id, store_id, dto));
+        return ApiResponse.onSuccess(ReviewSuccessCode.OK, storeReviewService.saveReview(memberId, storeId, dto));
+    }
+
+    @GetMapping("/reviews")
+    public ApiResponse<ReviewResDTO.ReviewPreViewListDTO> getReviews(
+            @RequestParam Long storeId,
+            @PageValid Integer page
+    ){
+        return ApiResponse.onSuccess(ReviewSuccessCode.FOUND, reviewQueryService.findReview(storeId, page));
+    }
+
+    @GetMapping("/my-reviews")
+    public ApiResponse<ReviewResDTO.MyReviewListDTO> getMyReviews(
+            @RequestParam Long memberId,
+            @PageValid Integer page
+    ){
+        return ApiResponse.onSuccess(ReviewSuccessCode.FOUND, reviewQueryService.findMyReview(memberId, page));
     }
 }

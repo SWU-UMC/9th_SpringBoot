@@ -4,11 +4,16 @@ import com.example.leeseo.global.entity.apiPayload.ApiResponse;
 import com.example.leeseo.global.entity.apiPayload.code.BaseErrorCode;
 import com.example.leeseo.global.entity.apiPayload.code.GeneralErrorCode;
 import com.example.leeseo.global.entity.apiPayload.exception.GeneralException;
+import com.example.leeseo.global.entity.apiPayload.exception.PageValidateException;
+import jakarta.validation.ConstraintDeclarationException;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import java.net.BindException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,6 +47,15 @@ public class GeneralExceptionAdvice {
 
         return ResponseEntity.status(code.getStatus()).body(errorResponse);
     }
+
+    // 페이지 검증 실패
+    @ExceptionHandler(PageValidateException.class)
+    public ResponseEntity<ApiResponse<Map<String, String>>> handlePageValidate(PageValidateException ex) {
+        return ResponseEntity
+                .status(GeneralErrorCode.VALID_FAIL.getStatus())
+                .body(ApiResponse.onFailure(GeneralErrorCode.VALID_FAIL, ex.getErrors()));
+    }
+
 
     // 그 외의 정의되지 않은 모든 예외 처리
     @ExceptionHandler

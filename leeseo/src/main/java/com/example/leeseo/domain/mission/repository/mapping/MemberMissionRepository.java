@@ -1,9 +1,13 @@
 package com.example.leeseo.domain.mission.repository.mapping;
 
+import com.example.leeseo.domain.member.entity.Member;
 import com.example.leeseo.domain.mission.dto.MemberMissionHomeDto;
 import com.example.leeseo.domain.mission.dto.MyMissionDoneDto;
 import com.example.leeseo.domain.mission.entity.mapping.MemberMission;
 import com.example.leeseo.domain.mission.dto.MemberMissionDto;
+import com.example.leeseo.domain.mission.enums.MissionStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,8 +19,9 @@ import java.util.Optional;
 public interface MemberMissionRepository extends JpaRepository<MemberMission, Long> {
 
     boolean existsByMemberIdAndMissionId(Long memberId, Long missionId);
+    
 
-    @Query("SELECT new com.example.leeseo.domain.mission.dto.MemberMissionDto(s.name, m.point, m.created_at, m.conditional, mm.status)" +
+    @Query("SELECT new com.example.leeseo.domain.mission.dto.MemberMissionDto(s.name, m.point, m.createdAt, m.conditional, mm.status)" +
             "FROM MemberMission mm JOIN mm.mission m  JOIN m.store s" +
             " WHERE mm.member.id = :memberId" +
             "  AND mm.status = :status" +
@@ -28,7 +33,7 @@ public interface MemberMissionRepository extends JpaRepository<MemberMission, Lo
             Pageable pageable);
 
     @Query("SELECT new com.example.leeseo.domain.mission.dto" +
-            ".MemberMissionHomeDto(s.name, m.conditional, m.point, m.created_at)" +
+            ".MemberMissionHomeDto(s.name, m.conditional, m.point, m.createdAt)" +
             " FROM MemberMission mm" +
             " JOIN mm.mission m" +
             " JOIN m.store s" +
@@ -46,4 +51,6 @@ public interface MemberMissionRepository extends JpaRepository<MemberMission, Lo
             "(SUM(CASE WHEN mm.status = 'DONE' THEN 1 ELSE 0 END), COUNT(mm.id))" +
             "FROM MemberMission mm" )
     Optional<MyMissionDoneDto> getMyMissionDoneCnt();
+
+    Page<MemberMission> findMemberMissionByMemberAndStatus(Member member, MissionStatus status, PageRequest pageRequest);
 }

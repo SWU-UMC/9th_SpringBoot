@@ -9,6 +9,7 @@ import com.example.leeseo.domain.store.exception.StoreException;
 import com.example.leeseo.domain.store.exception.code.LocationErrorCode;
 import com.example.leeseo.domain.store.repository.LocationRepository;
 import com.example.leeseo.domain.store.repository.StoreRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +20,12 @@ public class StoreService {
     private final LocationRepository locationRepository;
     private final StoreRepository storeRepository;
 
+    @Transactional
     public StoreResDTO.JoinDTO saveStore(
-            Long location_id,
+            Long locationId,
             StoreReqDTO.JoinDTO dto
     ){
-        Location location = locationRepository.findById(location_id)
+        Location location = locationRepository.findById(locationId)
                 .orElseThrow(() -> new StoreException(LocationErrorCode.NOT_FOUND));
 
         Store store = StoreConverter.toStore(dto,location);

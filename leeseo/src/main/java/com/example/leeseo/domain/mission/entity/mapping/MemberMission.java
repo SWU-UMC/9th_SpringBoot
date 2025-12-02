@@ -1,11 +1,13 @@
 package com.example.leeseo.domain.mission.entity.mapping;
 
 import com.example.leeseo.domain.member.entity.Member;
-import com.example.leeseo.domain.member.enums.MissionStatus;
+import com.example.leeseo.domain.mission.enums.MissionStatus;
 import com.example.leeseo.domain.mission.entity.Mission;
 import com.example.leeseo.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Builder
@@ -22,6 +24,11 @@ public class MemberMission extends BaseEntity {
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
     private MissionStatus status;
+
+    public void updateStatus(MissionStatus status){
+        this.status = status;
+        prePersist();
+    }
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
