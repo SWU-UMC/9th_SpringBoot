@@ -2,6 +2,7 @@ package com.example.umc9th.domain.member.dto;
 
 import com.example.umc9th.domain.member.enums.Gender;
 import com.example.umc9th.domain.member.enums.SocialType;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -31,5 +32,15 @@ public class MemberRequestDto {
         private SocialType socialType;
         private String nickname;
 
+    }
+
+    // 카카오
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class KakaoLoginRequest {
+        private String kakaoId;
+        private String email;
+        private String nickname;
     }
 }

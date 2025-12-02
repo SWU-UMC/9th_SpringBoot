@@ -39,4 +39,15 @@ public class MemberConverter {
                 .build();
     }
 
+    public static MemberResponseDto.KaKaoLoginResponse toKaKaoLoginResponse(Member member, String accessToken) {
+
+        return MemberResponseDto.KaKaoLoginResponse.builder()
+                .memberId(member.getId())
+                .email(member.getEmail())
+                .nickname(member.getNickname())
+                .accessToken(accessToken)
+                .build();
+    }
+
+
 }

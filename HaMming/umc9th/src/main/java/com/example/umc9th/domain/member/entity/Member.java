@@ -12,28 +12,29 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-@Table(name = "members")
+@Table(name = "user")
 public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long id;
 
-    @Column(nullable = false, unique = true, length = 50)
+    @Column
     private String email;
 
-    @Column(nullable = false, length = 100)
+    @Column(length = 100)
     private String password;
 
-    @Column(nullable = false, length = 30)
+    @Column(length = 30)
     private String nickname;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
+    @Column( length = 20)
     private Role role;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column
     private Gender gender;
 
 
@@ -42,6 +43,10 @@ public class Member {
 
 
     private LocalDateTime createdAt;
+
+    //카카오 로그인
+    @Column(unique = true)
+    private String kakaoId;
 
     @PrePersist
     protected void onCreate() {

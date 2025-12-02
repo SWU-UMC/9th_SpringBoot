@@ -19,3 +19,11 @@ spring:
 jwt:
   secret: this_is_a_very_long_secret_key_for_jwt_minimum_32_chars!!
   access-token-validity-in-seconds: 3600
+
+kakao:
+  oauth:
+    client-id: "d7a7032f1b5d01b1a086d6ec57aea401"
+    client-secret: "8n62cffHukLUhue7H99CcaVBMfrFKCYu"
+    redirect-uri: "http://localhost:8080/api/auth/kakao/callback"
+    token-uri: "https://kauth.kakao.com/oauth/token"
+    user-info-uri: "https://kapi.kakao.com/v2/user/me"

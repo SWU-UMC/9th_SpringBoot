@@ -34,4 +34,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     List<Review> findReviewsByMemberId(@Param("memberId") Long memberId);
 
     boolean existsByEmail(String email);
+
+    Optional<Member> findByKakaoId(String kakaoId);
 }

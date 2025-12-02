@@ -45,7 +45,9 @@ public class SecurityConfig {
                                 "/webjars/**"
                         ).permitAll()
                         // 인증 없이 가능한 API
-                        .requestMatchers("/auth/signup", "/auth/login").permitAll()
+                        .requestMatchers("/auth/signup", "/auth/login","/api/auth/kakao/redirect",
+                                "/api/auth/kakao/callback","/api/auth/kakao/**",
+                                "/api/auth/oauth/**").permitAll()
                         // 나머지는 인증 필요
                         .anyRequest().authenticated()
                 )

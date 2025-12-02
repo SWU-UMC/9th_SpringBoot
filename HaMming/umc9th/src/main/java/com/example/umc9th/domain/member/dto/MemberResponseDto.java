@@ -5,6 +5,7 @@ import com.example.umc9th.domain.member.enums.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 public class MemberResponseDto {
 
@@ -28,5 +29,17 @@ public class MemberResponseDto {
         private String nickname;
         private String accessToken;
     }
+
+    @Getter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class KaKaoLoginResponse {
+        private Long memberId;
+        private String email;
+        private String nickname;
+        private String accessToken;
+    }
+
 
 }

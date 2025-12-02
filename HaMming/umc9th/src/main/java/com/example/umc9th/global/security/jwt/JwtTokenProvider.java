@@ -21,12 +21,14 @@ public class JwtTokenProvider {
             @Value("${jwt.secret}") String secretKey,
             @Value("${jwt.access-token-validity-in-seconds:3600}") long accessTokenValidityInSeconds
     ) {
-        System.out.println("🔑 Loaded JWT Secret = " + secretKey);
         this.key = Keys.hmacShaKeyFor(secretKey.getBytes());
         this.accessTokenValidityInMillis = accessTokenValidityInSeconds * 1000;
     }
 
-    // Authentication -> JWT 문자열 생성
+    /**
+     * 🔹 기존 방식
+     * Authentication 기반 AccessToken 생성
+     */
     public String createAccessToken(Authentication authentication) {
         String email = authentication.getName(); // username = email
         Date now = new Date();
@@ -34,6 +36,23 @@ public class JwtTokenProvider {
 
         return Jwts.builder()
                 .setSubject(email)
+                .setIssuedAt(now)
+                .setExpiration(expiry)
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
+    }
+
+    /**
+     * 🔹 신규 추가 (카카오 로그인용)
+     * email & role 기반 AccessToken 생성
+     */
+    public String createAccessToken(String email, String role) {
+        Date now = new Date();
+        Date expiry = new Date(now.getTime() + accessTokenValidityInMillis);
+
+        return Jwts.builder()
+                .setSubject(email)
+                .claim("role", role) // role을 claim에 포함
                 .setIssuedAt(now)
                 .setExpiration(expiry)
                 .signWith(key, SignatureAlgorithm.HS256)
