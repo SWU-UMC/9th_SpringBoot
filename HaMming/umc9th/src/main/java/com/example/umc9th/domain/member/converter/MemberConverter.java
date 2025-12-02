@@ -4,43 +4,50 @@ import com.example.umc9th.domain.member.dto.MemberRequestDto;
 import com.example.umc9th.domain.member.dto.MemberResponseDto;
 import com.example.umc9th.domain.member.entity.Member;
 import com.example.umc9th.domain.member.enums.Role;
-import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
+import lombok.experimental.UtilityClass;
 
-@Component
-@RequiredArgsConstructor
+@UtilityClass
 public class MemberConverter {
 
-    private final PasswordEncoder passwordEncoder;
-
-    public Member toNormalMember(MemberRequestDto.SignUpRequest req) {
-
+    public Member toMember(MemberRequestDto.SignUpRequest request, String encodedPassword) {
         return Member.builder()
-                .email(req.getEmail())
-                .password(passwordEncoder.encode(req.getPassword()))
-                .nickname(req.getNickname())
-                .gender(null)
-                .birth(null)
-                .role(Role.NORMAL)
-                .socialId(null)
-                .socialType(null)
+                .email(request.getEmail())
+                .password(encodedPassword)
+                .nickname(request.getNickname())
+                .gender(request.getGender())
+                .birth(request.getBirth())
+                .role(Role.ROLE_USER)
                 .build();
     }
 
-    public Member toSocialMember(MemberRequestDto.SocialSignUpRequest req) {
-
-        return Member.builder()
-                .socialId(req.getSocialId())
-                .socialType(req.getSocialType())
-                .nickname(req.getNickname())
-                .email(null)
-                .password(null)
-                .role(Role.NORMAL)
+    public MemberResponseDto.SignUpResponse toSignupResponse(Member member) {
+        return MemberResponseDto.SignUpResponse.builder()
+                .memberId(member.getId())
+                .email(member.getEmail())
+                .nickname(member.getNickname())
+                .gender(member.getGender())
+                .birth(member.getBirth())
                 .build();
     }
 
-    public MemberResponseDto.SignUpResponse toSignUpResponse(Member member) {
-        return MemberResponseDto.from(member);
+    public MemberResponseDto.LoginResponse toLoginResponse(Member member, String accessToken) {
+        return MemberResponseDto.LoginResponse.builder()
+                .memberId(member.getId())
+                .email(member.getEmail())
+                .nickname(member.getNickname())
+                .accessToken(accessToken)
+                .build();
     }
+
+    public static MemberResponseDto.KaKaoLoginResponse toKaKaoLoginResponse(Member member, String accessToken) {
+
+        return MemberResponseDto.KaKaoLoginResponse.builder()
+                .memberId(member.getId())
+                .email(member.getEmail())
+                .nickname(member.getNickname())
+                .accessToken(accessToken)
+                .build();
+    }
+
+
 }
