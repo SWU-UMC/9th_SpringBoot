@@ -53,7 +53,6 @@ public class User extends BaseEntity {
     private String name;
 
     @Enumerated(EnumType.STRING)
-    @Size(max = 30)
     @Column(name = "gender", length = 30)
     private Gender gender;
 
@@ -81,6 +80,7 @@ public class User extends BaseEntity {
     @Column(name = "image_url", length = 512)
     private String imageUrl;
 
+    @Builder.Default
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, length = 30)
