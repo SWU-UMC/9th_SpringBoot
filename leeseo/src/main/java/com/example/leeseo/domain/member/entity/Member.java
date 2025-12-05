@@ -4,6 +4,7 @@ import com.example.leeseo.domain.member.entity.mapping.MemberFood;
 import com.example.leeseo.domain.member.entity.mapping.MemberTerm;
 import com.example.leeseo.domain.member.enums.Address;
 import com.example.leeseo.domain.member.enums.Gender;
+import com.example.leeseo.domain.member.enums.Role;
 import com.example.leeseo.domain.member.enums.SocialType;
 import com.example.leeseo.domain.mission.entity.mapping.MemberMission;
 import com.example.leeseo.domain.review.entity.Review;
@@ -55,12 +56,17 @@ public class Member extends BaseEntity {
     @Column(name = "point", nullable = false)
     private Integer point;
 
-    @Column(name = "email", nullable = false)
-    private String email;
-
     @Column(name = "phoneNumber")
     private String phoneNumber;
 
+    @Column(nullable = false, unique = true)
+    private String email;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     // 연관 관계
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)

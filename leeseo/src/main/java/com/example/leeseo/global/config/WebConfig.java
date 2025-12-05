@@ -1,4 +1,4 @@
-package com.example.leeseo.global.entity.config;
+package com.example.leeseo.global.config;
 
 import com.example.leeseo.global.entity.apiPayload.handler.PageValidArgumentResolver;
 import org.springframework.context.annotation.Configuration;
